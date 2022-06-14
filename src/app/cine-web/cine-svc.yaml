@@ -1,0 +1,955 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8001
+  description: Generated server url
+paths:
+  /api/views:
+    post:
+      tags:
+      - view-controller
+      operationId: createView
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseString'
+  /api/films/like:
+    post:
+      tags:
+      - film-controller
+      operationId: createLike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseLikeDTO'
+  /api/films/dislike:
+    post:
+      tags:
+      - film-controller
+      operationId: createDislike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DislikeDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseDislikeDTO'
+  /api/films/comment:
+    post:
+      tags:
+      - film-controller
+      operationId: createCommentDTO
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseCommentDTO'
+  /api/favorites:
+    post:
+      tags:
+      - favorite-controller
+      operationId: createFavorite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FavoriteDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseFavoriteDTO'
+  /api/auth/register:
+    post:
+      tags:
+      - user-controller
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseUserDTO'
+  /api/auth/login:
+    post:
+      tags:
+      - user-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseLoginResponseDTO'
+  /api/genres:
+    get:
+      tags:
+      - genre-controller
+      operationId: getAllGenres
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseListGenre'
+  /api/films/{id}/views/count:
+    get:
+      tags:
+      - view-controller
+      operationId: getViewCountByFilmId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseViewCountDTO'
+  /api/films/{genre}:
+    get:
+      tags:
+      - film-controller
+      operationId: getFilmsByGenre
+      parameters:
+      - name: genre
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: sortBy
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageFilm'
+  /api/films/singleFilm/{filmId}:
+    get:
+      tags:
+      - film-controller
+      operationId: getFilmById
+      parameters:
+      - name: filmId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseFilmDTO'
+  /api/films/search:
+    get:
+      tags:
+      - film-controller
+      operationId: getSearchData
+      parameters:
+      - name: searchText
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: sortBy
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageFilm'
+  /api/films/favorites:
+    get:
+      tags:
+      - film-controller
+      operationId: getFavoriteFilms
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: sortBy
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageFilm'
+  /api/films/browse:
+    get:
+      tags:
+      - film-controller
+      operationId: getBrowseData
+      parameters:
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseListCategorizedFilmsDTO'
+  /api/auth/user:
+    get:
+      tags:
+      - user-controller
+      operationId: getCurrentUser
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseUserDTO'
+  /api/films/like/{id}:
+    delete:
+      tags:
+      - film-controller
+      operationId: deleteLike
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseLike'
+  /api/films/dislike/{id}:
+    delete:
+      tags:
+      - film-controller
+      operationId: deleteDislike
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseDislike'
+  /api/films/comment/{id}:
+    delete:
+      tags:
+      - film-controller
+      operationId: deleteComment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseComment'
+  /api/favorites/{id}:
+    delete:
+      tags:
+      - favorite-controller
+      operationId: deleteFavorite
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponseString'
+components:
+  schemas:
+    ViewDTO:
+      required:
+      - filmId
+      - userId
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        filmId:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+    ApiResponseString:
+      type: object
+      properties:
+        result:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    LikeDTO:
+      required:
+      - filmId
+      - userId
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        filmId:
+          type: integer
+          format: int64
+    ApiResponseLikeDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/LikeDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    DislikeDTO:
+      required:
+      - filmId
+      - userId
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        filmId:
+          type: integer
+          format: int64
+    ApiResponseDislikeDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/DislikeDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    CommentDTO:
+      required:
+      - commentText
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        username:
+          type: string
+        filmId:
+          type: integer
+          format: int64
+        commentText:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    ApiResponseCommentDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/CommentDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    FavoriteDTO:
+      required:
+      - filmId
+      - userId
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        filmId:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+    ApiResponseFavoriteDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/FavoriteDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    UserDTO:
+      required:
+      - email
+      - password
+      - username
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+        email:
+          type: string
+        views:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViewDTO'
+        favorites:
+          type: array
+          items:
+            $ref: '#/components/schemas/FavoriteDTO'
+    ApiResponseUserDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/UserDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    LoginRequestDTO:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    ApiResponseLoginResponseDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/LoginResponseDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    LoginResponseDTO:
+      required:
+      - token
+      type: object
+      properties:
+        token:
+          type: string
+    ApiResponseListGenre:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    Genre:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    ApiResponseViewCountDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/ViewCountDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    ViewCountDTO:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+    Actor:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        age:
+          type: string
+    ApiResponsePageFilm:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/PageFilm'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        commentText:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Dislike:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+    Film:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+        maturity:
+          type: integer
+          format: int32
+        slug:
+          type: string
+        ratingStar:
+          type: integer
+          format: int32
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        likes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Like'
+        dislikes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dislike'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+    Like:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+    PageFilm:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Film'
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        unpaged:
+          type: boolean
+        paged:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
+    ApiResponseFilmDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/FilmDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    Favorite:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        film:
+          $ref: '#/components/schemas/Film'
+    FilmDTO:
+      required:
+      - description
+      - maturity
+      - slug
+      - title
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+        maturity:
+          type: integer
+          format: int32
+        slug:
+          type: string
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        likes:
+          type: array
+          items:
+            $ref: '#/components/schemas/LikeDTO'
+        dislikes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DislikeDTO'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentDTO'
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        views:
+          type: array
+          items:
+            $ref: '#/components/schemas/View'
+        ratingStar:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+        email:
+          type: string
+        favorites:
+          type: array
+          items:
+            $ref: '#/components/schemas/Favorite'
+    View:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        film:
+          $ref: '#/components/schemas/Film'
+        user:
+          $ref: '#/components/schemas/User'
+        createdAt:
+          type: string
+          format: date-time
+    ApiResponseListCategorizedFilmsDTO:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategorizedFilmsDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    CategorizedFilmsDTO:
+      type: object
+      properties:
+        genre:
+          $ref: '#/components/schemas/Genre'
+        films:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilmDTO'
+    ApiResponseLike:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Like'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    ApiResponseDislike:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Dislike'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    ApiResponseComment:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Comment'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
