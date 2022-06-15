@@ -11,13 +11,15 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { FooterCineComponent } from './cine-web/components/footer-cine/footer-cine.component';
+import { HeaderCineComponent } from './cine-web/components/header-cine/header-cine.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeCineWebComponent,
-    FooterCineComponent
+    FooterCineComponent,
+    HeaderCineComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,9 @@ import { FooterCineComponent } from './cine-web/components/footer-cine/footer-ci
     MatExpansionModule
   ],
   exports:[
-    FooterCineComponent
+    FooterCineComponent,
+    HomeCineWebComponent,
+    HeaderCineComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
