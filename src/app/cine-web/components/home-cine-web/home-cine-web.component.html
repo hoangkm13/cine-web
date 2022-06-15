@@ -1,1 +1,104 @@
-<p>home-cine-web works!</p>
+<div fxLayout="column">
+  <div class="background-cine-header" fxLayoutGap="250px" fxLayout="column">
+    <div>
+      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" style="margin: 10px 36px">
+        <div>
+          <img src="assets/images/logo.a27cfc72.svg" height="75%" width="75%" alt="Cine">
+        </div>
+
+        <a href="/sign-in">
+          <button mat-raised-button color="primary">
+            Sign In
+          </button>
+        </a>
+
+      </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+      <div class="text-homepage">
+        <h1 class="text-cine-homepage">Unlimited movies, TV shows, and more.</h1>
+      </div>
+
+      <h1 class="text-cine-subscript">Watch anywhere. Cancel at any time.</h1>
+
+      <div style="width: 50%" fxLayoutAlign="center center" fxLayout="column">
+        <form style="width: 75%">
+          <mat-form-field appearance="outline">
+            <mat-label>Email address</mat-label>
+            <input style="color: white" type="text" matInput>
+          </mat-form-field>
+        </form>
+
+        <h2 style="color: white;">Ready to watch? Enter your email to create or restart your membership.</h2>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div fxLayoutGap="5px" fxLayout="column">
+    <div class="background-cine" fxLayout="row">
+      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-evenly center" class="content-homepage">
+        <div>
+          <h1 class="text-cine-content">Enjoy on your TV.</h1>
+          <h2 class="text-cine-content-description">Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray
+            players and more.</h2>
+        </div>
+        <img src="assets/images/misc/home-tv.jpg" alt="Home-TV">
+      </div>
+    </div>
+    <div class="background-cine">
+      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-evenly center" class="content-homepage">
+        <img src="assets/images/misc/home-mobile.jpg" alt="Home-Mobile">
+        <div>
+          <h1 class="text-cine-content">Download your shows to watch offline.</h1>
+          <h2 class="text-cine-content-description">Save your data and watch all your favourites offline.</h2>
+        </div>
+      </div>
+    </div>
+    <div class="background-cine">
+      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-evenly center" class="content-homepage">
+        <div>
+          <h1 class="text-cine-content">Watch everywhere.</h1>
+          <h2 class="text-cine-content-description">Stream unlimited films and TV programmes on your phone, tablet,
+            laptop and TV without paying more.</h2>
+        </div>
+        <img src="assets/images/misc/home-imac.jpg" alt="Home-Imac">
+      </div>
+    </div>
+    <div class="background-cine">
+      <div fxFlex="100" fxLayout="column" fxLayoutAlign="center center" class="content-homepage" fxLayoutGap="48px">
+        <h1 class="text-cine-content">Frequently Asked Questions</h1>
+        <div style="max-width: 60%" fxLayout="column" fxLayoutGap="5px">
+          <mat-accordion *ngFor="let quiz of frequently_quiz">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span class="text-cine-subscript">{{quiz.question}}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div style="margin-top: 5px" class="text-cine-subscript" [innerText]="quiz.answer">
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <div style="width: 50%" fxLayoutAlign="center center" fxLayout="column">
+          <form style="width: 75%">
+            <mat-form-field appearance="outline">
+              <mat-label>Email address</mat-label>
+              <input style="color: white" type="text" matInput>
+            </mat-form-field>
+          </form>
+
+          <h2 style="color: white;">Ready to watch? Enter your email to create or restart your membership.</h2>
+        </div>
+
+      </div>
+    </div>
+
+    <app-footer-cine></app-footer-cine>
+  </div>
+
+
+</div>
