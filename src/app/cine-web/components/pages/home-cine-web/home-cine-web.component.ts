@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FREQUENTLY_QUIZ, Frequently_quiz} from "../../static/frequently_quiz";
+import {FREQUENTLY_QUIZ, Frequently_quiz} from "../../../static/frequently_quiz";
 
 @Component({
   selector: 'app-home-cine-web',
