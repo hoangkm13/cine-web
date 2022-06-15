@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FREQUENTLY_QUIZ, Frequently_quiz} from "../../static/frequently_quiz";
 
 @Component({
   selector: 'app-home-cine-web',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeCineWebComponent implements OnInit {
 
-  constructor() { }
+  frequently_quiz: Frequently_quiz[] = []
+
+  constructor() {
+    this.frequently_quiz = FREQUENTLY_QUIZ
+  }
 
   ngOnInit(): void {
   }
