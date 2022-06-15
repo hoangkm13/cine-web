@@ -1,19 +1,6 @@
 <div fxLayout="column">
   <div class="background-cine-header" fxLayoutGap="250px" fxLayout="column">
-    <div>
-      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" style="margin: 10px 36px">
-        <div>
-          <img src="assets/images/logo.a27cfc72.svg" height="75%" width="75%" alt="Cine">
-        </div>
-
-        <a href="/sign-in">
-          <button mat-raised-button color="primary">
-            Sign In
-          </button>
-        </a>
-
-      </div>
-    </div>
+    <app-header-cine></app-header-cine>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
       <div class="text-homepage">
         <h1 class="text-cine-homepage">Unlimited movies, TV shows, and more.</h1>
@@ -29,7 +16,7 @@
           </mat-form-field>
         </form>
 
-        <h2 style="color: white;">Ready to watch? Enter your email to create or restart your membership.</h2>
+        <h2 class="white-text">Ready to watch? Enter your email to create or restart your membership.</h2>
       </div>
 
     </div>
@@ -99,6 +86,5 @@
 
     <app-footer-cine></app-footer-cine>
   </div>
-
 
 </div>

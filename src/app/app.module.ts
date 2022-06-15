@@ -11,14 +11,17 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {FooterCineComponent} from './cine-web/components/footer-cine/footer-cine.component';
-import {SignInComponent} from './cine-web/components/sign-in/sign-in.component';
+import {HeaderCineComponent} from './cine-web/components/header-cine/header-cine.component';
+import {SignInComponent} from "./cine-web/components/sign-in/sign-in.component";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeCineWebComponent,
     FooterCineComponent,
-    SignInComponent,
+    HeaderCineComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,9 @@ import {SignInComponent} from './cine-web/components/sign-in/sign-in.component';
     MatExpansionModule
   ],
   exports: [
-    FooterCineComponent
+    FooterCineComponent,
+    HomeCineWebComponent,
+    HeaderCineComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
