@@ -12,6 +12,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { FooterCineComponent } from './cine-web/components/shared/footer-cine/footer-cine.component';
 import { HeaderCineComponent } from './cine-web/components/shared/header-cine/header-cine.component';
+import {HttpClientModule} from "@angular/common/http";
+import {ApiModule, Configuration} from "./cine-web/cine-svc";
+import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
+import { DetailFilmComponent } from './cine-web/components/pages/detail-film/detail-film.component';
 
 
 @NgModule({
@@ -19,7 +23,8 @@ import { HeaderCineComponent } from './cine-web/components/shared/header-cine/he
     AppComponent,
     HomeCineWebComponent,
     FooterCineComponent,
-    HeaderCineComponent
+    HeaderCineComponent,
+    DetailFilmComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,13 @@ import { HeaderCineComponent } from './cine-web/components/shared/header-cine/he
     MatButtonModule,
     MatInputModule,
     MatIconModule,
-    MatExpansionModule
+    ApiModule.forRoot(() => {
+      return new Configuration({
+        basePath: `${GlobalConstants.baseUrl}`
+      })
+    }),
+    MatExpansionModule,
+    HttpClientModule
   ],
   exports:[
     FooterCineComponent,
