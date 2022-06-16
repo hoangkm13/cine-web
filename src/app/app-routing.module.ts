@@ -5,15 +5,15 @@ import {HomeCineWebComponent} from "./cine-web/components/pages/home-cine-web/ho
 let routes: Routes = [];
 routes = [
   {
+    path: '',
+    component: HomeCineWebComponent
+  },
+  {
+    path: '#',
+    component: HomeCineWebComponent
+  },
+  {
     path: 'cine-web',
-    component: HomeCineWebComponent
-  },
-  {
-    path: 'signin',
-    component: HomeCineWebComponent
-  },
-  {
-    path: 'signout',
     component: HomeCineWebComponent
   },
 ]
