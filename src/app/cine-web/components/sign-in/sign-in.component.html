@@ -4,20 +4,22 @@
     <div class="sign-in-form" fxLayout="column" fxLayoutAlign="center center">
       <div style="width: 350px" fxLayout="column" fxLayoutGap="20">
         <div class="sign-in-title white-text">SIGN IN</div>
-        <form fxLayout="column">
+        <form [formGroup]="formGroup" fxLayout="column">
           <mat-form-field appearance="outline">
             <mat-label>User name</mat-label>
-            <input class="white-text" matInput>
+            <input formControlName="username" class="white-text" matInput>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input type="password" class="white-text" matInput>
+            <input formControlName="password" type="password" class="white-text" matInput>
           </mat-form-field>
         </form>
-        <button mat-raised-button color="primary">Sign in</button>
+        <div class="dialog-action-row">
+          <button style="width: 100%" mat-raised-button color="primary">Sign in</button>
+        </div>
         <div class="gray-text">
-          <p>New to Cine? <a class="white-text" style="text-decoration: none" href="/cine-web">Sign up now</a></p>
+          <p>New to Cine? <a class="white-text" style="text-decoration: none" href="/sign-up">Sign up now</a></p>
           <p>This page is protected by Google mCaptcha to ensure you're not a bot</p>
         </div>
       </div>

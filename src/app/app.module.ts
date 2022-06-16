@@ -13,6 +13,12 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {FooterCineComponent} from './cine-web/components/footer-cine/footer-cine.component';
 import {HeaderCineComponent} from './cine-web/components/header-cine/header-cine.component';
 import {SignInComponent} from "./cine-web/components/sign-in/sign-in.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import { SignUpComponent } from './cine-web/components/sign-up/sign-up.component';
+import {MatRadioModule} from "@angular/material/radio";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -21,7 +27,8 @@ import {SignInComponent} from "./cine-web/components/sign-in/sign-in.component";
     HomeCineWebComponent,
     FooterCineComponent,
     HeaderCineComponent,
-    SignInComponent
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +38,12 @@ import {SignInComponent} from "./cine-web/components/sign-in/sign-in.component";
     MatButtonModule,
     MatInputModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   exports: [
     FooterCineComponent,
