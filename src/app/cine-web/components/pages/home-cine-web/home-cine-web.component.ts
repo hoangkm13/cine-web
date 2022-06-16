@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FREQUENTLY_QUIZ, Frequently_quiz} from "../../static/frequently_quiz";
+import {FREQUENTLY_QUIZ, Frequently_quiz} from "../../../static/frequently_quiz";
+import {ApiResponseLoginResponseDTO, FilmControllerService, UserControllerService} from "../../../cine-svc";
+import {parseJSONData} from "../../shared/parseJSONData";
 
 @Component({
   selector: 'app-home-cine-web',
