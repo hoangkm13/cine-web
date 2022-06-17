@@ -11,5 +11,4 @@ export class LandingCineWebComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

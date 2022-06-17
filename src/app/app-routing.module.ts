@@ -4,6 +4,7 @@ import {SignInComponent} from "./cine-web/components/pages/sign-in/sign-in.compo
 import {SignUpComponent} from "./cine-web/components/pages/sign-up/sign-up.component";
 import {HomeCineWebComponent} from "./cine-web/components/pages/home-cine-web/home-cine-web.component";
 import {LandingCineWebComponent} from "./cine-web/components/pages/landing-cine-web/landing-cine-web.component";
+import {FlickyTestComponent} from "./cine-web/components/pages/flicky-test/flicky-test.component";
 
 let routes: Routes = [];
 routes = [
@@ -30,6 +31,10 @@ routes = [
   {
     path: "welcome",
     component: LandingCineWebComponent
+  },
+  {
+    path: "test",
+    component: FlickyTestComponent
   }
 ]
 
