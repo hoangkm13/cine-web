@@ -9,21 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ViewDTO } from './viewDTO';
-import { FavoriteDTO } from './favoriteDTO';
+import { PageComment } from './pageComment';
 
 
-export interface UserDTO { 
-    id?: number;
-    username: string;
-    fullName: string;
-    gender: string;
-    birthOfDate: string;
-    mobile: string;
-    password: string;
-    role?: string;
-    email: string;
-    views?: Array<ViewDTO>;
-    favorites?: Array<FavoriteDTO>;
+export interface ApiResponsePageComment { 
+    result?: PageComment;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

@@ -15,7 +15,7 @@ import { HeaderCineComponent } from './cine-web/components/shared/header-cine/he
 import {HttpClientModule} from "@angular/common/http";
 import {ApiModule, Configuration} from "./cine-web/cine-svc";
 import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
-import { DetailFilmComponent } from './cine-web/components/pages/detail-film/detail-film.component';
+import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
 
 
 @NgModule({

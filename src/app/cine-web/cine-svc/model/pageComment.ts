@@ -10,15 +10,15 @@
  * Do not edit the class manually.
  */
 import { PageableObject } from './pageableObject';
-import { Film } from './film';
+import { Comment } from './comment';
 import { Sort } from './sort';
 
 
-export interface PageFilm { 
+export interface PageComment { 
     totalPages?: number;
     totalElements?: number;
     size?: number;
-    content?: Array<Film>;
+    content?: Array<Comment>;
     number?: number;
     sort?: Sort;
     first?: boolean;

@@ -11,8 +11,15 @@ import {parseJSONData} from "../../shared/parseJSONData";
 export class HomeCineWebComponent implements OnInit {
 
   frequently_quiz: Frequently_quiz[] = []
+  // data: any
 
-  constructor() {
+  constructor(
+    // private service: UserControllerService
+  ) {
+    // this.service.login({username: "hoangkm13", password: "Hoangkm133131"}).subscribe(result => {
+    //   this.data = parseJSONData(result)
+    //   console.log(this.data.result.token)
+    // })
     this.frequently_quiz = FREQUENTLY_QUIZ
   }
 

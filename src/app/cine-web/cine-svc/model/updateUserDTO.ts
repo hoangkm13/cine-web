@@ -9,21 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ViewDTO } from './viewDTO';
-import { FavoriteDTO } from './favoriteDTO';
 
 
-export interface UserDTO { 
-    id?: number;
-    username: string;
-    fullName: string;
-    gender: string;
-    birthOfDate: string;
-    mobile: string;
-    password: string;
-    role?: string;
-    email: string;
-    views?: Array<ViewDTO>;
-    favorites?: Array<FavoriteDTO>;
+export interface UpdateUserDTO { 
+    username?: string;
+    fullName?: string;
+    gender?: string;
+    birthOfDate?: string;
+    mobile?: string;
+    email?: string;
 }
 
