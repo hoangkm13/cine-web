@@ -34,7 +34,6 @@ import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-
     SignInComponent,
     SignUpComponent,
     LandingCineWebComponent,
-
   ],
   imports: [
     BrowserModule,
