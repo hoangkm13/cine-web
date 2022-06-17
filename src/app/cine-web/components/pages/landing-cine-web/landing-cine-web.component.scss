@@ -1,0 +1,31 @@
+.landing-title{
+  font-size: 50px;
+  line-height: normal;
+  font-weight: 550;
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 45%);
+  margin: 0;
+}
+
+.landing-content{
+  font-size: 22px;
+  line-height: normal;
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 45%);
+  text-align: justify;
+}
+
+.play-button{
+  box-shadow: 0 0.6vw 1vw -0.4vw rgb(0 0 0 / 35%);
+  background-color: #e6e6e6;
+  color: #000;
+  border-width: 0;
+  padding: 4px 40px;
+  border-radius: 5px;
+  max-width: 130px;
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
+}
+
