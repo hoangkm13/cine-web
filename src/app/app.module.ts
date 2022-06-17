@@ -23,7 +23,7 @@ import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
 import {FooterCineComponent} from './cine-web/components/shared/footer-cine/footer-cine.component';
 import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
 import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-web/landing-cine-web.component';
-import {FlickyTestComponent} from './cine-web/components/pages/flicky-test/flicky-test.component';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import {FlickyTestComponent} from './cine-web/components/pages/flicky-test/flick
     SignInComponent,
     SignUpComponent,
     LandingCineWebComponent,
-    FlickyTestComponent
+
   ],
   imports: [
     BrowserModule,
