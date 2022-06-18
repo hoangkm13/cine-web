@@ -11,4 +11,19 @@ export class LandingCineWebComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  children = [
+    { title: 'Child 1' },
+    { title: 'Child 2' },
+    { title: 'Child 3' },
+    { title: 'Child 4' },
+    { title: 'Child 5' },
+    { title: 'Child 6' },
+  ];
+
+  flickityOptions = {
+    cellAlign: 'left',
+    groupCells: true,
+    initialIndex: 2,
+  };
 }

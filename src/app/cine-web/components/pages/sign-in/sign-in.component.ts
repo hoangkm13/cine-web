@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {ApiResponseLoginResponseDTO, UserControllerService} from "../../../cine-svc";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-in',
@@ -8,9 +10,9 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 })
 export class SignInComponent implements OnInit {
 
-  formGroup: FormGroup ;
+  formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private loginController: UserControllerService, private route: Router) {
     this.formGroup = this.formBuilder.group({
       username: [],
       password: []
@@ -18,6 +20,19 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  login() {
+    this.loginController.login({
+      username: this.formGroup.controls['username'].value,
+      password: this.formGroup.controls['password'].value
+    }).subscribe((response: ApiResponseLoginResponseDTO) => {
+      if (response.errorCode != null) {
+        console.log(response.errorCode + "," + response.message);
+      } else {
+        this.route.navigateByUrl("/welcome").then();
+      }
+    })
   }
 
 }
