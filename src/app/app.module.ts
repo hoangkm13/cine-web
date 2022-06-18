@@ -22,6 +22,8 @@ import {ApiModule, Configuration} from "./cine-web/cine-svc";
 import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
 import { FooterCineComponent } from './cine-web/components/shared/footer-cine/footer-cine.component';
 import { HeaderCineComponent } from './cine-web/components/shared/header-cine/header-cine.component';
+import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { HeaderCineComponent } from './cine-web/components/shared/header-cine/he
     FooterCineComponent,
     HeaderCineComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    DetailFilmComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { HeaderCineComponent } from './cine-web/components/shared/header-cine/he
       })
     }),
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   exports: [
     FooterCineComponent,
