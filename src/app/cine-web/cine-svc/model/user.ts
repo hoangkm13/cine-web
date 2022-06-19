@@ -15,6 +15,10 @@ import { Favorite } from './favorite';
 export interface User { 
     id?: number;
     username?: string;
+    fullName?: string;
+    gender: string;
+    birthOfDate?: string;
+    mobile?: string;
     password?: string;
     role?: string;
     email?: string;
