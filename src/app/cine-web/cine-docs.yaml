@@ -1,10 +1,14 @@
 openapi: 3.0.1
 info:
-  title: OpenAPI definition
-  version: v0
+  title: App API
+  version: snapshot
 servers:
-- url: http://localhost:8001
+- url: http://localhost:5000
   description: Generated server url
+security:
+- bearer-jwt:
+  - read
+  - write
 paths:
   /api/auth/{userId}:
     put:
@@ -364,9 +368,10 @@ paths:
         "200":
           description: OK
           content:
-            application/json;charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseListCategorizedFilmsDTO'
+      security: []
   /api/auth/user:
     get:
       tags:
@@ -878,15 +883,15 @@ components:
           format: int64
         sort:
           $ref: '#/components/schemas/Sort'
-        pageNumber:
-          type: integer
-          format: int32
         pageSize:
           type: integer
           format: int32
-        unpaged:
-          type: boolean
+        pageNumber:
+          type: integer
+          format: int32
         paged:
+          type: boolean
+        unpaged:
           type: boolean
     Sort:
       type: object
@@ -1106,3 +1111,8 @@ components:
         responseCode:
           type: integer
           format: int32
+  securitySchemes:
+    bearer-jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -17,13 +17,15 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ApiModule, Configuration} from "./cine-web/cine-svc";
 import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
 import { FooterCineComponent } from './cine-web/components/shared/footer-cine/footer-cine.component';
 import { HeaderCineComponent } from './cine-web/components/shared/header-cine/header-cine.component';
 import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {_providers} from "./provider";
+import {ApiHttpInterceptor, apiHttpInterceptorProvider} from "./cine-web/components/shared/api-http-interceptor";
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeCineWebComponent,
     HeaderCineComponent
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
