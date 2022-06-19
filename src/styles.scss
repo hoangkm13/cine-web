@@ -2,3 +2,35 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.background-cine-header {
+  background-image: url("assets/images/misc/home-bg.jpg");
+}
+
+.background-cine-landing {
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: url(assets/images/films/joker/spotlight.jpg);
+}
+
+.white-text {
+  color: white !important;
+}
+
+.gray-text{
+  color: gray !important;
+}
+
+.dialog-action-row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+
+  button {
+    padding: 4px;
+  }
+}
+
+
+
