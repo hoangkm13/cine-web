@@ -3,7 +3,7 @@ info:
   title: App API
   version: snapshot
 servers:
-- url: http://localhost:5000
+- url: http://localhost:8001
   description: Generated server url
 security:
 - bearer-jwt:

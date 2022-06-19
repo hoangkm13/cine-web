@@ -12,13 +12,20 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {SignInComponent} from "./cine-web/components/pages/sign-in/sign-in.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {SignUpComponent} from './cine-web/components/pages/sign-up/sign-up.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ApiModule, Configuration} from "./cine-web/cine-svc";
 import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
+import {FooterCineComponent} from './cine-web/components/shared/footer-cine/footer-cine.component';
+import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
+import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {_providers} from "./provider";
+import {ApiHttpInterceptor, apiHttpInterceptorProvider} from "./cine-web/components/shared/api-http-interceptor";
 import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
 
 import {FooterCineComponent} from './cine-web/components/shared/footer-cine/footer-cine.component';
@@ -34,8 +41,8 @@ import {SlickCarouselModule} from "ngx-slick-carousel";
     HomeCineWebComponent,
     FooterCineComponent,
     HeaderCineComponent,
-    DetailFilmComponent,
     SignInComponent,
+    DetailFilmComponent
     SignUpComponent,
     LandingCineWebComponent
   ],
@@ -62,13 +69,16 @@ import {SlickCarouselModule} from "ngx-slick-carousel";
     }),
     MatExpansionModule,
     HttpClientModule,
+    NgbModule
   ],
   exports: [
     FooterCineComponent,
     HomeCineWebComponent,
     HeaderCineComponent,
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
