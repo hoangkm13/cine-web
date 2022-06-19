@@ -24,7 +24,6 @@ import {FooterCineComponent} from './cine-web/components/shared/footer-cine/foot
 import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
 import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-web/landing-cine-web.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +59,7 @@ import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-
   exports: [
     FooterCineComponent,
     HomeCineWebComponent,
-    HeaderCineComponent
+    HeaderCineComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
