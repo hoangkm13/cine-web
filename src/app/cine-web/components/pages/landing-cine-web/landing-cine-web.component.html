@@ -13,8 +13,32 @@
       </div>
     </div>
   </div>
+  <section>
+    <ngx-slick-carousel class="carousel"
+                        #slickModal="slick-carousel"
+                        [config]="slideConfig"
+    >
+      <mat-card class="example-card" ngxSlickItem *ngFor="let slide of slides" class="slide">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Shiba Inu</mat-card-title>
+          <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="{{ slide.img }}" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum laudantium aperiam fugit quam obcaecati odio
+            sit nesciunt ratione reiciendis eveniet, accusantium temporibus eos explicabo asperiores dolorum unde illum
+            vitae nemo.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions>
+      </mat-card>
+    </ngx-slick-carousel>
+  </section>
   <app-footer-cine></app-footer-cine>
 </div>
-
-
 

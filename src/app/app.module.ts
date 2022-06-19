@@ -25,6 +25,8 @@ import {FooterCineComponent} from './cine-web/components/shared/footer-cine/foot
 import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
 import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-web/landing-cine-web.component';
 import {SignUpComponent} from "./cine-web/components/pages/sign-up/sign-up.component";
+import {MatCardModule} from "@angular/material/card";
+import {SlickCarouselModule} from "ngx-slick-carousel";
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import {SignUpComponent} from "./cine-web/components/pages/sign-up/sign-up.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
+    MatCardModule,
+    SlickCarouselModule,
     ApiModule.forRoot(() => {
       return new Configuration({
         basePath: `${GlobalConstants.baseUrl}`

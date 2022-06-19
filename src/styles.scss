@@ -32,5 +32,32 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-
+section{
+  padding: 10px;
+  .example-header-image {
+    background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+    background-size: cover;
+  }
+  .mat-card {
+    width: 350px;
+    margin: 15px;
+    background-color: #fff;
+    font-family: "Open Sans", sans-serif;
+    p {
+      font-size: 16px;
+    }
+  }
+}
+.fa {
+  font-size: 40px;
+  color: #fff;
+}
+@media(max-width:575px){
+  section{
+    .mat-card{
+      margin: 10px;
+      width: 280px;
+    }
+  }
+}
 
