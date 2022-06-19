@@ -24,14 +24,10 @@ import {FooterCineComponent} from './cine-web/components/shared/footer-cine/foot
 import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
 import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {_providers} from "./provider";
-import {ApiHttpInterceptor, apiHttpInterceptorProvider} from "./cine-web/components/shared/api-http-interceptor";
-import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
 
-import {FooterCineComponent} from './cine-web/components/shared/footer-cine/footer-cine.component';
-import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
+import {ApiHttpInterceptor} from "./cine-web/components/shared/api-http-interceptor";
 import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-web/landing-cine-web.component';
-import {SignUpComponent} from "./cine-web/components/pages/sign-up/sign-up.component";
+
 import {MatCardModule} from "@angular/material/card";
 import {SlickCarouselModule} from "ngx-slick-carousel";
 
@@ -42,7 +38,7 @@ import {SlickCarouselModule} from "ngx-slick-carousel";
     FooterCineComponent,
     HeaderCineComponent,
     SignInComponent,
-    DetailFilmComponent
+    DetailFilmComponent,
     SignUpComponent,
     LandingCineWebComponent
   ],
