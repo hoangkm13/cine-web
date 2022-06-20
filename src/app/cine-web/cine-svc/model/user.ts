@@ -16,6 +16,8 @@ export interface User {
     id?: number;
     username?: string;
     fullName?: string;
+    firstName?: string;
+    lastName?: string;
     gender: string;
     birthOfDate?: string;
     mobile?: string;

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
-import {UserControllerService} from "../../../cine-svc";
+import {ApiResponseUserDTO, UserControllerService} from "../../../cine-svc";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-sign-up',
@@ -19,10 +20,12 @@ export class SignUpComponent implements OnInit {
       username: [],
       password: [],
       cf_password: [],
-      fullName: [],
+      firstName: [],
+      lastName: [],
       gender: [],
-      birthDay: [],
-      phone: [],
+      birthOfDate: [],
+      mobile: [],
+      email: []
     })
   }
 
@@ -30,6 +33,25 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp() {
-    console.log(this.formGroup.getRawValue())
+    let formValue = this.formGroup.getRawValue();
+    if(formValue.password === formValue.cf_password){
+      this.signUpController.register({
+        username: formValue.username,
+        password: formValue.password,
+        firstName: formValue.firstName,
+        lastName: formValue.lastName,
+        fullName: formValue.firstName + formValue.lastName,
+        gender: formValue.gender,
+        birthOfDate: formValue.birthOfDate,
+        email: formValue.email,
+        mobile: formValue.mobile
+      }).subscribe((response: ApiResponseUserDTO) => {
+        if(response != null){
+          console.log("Error" + response.errorCode + ", "+ response.message)
+        }
+      })
+    }else{
+      console.log("Loi")
+    }
   }
 }

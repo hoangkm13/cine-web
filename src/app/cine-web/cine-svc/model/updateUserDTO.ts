@@ -16,6 +16,8 @@ export interface UpdateUserDTO {
     fullName?: string;
     gender?: string;
     birthOfDate?: string;
+    firstName?: string;
+    lastName?: string;
     mobile?: string;
     email?: string;
 }

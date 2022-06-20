@@ -15,11 +15,11 @@ import { Sort } from './sort';
 
 
 export interface PageFilm { 
-    totalElements?: number;
     totalPages?: number;
-    number?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<Film>;
+    number?: number;
     sort?: Sort;
     first?: boolean;
     last?: boolean;

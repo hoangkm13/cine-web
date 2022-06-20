@@ -23,6 +23,7 @@ export interface Film {
     description?: string;
     maturity?: number;
     slug?: string;
+    year?: number;
     ratingStar?: number;
     genres?: Array<Genre>;
     createdAt?: string;

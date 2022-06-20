@@ -40,25 +40,6 @@
   font-weight: 500;
 }
 
-.star {
-  position: relative;
-  display: inline-block;
-  font-size: 2.5rem;
-  color: #d3d3d3;
-}
-
-.full {
-  color: #FFC107;
-}
-
-.half {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden !important;
-  color: #FFC107;
-  //display: none;
-}
-
 .mat-stroked-button {
   color: royalblue;
   height: 40px;

@@ -30,6 +30,7 @@ import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-
 
 import {MatCardModule} from "@angular/material/card";
 import {SlickCarouselModule} from "ngx-slick-carousel";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import {SlickCarouselModule} from "ngx-slick-carousel";
     MatCheckboxModule,
     MatCardModule,
     SlickCarouselModule,
+    MatTooltipModule,
     ApiModule.forRoot(() => {
       return new Configuration({
         basePath: `${GlobalConstants.baseUrl}`

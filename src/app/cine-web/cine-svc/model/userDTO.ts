@@ -19,6 +19,8 @@ export interface UserDTO {
     fullName: string;
     gender: string;
     birthOfDate: string;
+    firstName: string;
+    lastName: string;
     mobile: string;
     password: string;
     role?: string;

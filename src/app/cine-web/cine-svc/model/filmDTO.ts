@@ -24,6 +24,7 @@ export interface FilmDTO {
     description: string;
     maturity: number;
     slug: string;
+    year?: string;
     actors?: Array<Actor>;
     likes?: Array<LikeDTO>;
     dislikes?: Array<DislikeDTO>;

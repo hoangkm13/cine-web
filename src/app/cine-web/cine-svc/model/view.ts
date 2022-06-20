@@ -9,14 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { User } from './user';
-import { Film } from './film';
 
 
 export interface View { 
     id?: number;
-    film?: Film;
-    user?: User;
     createdAt?: string;
 }
 

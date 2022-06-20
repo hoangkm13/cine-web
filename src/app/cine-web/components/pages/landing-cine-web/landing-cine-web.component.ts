@@ -1,4 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {
+  ApiResponseListCategorizedFilmsDTO,
+  FilmControllerService,
+  FilmDTO, Genre
+} from "../../../cine-svc";
+
+export interface SLIDE_DATA {
+  genre: string;
+  filmList: Array<FilmDTO>
+}
 
 @Component({
   selector: 'app-landing-cine-web',
@@ -7,25 +17,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingCineWebComponent implements OnInit {
 
-  constructor() { }
+  beforePath = "././assets/images/films/";
+  afterPath = "/small.jpg";
 
-  ngOnInit(): void {
+  currentStar: number = 3
+
+  slides: SLIDE_DATA[] = [];
+
+  constructor(private filmController: FilmControllerService) {
+
   }
 
-  title = 'Ngx-Slick-Carousel-In-Angular-Material-Card-with-Custom-Arrows';
-  slides = [
-    {img: 'https://material.angular.io/assets/img/examples/shiba2.jpg'},
-    {img: 'https://material.angular.io/assets/img/examples/shiba2.jpg'},
-    {img: 'https://material.angular.io/assets/img/examples/shiba2.jpg'},
-    {img: 'https://material.angular.io/assets/img/examples/shiba2.jpg'},
-  ];
+  ngOnInit(): void {
+    this.filmController.getBrowseData(10).subscribe((response: ApiResponseListCategorizedFilmsDTO) => {
+      response.result?.map((ele) => {
+        this.slides.push(<SLIDE_DATA>{genre: ele.genre?.name, filmList: ele.films})
+      })
+    })
+    console.log(this.slides)
+  }
+
   slideConfig = {
     slidesToShow: 1,
     infinite: true,
     variableWidth: true,
     outerEdgeLimit: true,
-    nextArrow: '<div style=\'position: absolute; top: 35%; right: 5px; cursor: pointer;\' class=\'next-slide\'><i class="fa fa-angle-double-right"></i></div>',
-    prevArrow: '<div style=\'position: absolute; top: 35%; left: 5px; z-index: 1; cursor: pointer;\' class=\'next-slide\'><i class="fa fa-angle-double-left"></i></div>'
+    arrows: true,
   };
 
+  setStarRating(star: any): number{
+    return Number(star);
+  }
 }
