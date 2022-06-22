@@ -11,7 +11,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {SignInComponent} from "./cine-web/components/pages/sign-in/sign-in.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { SignUpComponent } from './cine-web/components/pages/sign-up/sign-up.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -24,8 +24,11 @@ import { FooterCineComponent } from './cine-web/components/shared/footer-cine/fo
 import { HeaderCineComponent } from './cine-web/components/shared/header-cine/header-cine.component';
 import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {_providers} from "./provider";
-import {ApiHttpInterceptor, apiHttpInterceptorProvider} from "./cine-web/components/shared/api-http-interceptor";
+import {ApiHttpInterceptor} from "./cine-web/components/shared/api-http-interceptor";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { UserProfileComponent } from './cine-web/components/pages/user-profile/user-profile.component';
+import {MatDialogModule} from "@angular/material/dialog";
+
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import {ApiHttpInterceptor, apiHttpInterceptorProvider} from "./cine-web/compone
     HeaderCineComponent,
     SignInComponent,
     SignUpComponent,
-    DetailFilmComponent
+    DetailFilmComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +62,10 @@ import {ApiHttpInterceptor, apiHttpInterceptorProvider} from "./cine-web/compone
     }),
     MatExpansionModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatDialogModule
   ],
   exports: [
     FooterCineComponent,

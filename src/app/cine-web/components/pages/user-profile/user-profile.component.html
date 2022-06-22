@@ -1,3 +1,189 @@
-<div>
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="30px">
+  <div mat-dialog-content class="dialog-profile" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="column" style="padding-right: 24px" fxLayoutAlign="space-around center" fxFlex="25" fxLayoutGap="24px">
+      <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+        <img src="assets/images/users/1.png" class="image-profile" height="150" width="150" alt="">
+        <span class="user-name">
+        NghiaNN
+      </span>
+        <span>
+        nghiann.260701@gmail.com
+      </span>
+      </div>
+
+      <div>
+        <button mat-stroked-button color="warn">
+          Sign out
+        </button>
+      </div>
+
+    </div>
+    <div fxLayout="row"
+         fxLayoutAlign="space-between center" fxFlex="40"
+         class="middle-content"
+    >
+      <div class="vertical-line"></div>
+      <div fxLayout="column"
+           class="user-info"
+           fxLayoutAlign="center start"
+           style="padding: 0 24px"
+           fxFlex="99"
+           [formGroup]="userProfile"
+      >
+        <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%; margin-bottom: 10px">
+          <h2>
+            Profile User
+          </h2>
+
+          <button *ngIf="!inProcessEdit; else cancel"
+                  mat-raised-button
+                  (click)="handleUser('editProfile')"
+                  [disabled]="inProcessChangePass"
+          >
+            Edit profile user
+          </button>
+
+          <ng-template #cancel>
+            <button mat-raised-button (click)="handleUser('cancel')">
+              Cancel
+            </button>
+          </ng-template>
+
+
+        </div>
+        <div fxLayout="row" class="user-name-last-first" fxLayoutAlign="start center" >
+          <div fxLayout="column" fxLayoutAlign="center start" fxFlex="47">
+            <span>
+              First Name
+            </span>
+
+            <mat-form-field appearance="outline">
+              <input type="text" matInput formControlName="firstName">
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="center start" fxFlex="47">
+            <span class="text-field">
+              Last Name
+            </span>
+
+            <mat-form-field appearance="outline">
+              <input type="text" matInput formControlName="lastName">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="center start" class="profile-width-max">
+        <span>
+          Date of Birth
+        </span>
+          <mat-form-field appearance="outline">
+            <input type="date" matInput formControlName="dateOfBirth">
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center start" class="profile-width-max" style="margin-bottom: 5px">
+        <span>
+          Gender
+        </span>
+          <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            style="height: 40px"
+            fxLayout="row" fxLayoutAlign="center center"
+            fxLayoutGap="48px"
+            formControlName="gender"
+          >
+            <mat-radio-button value="male">
+              Male
+            </mat-radio-button>
+            <mat-radio-button value="female">
+              Female
+            </mat-radio-button>
+            <mat-radio-button value="another">
+              Another
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center start" class="profile-width-max">
+        <span>
+          Mobile
+        </span>
+          <mat-form-field appearance="outline">
+            <input type="tel" matInput formControlName="mobile">
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div class="vertical-line"></div>
+    </div>
+
+    <div fxLayout="column" class="user-info" style="padding-left: 24px" fxLayoutAlign="space-between center" fxFlex>
+      <div fxLayout="column" fxLayoutAlign="center start" class="profile-width-max" [formGroup]="userProfile">
+        <span>
+          Email
+        </span>
+        <mat-form-field appearance="outline">
+          <input type="tel" matInput formControlName="email">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between start"
+           class="profile-width-max"
+           style="margin-bottom: 10px"
+      >
+        <h2>
+          Change password
+        </h2>
+
+        <button *ngIf="!inProcessChangePass; else cancelPassword"
+                mat-raised-button
+                (click)="handleUser('changePassword')"
+                [disabled]="inProcessEdit"
+        >
+          Change password
+        </button>
+
+        <ng-template #cancelPassword>
+          <button mat-raised-button (click)="handleUser('cancel')">
+            Cancel
+          </button>
+        </ng-template>
+
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center start"
+           class="profile-width-max"
+           [formGroup]="passwordForm"
+      >
+        <span>
+          New password
+        </span>
+        <mat-form-field appearance="outline">
+          <input type="password" matInput formControlName="newPassword">
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center start"
+           class="profile-width-max"
+           [formGroup]="passwordForm"
+      >
+        <span>
+          Confirm new password
+        </span>
+        <mat-form-field appearance="outline">
+          <input type="password" matInput formControlName="confirmNewPassword">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="30px">
+    <button mat-raised-button color="accent"
+            [disabled]="!inProcessEdit && !inProcessChangePass"
+
+    >
+      Save
+    </button>
+    <button mat-raised-button mat-dialog-close>
+      Exit
+    </button>
+  </div>
 
 </div>

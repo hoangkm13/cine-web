@@ -1,11 +1,20 @@
 <div>
-  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" style="margin: 10px 36px">
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" style="margin: 10px 36px 0">
     <div>
       <img src="../../../../../assets/images/logo.a27cfc72.svg" height="75%" width="75%" alt="Cine">
     </div>
 
-    <button mat-raised-button color="primary">
+    <button *ngIf="!token" mat-raised-button color="primary">
       Sign In
     </button>
+
+    <div *ngIf="token">
+      <mat-icon (click)="openUserProfile()" class="icon-profile" color="primary">
+        account_circle
+      </mat-icon >
+    </div>
+
   </div>
+
 </div>
+

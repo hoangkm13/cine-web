@@ -20,7 +20,7 @@ export class DetailFilmComponent implements OnInit {
   starRating: number = 0
 
   length: number | undefined = 0
-  pageSize: number = 10
+  pageSize: number = 5
   pageIndex: number = 0
 
   avatarUser: string = ``
@@ -73,6 +73,7 @@ export class DetailFilmComponent implements OnInit {
         year: this.data.year,
         slug: this.data.slug,
         genres: this.data.genres,
+        actors: this.data.actors,
         director: this.data.director.name,
         ratingStar: this.data.ratingStar
       })
@@ -105,11 +106,11 @@ export class DetailFilmComponent implements OnInit {
   getCommentData() {
     this.filmService.getCommentPagination(
       42,
-      this.pageIndex,
+      this.pageIndex + 1,
       this.pageSize,
       'createdAt',
       'DSC').subscribe(result => {
-      this.formGroup.controls["comments"].setValue(result.result?.content)
+      this.formGroup.controls["comments"].setValue(result.result?.commentDTOList)
       this.length = result.result?.totalElements
     })
   }

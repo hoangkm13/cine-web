@@ -81,10 +81,11 @@
           <div fxLayout="column" class="text-description">
             <h1 style="color: white">Actor</h1>
             <div fxLayout="row" fxLayoutGap="52px" style="padding: 10px 20px" >
-              <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="15px" *ngFor="let actor of actor">
+              <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="15px"
+                   *ngFor="let actor of this.formGroup.controls['actors'].value">
                 <img src="assets/images/users/5.png" height="120" width="120" style="border-radius: 50%" alt="">
                 <span style="color: white">
-                {{actor}}
+                {{actor.name}}
               </span>
               </div>
             </div>
@@ -141,7 +142,7 @@
           <mat-paginator
             [length]="length"
             [pageSize]="pageSize"
-            [pageSizeOptions]="[1, 2, 5]"
+            [pageSizeOptions]="[5, 10, 15]"
             [showFirstLastButtons]="true"
             (page)="onPagination($event)"
             aria-label="Select page">
