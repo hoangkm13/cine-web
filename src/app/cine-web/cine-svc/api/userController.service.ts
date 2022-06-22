@@ -25,6 +25,8 @@ import { ApiResponseUserDTO } from '../model/apiResponseUserDTO';
 // @ts-ignore
 import { LoginRequestDTO } from '../model/loginRequestDTO';
 // @ts-ignore
+import { ResetPasswordDTO } from '../model/resetPasswordDTO';
+// @ts-ignore
 import { UpdateUserDTO } from '../model/updateUserDTO';
 // @ts-ignore
 import { UserDTO } from '../model/userDTO';
@@ -288,6 +290,83 @@ export class UserControllerService {
 
         return this.httpClient.post<ApiResponseUserDTO>(`${this.configuration.basePath}/api/auth/register`,
             userDTO,
+            {
+                context: localVarHttpContext,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param userId 
+     * @param resetPasswordDTO 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public resetPassword(userId: number, resetPasswordDTO: ResetPasswordDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponseUserDTO>;
+    public resetPassword(userId: number, resetPasswordDTO: ResetPasswordDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponseUserDTO>>;
+    public resetPassword(userId: number, resetPasswordDTO: ResetPasswordDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponseUserDTO>>;
+    public resetPassword(userId: number, resetPasswordDTO: ResetPasswordDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling resetPassword.');
+        }
+        if (resetPasswordDTO === null || resetPasswordDTO === undefined) {
+            throw new Error('Required parameter resetPasswordDTO was null or undefined when calling resetPassword.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (bearer-jwt) required
+        localVarCredential = this.configuration.lookupCredential('bearer-jwt');
+        if (localVarCredential) {
+            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        return this.httpClient.post<ApiResponseUserDTO>(`${this.configuration.basePath}/api/auth/changePassword/${encodeURIComponent(String(userId))}`,
+            resetPasswordDTO,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

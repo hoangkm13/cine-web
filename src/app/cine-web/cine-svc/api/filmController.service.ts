@@ -23,6 +23,8 @@ import { ApiResponseComment } from '../model/apiResponseComment';
 // @ts-ignore
 import { ApiResponseCommentDTO } from '../model/apiResponseCommentDTO';
 // @ts-ignore
+import { ApiResponseCommentPaginationResponse } from '../model/apiResponseCommentPaginationResponse';
+// @ts-ignore
 import { ApiResponseDislike } from '../model/apiResponseDislike';
 // @ts-ignore
 import { ApiResponseDislikeDTO } from '../model/apiResponseDislikeDTO';
@@ -34,8 +36,6 @@ import { ApiResponseLike } from '../model/apiResponseLike';
 import { ApiResponseLikeDTO } from '../model/apiResponseLikeDTO';
 // @ts-ignore
 import { ApiResponseListCategorizedFilmsDTO } from '../model/apiResponseListCategorizedFilmsDTO';
-// @ts-ignore
-import { ApiResponsePageComment } from '../model/apiResponsePageComment';
 // @ts-ignore
 import { ApiResponsePageFilm } from '../model/apiResponsePageFilm';
 // @ts-ignore
@@ -590,9 +590,9 @@ export class FilmControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCommentPagination(filmId: number, page: number, size: number, sortBy: string, orderBy: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePageComment>;
-    public getCommentPagination(filmId: number, page: number, size: number, sortBy: string, orderBy: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePageComment>>;
-    public getCommentPagination(filmId: number, page: number, size: number, sortBy: string, orderBy: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePageComment>>;
+    public getCommentPagination(filmId: number, page: number, size: number, sortBy: string, orderBy: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponseCommentPaginationResponse>;
+    public getCommentPagination(filmId: number, page: number, size: number, sortBy: string, orderBy: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponseCommentPaginationResponse>>;
+    public getCommentPagination(filmId: number, page: number, size: number, sortBy: string, orderBy: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponseCommentPaginationResponse>>;
     public getCommentPagination(filmId: number, page: number, size: number, sortBy: string, orderBy: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (filmId === null || filmId === undefined) {
             throw new Error('Required parameter filmId was null or undefined when calling getCommentPagination.');
@@ -666,7 +666,7 @@ export class FilmControllerService {
             }
         }
 
-        return this.httpClient.get<ApiResponsePageComment>(`${this.configuration.basePath}/api/films/comment/pagination/${encodeURIComponent(String(filmId))}`,
+        return this.httpClient.get<ApiResponseCommentPaginationResponse>(`${this.configuration.basePath}/api/films/comment/pagination/${encodeURIComponent(String(filmId))}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,

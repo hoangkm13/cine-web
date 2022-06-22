@@ -10,9 +10,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {SignInComponent} from "./cine-web/components/pages/sign-in/sign-in.component";
+import {SignInComponent} from "./cine-web/components/auth/sign-in/sign-in.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import {SignUpComponent} from './cine-web/components/pages/sign-up/sign-up.component';
+import {SignUpComponent} from './cine-web/components/auth/sign-up/sign-up.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
@@ -31,6 +31,9 @@ import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-
 import {MatCardModule} from "@angular/material/card";
 import {SlickCarouselModule} from "ngx-slick-carousel";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { FilmsByGenreComponent } from './cine-web/components/pages/films-by-genre/films-by-genre.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     SignInComponent,
     DetailFilmComponent,
     SignUpComponent,
-    LandingCineWebComponent
+    LandingCineWebComponent,
+    FilmsByGenreComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatCardModule,
     SlickCarouselModule,
     MatTooltipModule,
+    MatPaginatorModule,
+    NgxPaginationModule,
     ApiModule.forRoot(() => {
       return new Configuration({
         basePath: `${GlobalConstants.baseUrl}`

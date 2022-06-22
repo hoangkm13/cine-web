@@ -19,12 +19,12 @@ export interface PageFilm {
     totalElements?: number;
     size?: number;
     content?: Array<Film>;
-    number?: number;
     sort?: Sort;
     first?: boolean;
     last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
+    number?: number;
     empty?: boolean;
 }
 

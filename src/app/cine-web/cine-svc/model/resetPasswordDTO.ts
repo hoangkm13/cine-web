@@ -11,13 +11,7 @@
  */
 
 
-export interface CommentDTO { 
-    id?: number;
-    userId?: number;
-    username?: string;
-    userAvatar?: string;
-    filmId?: number;
-    commentText: string;
-    createdAt?: string;
+export interface ResetPasswordDTO { 
+    password: string;
 }
 

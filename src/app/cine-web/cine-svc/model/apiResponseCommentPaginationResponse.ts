@@ -9,15 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { CommentPaginationResponse } from './commentPaginationResponse';
 
 
-export interface CommentDTO { 
-    id?: number;
-    userId?: number;
-    username?: string;
-    userAvatar?: string;
-    filmId?: number;
-    commentText: string;
-    createdAt?: string;
+export interface ApiResponseCommentPaginationResponse { 
+    result?: CommentPaginationResponse;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

@@ -16,13 +16,13 @@ import { FavoriteDTO } from './favoriteDTO';
 export interface UserDTO { 
     id?: number;
     username: string;
-    fullName: string;
     gender: string;
     birthOfDate: string;
     firstName: string;
     lastName: string;
     mobile: string;
     password: string;
+    avatar?: string;
     role?: string;
     email: string;
     views?: Array<ViewDTO>;

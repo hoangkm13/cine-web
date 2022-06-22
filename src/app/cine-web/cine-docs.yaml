@@ -161,6 +161,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseLoginResponseDTO'
+  /api/auth/changePassword/{userId}:
+    post:
+      tags:
+      - user-controller
+      operationId: resetPassword
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseUserDTO'
   /api/genres:
     get:
       tags:
@@ -351,7 +376,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponsePageComment'
+                $ref: '#/components/schemas/ApiResponseCommentPaginationResponse'
   /api/films/browse:
     get:
       tags:
@@ -534,7 +559,6 @@ components:
       - birthOfDate
       - email
       - firstName
-      - fullName
       - gender
       - lastName
       - mobile
@@ -546,8 +570,6 @@ components:
           type: integer
           format: int64
         username:
-          type: string
-        fullName:
           type: string
         gender:
           type: string
@@ -561,6 +583,8 @@ components:
           pattern: "^0\\d{9}$"
           type: string
         password:
+          type: string
+        avatar:
           type: string
         role:
           type: string
@@ -673,6 +697,8 @@ components:
           format: int64
         username:
           type: string
+        userAvatar:
+          type: string
         filmId:
           type: integer
           format: int64
@@ -732,6 +758,13 @@ components:
       type: object
       properties:
         token:
+          type: string
+    ResetPasswordDTO:
+      required:
+      - password
+      type: object
+      properties:
+        password:
           type: string
     ApiResponseListGenre:
       type: object
@@ -902,9 +935,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Film'
-        number:
-          type: integer
-          format: int32
         sort:
           $ref: '#/components/schemas/Sort'
         first:
@@ -916,6 +946,9 @@ components:
           format: int32
         pageable:
           $ref: '#/components/schemas/PageableObject'
+        number:
+          type: integer
+          format: int32
         empty:
           type: boolean
     PageableObject:
@@ -955,11 +988,11 @@ components:
           format: int64
         username:
           type: string
-        fullName:
-          type: string
         firstName:
           type: string
         lastName:
+          type: string
+        avatar:
           type: string
         gender:
           type: string
@@ -1055,11 +1088,11 @@ components:
         createdAt:
           type: string
           format: date-time
-    ApiResponsePageComment:
+    ApiResponseCommentPaginationResponse:
       type: object
       properties:
         result:
-          $ref: '#/components/schemas/PageComment'
+          $ref: '#/components/schemas/CommentPaginationResponse'
         errorCode:
           type: string
         message:
@@ -1067,38 +1100,16 @@ components:
         responseCode:
           type: integer
           format: int32
-    PageComment:
+    CommentPaginationResponse:
       type: object
       properties:
-        totalPages:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int32
-        content:
+        commentDTOList:
           type: array
           items:
-            $ref: '#/components/schemas/Comment'
-        number:
+            $ref: '#/components/schemas/CommentDTO'
+        totalElements:
           type: integer
           format: int32
-        sort:
-          $ref: '#/components/schemas/Sort'
-        first:
-          type: boolean
-        last:
-          type: boolean
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        empty:
-          type: boolean
     ApiResponseListCategorizedFilmsDTO:
       type: object
       properties:
