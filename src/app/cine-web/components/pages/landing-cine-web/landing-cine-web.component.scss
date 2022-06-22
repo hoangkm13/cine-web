@@ -1,0 +1,108 @@
+
+.landing-title {
+  font-size: 50px;
+  line-height: normal;
+  font-weight: 550;
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 45%);
+  margin: 0;
+}
+
+.landing-content {
+  font-size: 22px;
+  line-height: normal;
+  font-weight: lighter;
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 45%);
+  text-align: justify;
+}
+
+.play-button {
+  box-shadow: 0 0.6vw 1vw -0.4vw rgb(0 0 0 / 35%);
+  background-color: #e6e6e6;
+  color: #000;
+  border-width: 0;
+  padding: 4px 40px;
+  border-radius: 5px;
+  max-width: 130px;
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.play-button:hover{
+  background-color: #ff1e1e;
+  color: white;
+}
+
+.favourite-btn{
+  z-index: 2;
+  position: absolute;
+  top: 18px;
+  right: 0;
+}
+
+/* Slide */
+.slide-list {
+  width: 1288px;
+  margin: -50px 38px 38px;
+}
+
+mat-card-actions {
+  padding: 0;
+}
+
+.genreName {
+  font-size: 24px;
+  color: #e5e5e5;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Show button when hover */
+::ng-deep .slick-slider:hover .slick-prev,
+::ng-deep .slick-slider:hover .slick-next {
+  display: inline-block !important;
+}
+
+::ng-deep .slick-next {
+  right: 2px;
+}
+
+::ng-deep .slick-prev, ::ng-deep .slick-next {
+  z-index: 1;
+  display: none !important;
+
+  &:before {
+    font-size: 50px !important;
+  }
+}
+
+/* Star */
+.star {
+  font-size: 1.5rem;
+}
+
+.short-description{
+  overflow: hidden;
+  max-height: 100%;
+  opacity: 0;
+  position: absolute;
+  bottom: 68px;
+  right: 0px;
+  padding: 10px;
+  background-color: #0000008f;
+  transition: .3s;
+  word-break: break-word;
+  p{
+    margin: 0 !important;
+    font-weight: lighter;
+  }
+}
+
+mat-card:hover .short-description{
+  opacity: 0.8;
+}
+
+
+
+
