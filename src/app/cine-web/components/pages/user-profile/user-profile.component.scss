@@ -1,0 +1,42 @@
+.vertical-line {
+  border-left: 1px solid #CECDCDFF;
+  height: 400px;
+}
+
+.dialog-profile {
+  overflow-y: hidden;
+  color: white;
+}
+
+.image-profile {
+  border-radius: 50%;
+}
+
+.user-info span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+mat-form-field {
+  width: 100% !important;
+}
+
+.user-name-last-first mat-form-field {
+  width: 80% !important;
+}
+
+.profile-width-max {
+  width: 100% !important;
+}
+
+user-name-last-first {
+  width: 100%;
+}
+
+.user-info {
+  min-width: 365px !important;
+}
+
+.middle-content {
+  min-width: 394px !important;
+}
