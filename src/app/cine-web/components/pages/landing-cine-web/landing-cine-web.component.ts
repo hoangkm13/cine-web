@@ -38,9 +38,6 @@ export class LandingCineWebComponent implements OnInit {
         this.slides.push(<SLIDE_DATA>{genre: ele.genre?.name, filmList: ele.films})
       })
     })
-    this.slides.map((ele) => {
-
-    })
   }
 
   goToFilmByGenre(genreName: string){
@@ -48,7 +45,7 @@ export class LandingCineWebComponent implements OnInit {
   }
 
   goToFilmDetail(id: any){
-    this.router.navigate(['/film', id, "/detail"]).then();
+    this.router.navigate(['/film', id , "detail"]).then();
   }
 
   slideConfig = {
