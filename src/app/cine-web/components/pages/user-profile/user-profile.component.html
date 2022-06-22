@@ -2,13 +2,13 @@
   <div mat-dialog-content class="dialog-profile" fxLayout="row" fxLayoutAlign="space-between center">
     <div fxLayout="column" style="padding-right: 24px" fxLayoutAlign="space-around center" fxFlex="25" fxLayoutGap="24px">
       <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
-        <img src="assets/images/users/1.png" class="image-profile" height="150" width="150" alt="">
+        <img [src]="avatarUrl" class="image-profile" height="150" width="150" alt="">
         <span class="user-name">
-        NghiaNN
-      </span>
+          {{this.userProfile.controls['username'].value}}
+        </span>
         <span>
-        nghiann.260701@gmail.com
-      </span>
+          {{this.userProfile.controls['email'].value}}
+        </span>
       </div>
 
       <div>
@@ -92,14 +92,8 @@
             fxLayoutGap="48px"
             formControlName="gender"
           >
-            <mat-radio-button value="male">
-              Male
-            </mat-radio-button>
-            <mat-radio-button value="female">
-              Female
-            </mat-radio-button>
-            <mat-radio-button value="another">
-              Another
+            <mat-radio-button *ngFor="let gender of genderChoice" [value]="gender.value">
+              {{gender.viewValue}}
             </mat-radio-button>
           </mat-radio-group>
         </div>
@@ -175,9 +169,10 @@
   </div>
 
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="30px">
-    <button mat-raised-button color="accent"
-            [disabled]="!inProcessEdit && !inProcessChangePass"
-
+    <button
+      mat-raised-button color="accent"
+      [disabled]="!inProcessEdit && !inProcessChangePass"
+      (click)="editUser()"
     >
       Save
     </button>
