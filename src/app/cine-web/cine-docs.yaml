@@ -351,7 +351,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponsePageComment'
+                $ref: '#/components/schemas/ApiResponseListCommentDTO'
   /api/films/browse:
     get:
       tags:
@@ -534,7 +534,6 @@ components:
       - birthOfDate
       - email
       - firstName
-      - fullName
       - gender
       - lastName
       - mobile
@@ -546,8 +545,6 @@ components:
           type: integer
           format: int64
         username:
-          type: string
-        fullName:
           type: string
         gender:
           type: string
@@ -561,6 +558,8 @@ components:
           pattern: "^0\\d{9}$"
           type: string
         password:
+          type: string
+        avatar:
           type: string
         role:
           type: string
@@ -672,6 +671,8 @@ components:
           type: integer
           format: int64
         username:
+          type: string
+        userAvatar:
           type: string
         filmId:
           type: integer
@@ -932,9 +933,9 @@ components:
         pageSize:
           type: integer
           format: int32
-        paged:
-          type: boolean
         unpaged:
+          type: boolean
+        paged:
           type: boolean
     Sort:
       type: object
@@ -955,11 +956,11 @@ components:
           format: int64
         username:
           type: string
-        fullName:
-          type: string
         firstName:
           type: string
         lastName:
+          type: string
+        avatar:
           type: string
         gender:
           type: string
@@ -1055,11 +1056,13 @@ components:
         createdAt:
           type: string
           format: date-time
-    ApiResponsePageComment:
+    ApiResponseListCommentDTO:
       type: object
       properties:
         result:
-          $ref: '#/components/schemas/PageComment'
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentDTO'
         errorCode:
           type: string
         message:
@@ -1067,38 +1070,6 @@ components:
         responseCode:
           type: integer
           format: int32
-    PageComment:
-      type: object
-      properties:
-        totalPages:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Comment'
-        number:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/Sort'
-        first:
-          type: boolean
-        last:
-          type: boolean
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        empty:
-          type: boolean
     ApiResponseListCategorizedFilmsDTO:
       type: object
       properties:

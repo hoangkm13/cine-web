@@ -31,6 +31,9 @@ import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-
 import {MatCardModule} from "@angular/material/card";
 import {SlickCarouselModule} from "ngx-slick-carousel";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { FilmsByGenreComponent } from './cine-web/components/pages/films-by-genre/films-by-genre.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     SignInComponent,
     DetailFilmComponent,
     SignUpComponent,
-    LandingCineWebComponent
+    LandingCineWebComponent,
+    FilmsByGenreComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatCardModule,
     SlickCarouselModule,
     MatTooltipModule,
+    MatPaginatorModule,
+    NgxPaginationModule,
     ApiModule.forRoot(() => {
       return new Configuration({
         basePath: `${GlobalConstants.baseUrl}`

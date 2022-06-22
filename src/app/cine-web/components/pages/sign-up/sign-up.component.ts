@@ -40,7 +40,6 @@ export class SignUpComponent implements OnInit {
         password: formValue.password,
         firstName: formValue.firstName,
         lastName: formValue.lastName,
-        fullName: formValue.firstName + formValue.lastName,
         gender: formValue.gender,
         birthOfDate: formValue.birthOfDate,
         email: formValue.email,

@@ -22,9 +22,9 @@ model/apiResponseFilmDTO.ts
 model/apiResponseLike.ts
 model/apiResponseLikeDTO.ts
 model/apiResponseListCategorizedFilmsDTO.ts
+model/apiResponseListCommentDTO.ts
 model/apiResponseListGenre.ts
 model/apiResponseLoginResponseDTO.ts
-model/apiResponsePageComment.ts
 model/apiResponsePageFilm.ts
 model/apiResponseString.ts
 model/apiResponseUserDTO.ts
@@ -45,7 +45,6 @@ model/likeDTO.ts
 model/loginRequestDTO.ts
 model/loginResponseDTO.ts
 model/models.ts
-model/pageComment.ts
 model/pageFilm.ts
 model/pageableObject.ts
 model/sort.ts

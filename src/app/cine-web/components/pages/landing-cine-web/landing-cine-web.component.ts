@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {
   ApiResponseListCategorizedFilmsDTO,
   FilmControllerService,
-  FilmDTO, Genre
+  FilmDTO
 } from "../../../cine-svc";
+import {Router} from "@angular/router";
 
 export interface SLIDE_DATA {
   genre: string;
@@ -20,21 +21,26 @@ export class LandingCineWebComponent implements OnInit {
   beforePath = "././assets/images/films/";
   afterPath = "/small.jpg";
 
-  currentStar: number = 3
-
   slides: SLIDE_DATA[] = [];
 
-  constructor(private filmController: FilmControllerService) {
+  constructor(private filmController: FilmControllerService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.filmController.getBrowseData(10).subscribe((response: ApiResponseListCategorizedFilmsDTO) => {
+    this.getFilmData().then();
+  }
+
+  async getFilmData(){
+    await this.filmController.getBrowseData(10).subscribe((response: ApiResponseListCategorizedFilmsDTO) => {
       response.result?.map((ele) => {
         this.slides.push(<SLIDE_DATA>{genre: ele.genre?.name, filmList: ele.films})
       })
     })
-    console.log(this.slides)
+  }
+
+  goToFilmByGenre(genreName: string){
+    this.router.navigate(['/films', genreName]).then();
   }
 
   slideConfig = {

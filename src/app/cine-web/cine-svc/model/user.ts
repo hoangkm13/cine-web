@@ -15,9 +15,9 @@ import { Favorite } from './favorite';
 export interface User { 
     id?: number;
     username?: string;
-    fullName?: string;
     firstName?: string;
     lastName?: string;
+    avatar?: string;
     gender: string;
     birthOfDate?: string;
     mobile?: string;

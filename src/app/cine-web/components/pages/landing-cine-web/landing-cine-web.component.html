@@ -1,7 +1,7 @@
 <div fxLayout="column" style="background: #000000;">
   <div class="background-cine-landing" fxLayout="column" style="height: 700px">
     <app-header-cine fxFlex></app-header-cine>
-    <div fxLayout="row" fxFlex="60">
+    <div fxLayout="row" fxFlex="65">
       <div class="text-white" style="margin-left: 40px" fxLayout="column" fxLayoutGap="20px" fxFlex="50">
         <h2 class="landing-title">Watch Joker Now</h2>
         <p class="landing-content">Forever alone in a crowd, failed comedian Arthur Fleck seeks connection as he walks
@@ -17,7 +17,7 @@
   </div>
   <div class="slide-list text-white" fxLayout="column" fxLayoutGap="30px">
     <div fxLayout="column" *ngFor="let slide of slides">
-      <p><a href="/films/{{slide.genre}}" class="text-white" style="text-decoration: none" >{{slide.genre}}</a></p>
+      <p class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</p>
       <section>
         <ngx-slick-carousel class="carousel" [config]="slideConfig">
           <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
@@ -30,7 +30,7 @@
             <img height="140px" mat-card-image src="{{beforePath + ele.slug + afterPath }}" alt="Photo of a Shiba Inu">
             <div class="short-description">
               <p style="font-size: 16px">{{ ele.title }}</p>
-              <p style="font-size: 14px">{{ ele.description }}</p>
+              <p style="font-size: 14px" >{{ ele.description }}</p>
             </div>
             <mat-card-actions>
               <p>{{ ele.title }}</p>
