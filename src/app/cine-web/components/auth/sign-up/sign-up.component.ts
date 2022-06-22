@@ -14,8 +14,8 @@ export class SignUpComponent implements OnInit {
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private route: Router,
-              private signUpController: UserControllerService) {
+              private router: Router,
+              private userController: UserControllerService) {
     this.formGroup = this.formBuilder.group({
       username: [],
       password: [],
@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit {
   signUp() {
     let formValue = this.formGroup.getRawValue();
     if(formValue.password === formValue.cf_password){
-      this.signUpController.register({
+      this.userController.register({
         username: formValue.username,
         password: formValue.password,
         firstName: formValue.firstName,
@@ -45,8 +45,8 @@ export class SignUpComponent implements OnInit {
         email: formValue.email,
         mobile: formValue.mobile
       }).subscribe((response: ApiResponseUserDTO) => {
-        if(response != null){
-          console.log("Error" + response.errorCode + ", "+ response.message)
+        if(response.errorCode != null){
+          this.router.navigate(["\sign-in"]).then()
         }
       })
     }else{

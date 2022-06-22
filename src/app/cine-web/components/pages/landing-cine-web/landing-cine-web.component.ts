@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  ApiResponseListCategorizedFilmsDTO,
+  ApiResponseListCategorizedFilmsDTO, ApiResponseLoginResponseDTO,
   FilmControllerService,
-  FilmDTO
+  FilmDTO, UserControllerService
 } from "../../../cine-svc";
 import {Router} from "@angular/router";
 
@@ -23,8 +23,9 @@ export class LandingCineWebComponent implements OnInit {
 
   slides: SLIDE_DATA[] = [];
 
-  constructor(private filmController: FilmControllerService, private router: Router) {
-
+  constructor(private filmController: FilmControllerService,
+              private router: Router,
+              ) {
   }
 
   ngOnInit(): void {
@@ -37,10 +38,17 @@ export class LandingCineWebComponent implements OnInit {
         this.slides.push(<SLIDE_DATA>{genre: ele.genre?.name, filmList: ele.films})
       })
     })
+    this.slides.map((ele) => {
+
+    })
   }
 
   goToFilmByGenre(genreName: string){
     this.router.navigate(['/films', genreName]).then();
+  }
+
+  goToFilmDetail(id: any){
+    this.router.navigate(['/film', id, "/detail"]).then();
   }
 
   slideConfig = {

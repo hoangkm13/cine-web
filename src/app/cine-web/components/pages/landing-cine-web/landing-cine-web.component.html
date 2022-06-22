@@ -20,7 +20,7 @@
       <p class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</p>
       <section>
         <ngx-slick-carousel class="carousel" [config]="slideConfig">
-          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
+          <mat-card (click)="goToFilmDetail(ele.id)" ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
             <div class="favourite-btn">
               <button mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
                 <mat-icon>add_to_photos</mat-icon>

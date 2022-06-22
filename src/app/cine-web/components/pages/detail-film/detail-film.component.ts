@@ -26,7 +26,6 @@ export class DetailFilmComponent implements OnInit {
       this.cookie.set(GlobalConstants.authToken, <string>result.result?.token, undefined, "/")
     })
     this.getData()
-
   }
 
   getData() {
