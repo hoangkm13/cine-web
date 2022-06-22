@@ -9,15 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Sort } from './sort';
+import { CommentPaginationResponse } from './commentPaginationResponse';
 
 
-export interface PageableObject { 
-    offset?: number;
-    sort?: Sort;
-    pageNumber?: number;
-    pageSize?: number;
-    paged?: boolean;
-    unpaged?: boolean;
+export interface ApiResponseCommentPaginationResponse { 
+    result?: CommentPaginationResponse;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

@@ -14,6 +14,7 @@ index.ts
 model/actor.ts
 model/apiResponseComment.ts
 model/apiResponseCommentDTO.ts
+model/apiResponseCommentPaginationResponse.ts
 model/apiResponseDislike.ts
 model/apiResponseDislikeDTO.ts
 model/apiResponseFavorite.ts
@@ -22,7 +23,6 @@ model/apiResponseFilmDTO.ts
 model/apiResponseLike.ts
 model/apiResponseLikeDTO.ts
 model/apiResponseListCategorizedFilmsDTO.ts
-model/apiResponseListCommentDTO.ts
 model/apiResponseListGenre.ts
 model/apiResponseLoginResponseDTO.ts
 model/apiResponsePageFilm.ts
@@ -32,6 +32,7 @@ model/apiResponseViewCountDTO.ts
 model/categorizedFilmsDTO.ts
 model/comment.ts
 model/commentDTO.ts
+model/commentPaginationResponse.ts
 model/director.ts
 model/dislike.ts
 model/dislikeDTO.ts
@@ -47,6 +48,7 @@ model/loginResponseDTO.ts
 model/models.ts
 model/pageFilm.ts
 model/pageableObject.ts
+model/resetPasswordDTO.ts
 model/sort.ts
 model/updateUserDTO.ts
 model/user.ts

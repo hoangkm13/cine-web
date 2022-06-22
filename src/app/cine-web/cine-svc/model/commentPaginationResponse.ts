@@ -9,22 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PageableObject } from './pageableObject';
-import { Film } from './film';
-import { Sort } from './sort';
+import { CommentDTO } from './commentDTO';
 
 
-export interface PageFilm { 
-    totalPages?: number;
+export interface CommentPaginationResponse { 
+    commentDTOList?: Array<CommentDTO>;
     totalElements?: number;
-    size?: number;
-    content?: Array<Film>;
-    sort?: Sort;
-    first?: boolean;
-    last?: boolean;
-    numberOfElements?: number;
-    pageable?: PageableObject;
-    number?: number;
-    empty?: boolean;
 }
 
