@@ -41,7 +41,7 @@ export class SignUpComponent implements OnInit {
         firstName: formValue.firstName,
         lastName: formValue.lastName,
         gender: formValue.gender,
-        birthOfDate: formValue.birthOfDate,
+        birthOfDate: moment(formValue.birthOfDate).toISOString(),
         email: formValue.email,
         mobile: formValue.mobile
       }).subscribe((response: ApiResponseUserDTO) => {
