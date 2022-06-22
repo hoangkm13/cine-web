@@ -7,14 +7,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-image: url("assets/images/misc/home-bg.jpg");
 }
 
+.white-text {
+  color: white !important;
+}
+
 .background-cine-landing {
   background-size: cover;
   background-image: url(assets/images/films/joker/spotlight.jpg);
 }
 
-/* Text color */
 .gray-text{
   color: gray !important;
+}
+
+.primary {
+  background-color: red;
+  color: #eae1e1;
 }
 
 .dialog-action-row{
@@ -69,6 +77,12 @@ section{
     }
   }
 }
+
+mat-dialog-container {
+  background-color: #06121E !important;
+  overflow: hidden !important;
+}
+
 
 
 

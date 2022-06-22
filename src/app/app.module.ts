@@ -11,7 +11,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {SignInComponent} from "./cine-web/components/auth/sign-in/sign-in.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {SignUpComponent} from './cine-web/components/auth/sign-up/sign-up.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -23,16 +23,18 @@ import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
 import {FooterCineComponent} from './cine-web/components/shared/footer-cine/footer-cine.component';
 import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
 import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {ApiHttpInterceptor} from "./cine-web/components/shared/api-http-interceptor";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { UserProfileComponent } from './cine-web/components/pages/user-profile/user-profile.component';
+import {MatDialogModule} from "@angular/material/dialog";
+
 import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-web/landing-cine-web.component';
 
 import {MatCardModule} from "@angular/material/card";
 import {SlickCarouselModule} from "ngx-slick-carousel";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { FilmsByGenreComponent } from './cine-web/components/pages/films-by-genre/films-by-genre.component';
-import {MatPaginatorModule} from "@angular/material/paginator";
 import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
@@ -42,8 +44,9 @@ import {NgxPaginationModule} from "ngx-pagination";
     FooterCineComponent,
     HeaderCineComponent,
     SignInComponent,
-    DetailFilmComponent,
     SignUpComponent,
+    DetailFilmComponent,
+    UserProfileComponent,
     LandingCineWebComponent,
     FilmsByGenreComponent
   ],
@@ -73,7 +76,10 @@ import {NgxPaginationModule} from "ngx-pagination";
     }),
     MatExpansionModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatDialogModule
   ],
   exports: [
     FooterCineComponent,

@@ -1,7 +1,5 @@
 
-
 .background-film-large {
-  background-image: url("../../../../../../src/assets/images/films/a-quiet-place/large.jpg");
   background-repeat: no-repeat;
 }
 
@@ -9,7 +7,7 @@
   background-image: url("../../../../../../src/assets/images/films/a-quiet-place/small.jpg");
 }
 
-.mat-raised-button {
+.button-watch.mat-raised-button {
   height: 48px !important;
 }
 
@@ -38,6 +36,24 @@
   line-height: 1.1;
   font-size: 16px;
   font-weight: 500;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 2.5rem;
+  color: #d3d3d3;
+}
+
+.full {
+  color: #FFC107;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden !important;
+  color: #FFC107;
 }
 
 .mat-stroked-button {
@@ -85,3 +101,19 @@
   font-size: 18px;
   font-weight: 500;
 }
+
+.avatar-user {
+  border-radius: 50%;
+}
+
+.comment-user {
+  background-color: rgba(10, 10, 10, 0.22);
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.57);
+}
+
+.mat-paginator{
+  background-color: rgba(10, 10, 10, 0.66);
+}
+
+
