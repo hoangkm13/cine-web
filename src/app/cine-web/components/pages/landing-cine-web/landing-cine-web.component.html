@@ -1,20 +1,56 @@
-<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-<div class="background-cine-landing" fxLayout="column">
-  <app-header-cine></app-header-cine>
-  <div fxLayout="row">
-    <div class="white-text" style="margin-left: 40px" fxLayout="column" fxFlex="50">
-      <h2 class="landing-title">Watch Joker Now</h2>
-      <p class="landing-content">Forever alone in a crowd, failed comedian Arthur Fleck seeks connection as he walks the
-        streets of Gotham City.
-        Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he projects in a futile
-        attempt to feel like he's part of the world around him.</p>
-      <div>
-        <button class="play-button" mat-raised-button>Play</button>
+<div fxLayout="column" style="background: #000000;">
+  <div class="background-cine-landing" fxLayout="column" style="height: 700px">
+    <app-header-cine fxFlex></app-header-cine>
+    <div fxLayout="row" fxFlex="60">
+      <div class="text-white" style="margin-left: 40px" fxLayout="column" fxLayoutGap="20px" fxFlex="50">
+        <h2 class="landing-title">Watch Joker Now</h2>
+        <p class="landing-content">Forever alone in a crowd, failed comedian Arthur Fleck seeks connection as he walks
+          the
+          streets of Gotham City.
+          Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he projects in a futile
+          attempt to feel like he's part of the world around him.</p>
+        <div>
+          <button class="play-button" mat-raised-button>Play</button>
+        </div>
       </div>
     </div>
   </div>
+  <div class="slide-list text-white" fxLayout="column" fxLayoutGap="30px">
+    <div fxLayout="column" *ngFor="let slide of slides">
+      <p><a href="/films/{{slide.genre}}" class="text-white" style="text-decoration: none" >{{slide.genre}}</a></p>
+      <section>
+        <ngx-slick-carousel class="carousel" [config]="slideConfig">
+          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
+            <div class="favourite-btn">
+              <button mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
+                <mat-icon>add_to_photos</mat-icon>
+                <!--                <mat-icon>indeterminate_check_box</mat-icon>-->
+              </button>
+            </div>
+            <img height="140px" mat-card-image src="{{beforePath + ele.slug + afterPath }}" alt="Photo of a Shiba Inu">
+            <div class="short-description">
+              <p style="font-size: 16px">{{ ele.title }}</p>
+              <p style="font-size: 14px">{{ ele.description }}</p>
+            </div>
+            <mat-card-actions>
+              <p>{{ ele.title }}</p>
+              <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&star;</span>&star;
+                </span>
+              </ng-template>
+
+              <ngb-rating [rate]="setStarRating(ele.ratingStar)" [readonly]="true" [starTemplate]="t" [max]="5"></ngb-rating>
+            </mat-card-actions>
+          </mat-card>
+        </ngx-slick-carousel>
+      </section>
+    </div>
+
+  </div>
   <app-footer-cine></app-footer-cine>
 </div>
+
 
 
 

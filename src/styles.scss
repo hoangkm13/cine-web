@@ -9,14 +9,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .background-cine-landing {
   background-size: cover;
-  background-attachment: fixed;
   background-image: url(assets/images/films/joker/spotlight.jpg);
 }
 
-.white-text {
-  color: white !important;
-}
-
+/* Text color */
 .gray-text{
   color: gray !important;
 }
@@ -29,6 +25,48 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
   button {
     padding: 4px;
+  }
+}
+
+/* Star Rating */
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 2.5rem;
+  color: #d3d3d3;
+}
+
+.full {
+  color: #FFC107;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden !important;
+  color: #FFC107;
+  //display: none;
+}
+
+/* Card Slider */
+section{
+  width: 100%;
+  .mat-card {
+    width: 250px;
+    margin: 2px;
+    background-color: #000000;
+    font-family: "Open Sans", sans-serif;
+    p {
+      font-size: 16px;
+    }
+  }
+}
+@media(max-width:575px){
+  section{
+    .mat-card{
+      margin: 10px;
+      width: 280px;
+    }
   }
 }
 

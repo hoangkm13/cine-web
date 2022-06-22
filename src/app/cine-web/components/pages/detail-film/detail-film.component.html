@@ -1,6 +1,98 @@
-<div fxLayout="column">
-  <div fxLayout="column" class="background-image-film">
+<div fxLayout="column" style="background: #06121E">
+  <div fxLayout="column" class="background-film-large" fxLayoutGap="200px">
     <app-header-cine></app-header-cine>
+
+    <div fxLayout="row" style="padding: 24px 64px" fxLayoutGap="64px">
+      <div fxLayout="column" fxLayoutGap="32px" >
+        <img src="../../../../../assets/images/films/a-quiet-place/small2.jpg" height="414.96" width="280" alt="">
+        <button mat-raised-button class="button-watch" color="primary" fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon>play_arrow</mat-icon>
+          <span class="text-button-watch">
+            Watch now
+          </span>
+        </button>
+      </div>
+      <div fxLayout="column" fxFlex fxLayoutGap="32px">
+        <div fxLayout="column" fxLayoutGap="25px">
+          <div fxLayoutGap="10px">
+            <span class="text-title-film">
+              A quiet place
+            </span>
+
+            <span class="text-title-film">
+              (
+                <a href="" class="text-title-film-year">
+                  2020
+                </a>
+              )
+            </span>
+          </div>
+
+          <div>
+            <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&star;</span>&star;
+            </span>
+            </ng-template>
+
+            <ngb-rating [(rate)]="currentRate" [readonly]="true" [starTemplate]="t"  [max]="5"></ngb-rating>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center" (click)="getData()">
+              <mat-icon>add</mat-icon>
+              <span class="text-button">
+                Add to Favourite
+              </span>
+            </button>
+
+            <div fxLayout="row" class="genres" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+              <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center">
+                <span class="text-button-genres">
+                  Documentations
+                </span>
+              </button>
+              <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center">
+                <span class="text-button-genres">
+                  Documentations
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="45px" >
+          <div fxLayout="column" fxLayoutGap="10px" class="text-description">
+            <span >National</span>
+            <span >Director</span>
+            <span >Maturity</span>
+          </div>
+          <div fxLayout="column" fxLayoutGap="10px" class="text-description-info">
+            <span >America</span>
+            <span >Nghia Nguyen</span>
+            <span>18+</span>
+          </div>
+        </div >
+        <div class="text-description">
+          <span style="line-height: 1.2">
+            Henry Lee Lucas was an American convicted serial killer whose crimes spanned from 1960 to 1983. He was convicted of murdering eleven people and condemned to death for the murder of Debra Jackson
+          </span>
+        </div>
+        <div fxLayout="column" class="text-description">
+          <h1 class="text-white">Actor</h1>
+          <div fxLayout="row" fxLayoutGap="52px" style="padding: 10px 20px" >
+            <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="15px" *ngFor="let actor of actor">
+              <img src="assets/images/users/5.png" height="120" width="120" style="border-radius: 50%" alt="">
+              <span class="text-white">
+                {{actor}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
   </div>
 
   <app-footer-cine></app-footer-cine>
