@@ -12,7 +12,12 @@
         <form style="width: 75%">
           <mat-form-field appearance="outline">
             <mat-label>Email address</mat-label>
-            <input style="color: white" type="text" matInput>
+            <input style="color: white"
+                   type="text"
+                   [formControl]="email"
+                   (keydown.enter)="onSignUp()"
+                   [value]="email.value"
+                   matInput>
           </mat-form-field>
         </form>
 
@@ -74,7 +79,11 @@
           <form style="width: 55%">
             <mat-form-field appearance="outline">
               <mat-label>Email address</mat-label>
-              <input style="color: white" type="text" matInput>
+              <input style="color: white" type="text"
+                     (keydown.enter)="onSignUp()"
+                     [formControl]="email"
+                     [value]="email.value"
+                     matInput>
             </mat-form-field>
           </form>
 

@@ -1,12 +1,14 @@
 <div fxLayout="column" style="background: #06121E">
-  <div fxLayout="column" [style.background-image]="'url(' + urlImage + ')'"  class="background-film-large" fxLayoutGap="200px">
+  <div fxLayout="column" [style.background-image]="'url(' + urlImage + ')'"
+       class="background-film-large"
+       fxLayoutGap="200px">
     <app-header-cine></app-header-cine>
 
     <div fxLayout="column" style="padding: 24px 64px" fxLayoutGap="30px">
       <div fxLayout="row" fxLayoutGap="64px">
         <div fxLayout="column" fxLayoutGap="32px" >
           <img src="../../../../../assets/images/films/a-quiet-place/small2.jpg" height="414.96" width="280" alt="">
-          <button mat-raised-button class="button-watch" color="primary" fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button class="button-watch" color="warn" fxLayout="row" fxLayoutAlign="center center">
             <mat-icon>play_arrow</mat-icon>
             <span class="text-button-watch">
               Watch now
@@ -101,7 +103,7 @@
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-            <img [src]="" height="20" width="20" class="avatar-user" alt="">
+            <img [src]="avatarUser" height="20" width="20" class="avatar-user" alt="">
             <span class="text-description">
               {{this.dataUser.username}}
             </span>
@@ -113,7 +115,7 @@
                 <input type="text" matInput formControlName="commentUser" (keyup.enter)="userComment()" >
               </mat-form-field>
             </form>
-            <button mat-raised-button color="primary" (click)="userComment()">
+            <button mat-raised-button color="warn" (click)="userComment()">
               Comment
             </button>
           </div>
@@ -127,7 +129,7 @@
             <div fxLayout="column" fxLayoutGap="10px">
               <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                  <img src="assets/images/users/1.png" height="20" width="20" class="avatar-user" alt="">
+                  <img [src]="avatarUserComment + comment.userAvatar" height="20" width="20" class="avatar-user" alt="">
                   <span class="text-description">{{comment.username}}</span>
                 </div>
                 <span>

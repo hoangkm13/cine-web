@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use "@angular/material" as mat;
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -18,11 +21,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .gray-text{
   color: gray !important;
-}
-
-.primary {
-  background-color: red;
-  color: #eae1e1;
 }
 
 .dialog-action-row{
@@ -69,6 +67,7 @@ section{
     }
   }
 }
+
 @media(max-width:575px){
   section{
     .mat-card{
@@ -82,6 +81,7 @@ mat-dialog-container {
   background-color: #06121E !important;
   overflow: hidden !important;
 }
+
 
 
 

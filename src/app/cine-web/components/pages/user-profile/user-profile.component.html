@@ -6,13 +6,18 @@
         <span class="user-name">
           {{this.userProfile.controls['username'].value}}
         </span>
-        <span>
-          {{this.userProfile.controls['email'].value}}
-        </span>
+        <div style="display: flex">
+          <span
+            style="word-break: break-word; text-align: center"
+          >
+            {{this.dataBackup.email}}
+          </span>
+        </div>
+
       </div>
 
       <div>
-        <button mat-stroked-button color="warn">
+        <button (click)="onSignOut()" mat-stroked-button color="warn">
           Sign out
         </button>
       </div>
@@ -102,7 +107,7 @@
           Mobile
         </span>
           <mat-form-field appearance="outline">
-            <input type="tel" matInput formControlName="mobile">
+            <input type="text" matInput formControlName="mobile" (keypress)="isNumber($event)" maxlength="10">
           </mat-form-field>
         </div>
 
@@ -116,8 +121,8 @@
         <span>
           Email
         </span>
-        <mat-form-field appearance="outline">
-          <input type="tel" matInput formControlName="email">
+        <mat-form-field appearance="outline" >
+          <input type="text" matInput formControlName="email">
         </mat-form-field>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between start"
@@ -146,6 +151,7 @@
       <div fxLayout="column" fxLayoutAlign="center start"
            class="profile-width-max"
            [formGroup]="passwordForm"
+           (keypress)="enterPassword($event)"
       >
         <span>
           New password
@@ -157,6 +163,7 @@
       <div fxLayout="column" fxLayoutAlign="center start"
            class="profile-width-max"
            [formGroup]="passwordForm"
+           (keypress)="enterPassword($event)"
       >
         <span>
           Confirm new password

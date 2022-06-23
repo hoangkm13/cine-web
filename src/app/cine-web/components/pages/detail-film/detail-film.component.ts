@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FavoriteControllerService, FilmControllerService, UserControllerService, UserDTO} from "../../../cine-svc";
 import {CookieService} from "ngx-cookie-service";
-import {GlobalConstants} from "../../shared/GlobalConstants";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import * as _ from "lodash";
 import {PageEvent} from "@angular/material/paginator";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-detail-film',
@@ -19,11 +19,15 @@ export class DetailFilmComponent implements OnInit {
   dataUser: any
   starRating: number = 0
 
+  idFilm: number = 1
+
   length: number | undefined = 0
   pageSize: number = 5
   pageIndex: number = 0
 
   avatarUser: string = ``
+
+  avatarUserComment: string = `assets/images/users/`
 
   actor: Array<string> = [
     "Ngoc Nghia", "Hoang Khuat", "Quoc Viet"
@@ -34,7 +38,8 @@ export class DetailFilmComponent implements OnInit {
     private authService: UserControllerService,
     private cookie: CookieService,
     private formBuilder: FormBuilder,
-    private favouriteService: FavoriteControllerService
+    private favouriteService: FavoriteControllerService,
+    private activeRouter: ActivatedRoute
   ) {
     this.formGroup = formBuilder.group({
       nameFilm: [""],
@@ -50,21 +55,18 @@ export class DetailFilmComponent implements OnInit {
       commentUser: [""]
     })
 
-    this.authService.login({username: "hoangkm13", password: "Hoangkm133131"}).subscribe(result => {
-      this.cookie.set(GlobalConstants.authToken, <string>result.result?.token, undefined, "/")
-    })
-
+    this.getFilmID()
     this.getCurrentUser()
     this.getData()
     this.getCommentData()
-
   }
 
   ngOnInit(): void {
+
   }
 
   getData() {
-    this.filmService.getFilmById(42).subscribe(result => {
+    this.filmService.getFilmById(this.idFilm).subscribe(result => {
       this.data = _.cloneDeep(result.result)
       this.formGroup.patchValue({
         nameFilm: this.data.title,
@@ -87,7 +89,7 @@ export class DetailFilmComponent implements OnInit {
     this.favouriteService.createFavorite(
       {
         userId: this.dataUser.id,
-        filmId: 42
+        filmId: this.idFilm
       }
     ).subscribe(result => {
       console.log(result)
@@ -105,7 +107,7 @@ export class DetailFilmComponent implements OnInit {
 
   getCommentData() {
     this.filmService.getCommentPagination(
-      42,
+      this.idFilm,
       this.pageIndex + 1,
       this.pageSize,
       'createdAt',
@@ -123,7 +125,7 @@ export class DetailFilmComponent implements OnInit {
 
     this.filmService.createCommentDTO({
       userId: this.dataUser.id,
-      filmId: 42,
+      filmId: this.idFilm,
       commentText: this.formGroup.controls["commentUser"].value
     }).subscribe(result => {
       console.log(result)
@@ -140,5 +142,13 @@ export class DetailFilmComponent implements OnInit {
     this.pageSize = event.pageSize
 
     this.getCommentData()
+  }
+
+  getFilmID() {
+    this.activeRouter.params.forEach(param => {
+      this.idFilm = param['id']
+    }).then(result => {
+      console.log(result)
+    })
   }
 }
