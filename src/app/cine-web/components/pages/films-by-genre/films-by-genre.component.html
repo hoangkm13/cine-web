@@ -3,7 +3,8 @@
   <div fxLayout="column" fxLayoutAlign="center center">
     <div fxLayout="column" style="width: 1220px" fxLayoutGap="30px">
       <p class="genreName">{{genre}}</p>
-      <div fxLayout="row wrap">
+
+      <section fxLayout="row wrap">
         <mat-card style="width: 224px; margin: 10px;"
                   *ngFor="let film of list | paginate: { itemsPerPage: 20, currentPage: currentPage }">
           <img mat-card-image src="{{ beforePath + film.slug + afterPath}}"
@@ -27,7 +28,7 @@
           <!--            <button mat-raised-button color="primary">Watch</button>-->
           <!--          </mat-card-actions>-->
         </mat-card>
-      </div>
+      </section>
       <pagination-controls fxLayout="row" fxLayoutAlign="center center" (pageChange)="currentPage = $event"
                            class="float-right"></pagination-controls>
     </div>

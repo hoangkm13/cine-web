@@ -104,7 +104,7 @@ export class UserProfileComponent implements OnInit {
           email: this.dataBackup.email
         })
 
-        console.log()
+        console.log(result)
 
         this.avatarUrl = `assets/images/users/${this.dataBackup.avatar}`
       }

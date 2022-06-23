@@ -4,9 +4,9 @@
       <img src="../../../../../assets/images/logo.a27cfc72.svg" height="75%" width="75%" alt="Cine">
     </div>
 
-    <button *ngIf="!token" mat-raised-button color="primary">
+    <a href="/sign-in" *ngIf="!token" mat-raised-button color="primary">
       Sign In
-    </button>
+    </a>
 
     <div *ngIf="token">
       <mat-icon (click)="openUserProfile()" class="icon-profile" color="primary">

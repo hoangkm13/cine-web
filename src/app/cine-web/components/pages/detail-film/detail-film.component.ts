@@ -50,9 +50,9 @@ export class DetailFilmComponent implements OnInit {
       commentUser: [""]
     })
 
-    this.authService.login({username: "hoangkm13", password: "Hoangkm133131"}).subscribe(result => {
-      this.cookie.set(GlobalConstants.authToken, <string>result.result?.token, undefined, "/")
-    })
+    // this.authService.login({username: "hoangkm13", password: "Hoangkm133131"}).subscribe(result => {
+    //   this.cookie.set(GlobalConstants.authToken, <string>result.result?.token, undefined, "/")
+    // })
 
     this.getCurrentUser()
     this.getData()

@@ -82,13 +82,14 @@ mat-card-actions {
   font-size: 1.5rem;
 }
 
+
 .short-description{
   overflow: hidden;
   max-height: 100%;
   opacity: 0;
   position: absolute;
   bottom: 68px;
-  right: 0px;
+  right: 0;
   padding: 10px;
   background-color: #0000008f;
   transition: .3s;
@@ -99,8 +100,13 @@ mat-card-actions {
   }
 }
 
+
 mat-card:hover .short-description{
   opacity: 0.8;
+}
+
+mat-card-actions:hover .film-title{
+  color: #3b519a;
 }
 
 

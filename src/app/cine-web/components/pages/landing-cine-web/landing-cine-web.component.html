@@ -10,7 +10,7 @@
           Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he projects in a futile
           attempt to feel like he's part of the world around him.</p>
         <div>
-          <button class="play-button" mat-raised-button>Play</button>
+          <button (click)="goToFilmDetail(hotFilm.id)" class="play-button" mat-raised-button>Play</button>
         </div>
       </div>
     </div>
@@ -20,9 +20,9 @@
       <p class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</p>
       <section>
         <ngx-slick-carousel class="carousel" [config]="slideConfig">
-          <mat-card (click)="goToFilmDetail(ele.id)" ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
+          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
             <div class="favourite-btn">
-              <button mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
+              <button (click)="addToFavorite(ele.id)" mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
                 <mat-icon>add_to_photos</mat-icon>
                 <!--                <mat-icon>indeterminate_check_box</mat-icon>-->
               </button>
@@ -32,8 +32,8 @@
               <p style="font-size: 16px">{{ ele.title }}</p>
               <p style="font-size: 14px" >{{ ele.description }}</p>
             </div>
-            <mat-card-actions>
-              <p>{{ ele.title }}</p>
+            <mat-card-actions (click)="goToFilmDetail(ele.id)" >
+              <p class="film-title">{{ ele.title }}</p>
               <ng-template #t let-fill="fill">
                 <span class="star" [class.full]="fill === 100">
                   <span class="half" [style.width.%]="fill">&star;</span>&star;

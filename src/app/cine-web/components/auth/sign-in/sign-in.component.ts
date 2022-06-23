@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validator, Validators} from "@angular/forms";
 import {ApiResponseLoginResponseDTO, UserControllerService} from "../../../cine-svc";
 import {Router} from "@angular/router";
 import {GlobalConstants} from "../../shared/GlobalConstants";
@@ -19,8 +19,8 @@ export class SignInComponent implements OnInit {
               private route: Router,
               private cookie: CookieService) {
     this.formGroup = this.formBuilder.group({
-      username: [],
-      password: []
+      userName: ["", Validators.required],
+      password: ["", Validators.required]
     });
   }
 
@@ -28,17 +28,19 @@ export class SignInComponent implements OnInit {
   }
 
   login() {
-    this.userController.login({
-      username: this.formGroup.controls['username'].value,
-      password: this.formGroup.controls['password'].value
-    }).subscribe((response: ApiResponseLoginResponseDTO) => {
-      if (response.errorCode != null) {
-        console.log(response.errorCode + "," + response.message);
-      } else {
-        this.cookie.set(GlobalConstants.authToken, <string>response.result?.token, undefined, "/")
-        this.route.navigateByUrl("/welcome").then();
-      }
-    })
+    this.formGroup.markAllAsTouched();
+    if (this.formGroup.valid) {
+      this.userController.login({
+        username: this.formGroup.controls['userName'].value,
+        password: this.formGroup.controls['password'].value
+      }).subscribe((response: ApiResponseLoginResponseDTO) => {
+        if (response.errorCode != null) {
+          console.log(response.errorCode + "," + response.message);
+        } else {
+          this.cookie.set(GlobalConstants.authToken, <string>response.result?.token, undefined, "/")
+          this.route.navigateByUrl("/welcome").then();
+        }
+      })
+    }
   }
-
 }

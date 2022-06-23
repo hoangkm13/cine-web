@@ -7,12 +7,18 @@
         <form [formGroup]="formGroup" fxLayout="column">
           <mat-form-field appearance="outline">
             <mat-label>User name</mat-label>
-            <input formControlName="username" class="text-white" matInput>
+            <input formControlName="userName" class="text-white" matInput>
+            <mat-error *ngIf="formGroup.controls['userName'].errors">
+              Tên đăng nhập không được để trống
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input formControlName="password" type="password" class="text-white" matInput>
+            <mat-error *ngIf="formGroup.controls['password'].errors">
+              Mật khẩu không được để trống
+            </mat-error>
           </mat-form-field>
         </form>
         <div class="dialog-action-row">
