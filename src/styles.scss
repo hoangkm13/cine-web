@@ -58,6 +58,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 section{
   width: 100%;
   .mat-card {
+    cursor: pointer;
     width: 250px;
     margin: 2px;
     background-color: #000000;

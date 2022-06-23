@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ApiResponseUserDTO, UserControllerService} from "../../../cine-svc";
 import * as moment from "moment";
@@ -11,6 +11,7 @@ import * as moment from "moment";
 })
 export class SignUpComponent implements OnInit {
 
+  checkPassword: boolean = false;
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
@@ -18,15 +19,15 @@ export class SignUpComponent implements OnInit {
               private userController: UserControllerService
   ) {
     this.formGroup = this.formBuilder.group({
-      username: [],
-      password: [],
-      cf_password: [],
-      firstName: [],
-      lastName: [],
-      gender: [],
-      birthOfDate: [],
-      mobile: [],
-      email: []
+      userName: ["", Validators.required],
+      password: ["", Validators.required],
+      cf_password: ["", Validators.required],
+      firstName: ["", Validators.required],
+      lastName: ["", Validators.required],
+      gender: [" ", Validators.required],
+      birthOfDate: ["", Validators.required],
+      mobile: ["", Validators.required],
+      email: ["", Validators.required]
     })
 
     this.getExtraData()
@@ -37,9 +38,10 @@ export class SignUpComponent implements OnInit {
 
   signUp() {
     let formValue = this.formGroup.getRawValue();
-    if(formValue.password === formValue.cf_password){
+    this.formGroup.markAllAsTouched();
+    if(formValue.password === formValue.cf_password && this.formGroup.valid){
       this.userController.register({
-        username: formValue.username,
+        username: formValue.userName,
         password: formValue.password,
         firstName: formValue.firstName,
         lastName: formValue.lastName,
@@ -53,6 +55,7 @@ export class SignUpComponent implements OnInit {
         }
       })
     }else{
+      this.checkPassword = true
       console.log("Loi")
     }
   }

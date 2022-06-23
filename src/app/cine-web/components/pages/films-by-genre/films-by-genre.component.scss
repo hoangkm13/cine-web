@@ -10,6 +10,16 @@
   cursor: pointer;
 }
 
-mat-card:hover{
-
+mat-card{
+  opacity: 0.8;
 }
+
+mat-card:hover{
+  opacity: 1;
+  box-shadow: -1px 10px 29px 0px rgba(0,0,0,0.8);
+}
+
+mat-card:hover mat-card-title{
+  color: #3b519a;
+}
+
