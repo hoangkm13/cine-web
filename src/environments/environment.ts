@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // apiBaseUrl: "http://localhost:8001"
-  apiBaseUrl: "https://demo-cine-svc.herokuapp.com"
+  apiBaseUrl: "http://cinewebappaws-env.eba-7czd7mmf.us-west-2.elasticbeanstalk.com"
 };
 
 /*

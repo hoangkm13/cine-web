@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.module.ts
 api/api.ts
@@ -15,8 +14,10 @@ index.ts
 model/actor.ts
 model/apiResponseComment.ts
 model/apiResponseCommentDTO.ts
+model/apiResponseCommentPaginationResponse.ts
 model/apiResponseDislike.ts
 model/apiResponseDislikeDTO.ts
+model/apiResponseFavorite.ts
 model/apiResponseFavoriteDTO.ts
 model/apiResponseFilmDTO.ts
 model/apiResponseLike.ts
@@ -31,6 +32,8 @@ model/apiResponseViewCountDTO.ts
 model/categorizedFilmsDTO.ts
 model/comment.ts
 model/commentDTO.ts
+model/commentPaginationResponse.ts
+model/director.ts
 model/dislike.ts
 model/dislikeDTO.ts
 model/favorite.ts
@@ -45,7 +48,9 @@ model/loginResponseDTO.ts
 model/models.ts
 model/pageFilm.ts
 model/pageableObject.ts
+model/resetPasswordDTO.ts
 model/sort.ts
+model/updateUserDTO.ts
 model/user.ts
 model/userDTO.ts
 model/view.ts

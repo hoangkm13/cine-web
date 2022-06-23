@@ -1,4 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: "https://demo-cine-svc.herokuapp.com"
+  apiBaseUrl: "http://localhost:8001"
+  // apiBaseUrl: "https://demo-cine-svc.herokuapp.com",
+
 };

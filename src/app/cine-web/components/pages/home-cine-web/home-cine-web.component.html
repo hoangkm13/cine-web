@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" style="background: #06121E">
   <div class="background-cine-header" fxLayoutGap="250px" fxLayout="column">
     <app-header-cine></app-header-cine>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
@@ -12,11 +12,16 @@
         <form style="width: 75%">
           <mat-form-field appearance="outline">
             <mat-label>Email address</mat-label>
-            <input style="color: white" type="text" matInput>
+            <input style="color: white"
+                   type="text"
+                   [formControl]="email"
+                   (keydown.enter)="onSignUp()"
+                   [value]="email.value"
+                   matInput>
           </mat-form-field>
         </form>
 
-        <h2 class="white-text">Ready to watch? Enter your email to create or restart your membership.</h2>
+        <h2 class="text-white">Ready to watch? Enter your email to create or restart your membership.</h2>
       </div>
 
     </div>
@@ -70,11 +75,15 @@
           </mat-accordion>
         </div>
 
-        <div style="width: 50%" fxLayoutAlign="center center" fxLayout="column">
-          <form style="width: 75%">
+        <div style="width: 75%" fxLayoutAlign="center center" fxLayout="column">
+          <form style="width: 55%">
             <mat-form-field appearance="outline">
               <mat-label>Email address</mat-label>
-              <input style="color: white" type="text" matInput>
+              <input style="color: white" type="text"
+                     (keydown.enter)="onSignUp()"
+                     [formControl]="email"
+                     [value]="email.value"
+                     matInput>
             </mat-form-field>
           </form>
 

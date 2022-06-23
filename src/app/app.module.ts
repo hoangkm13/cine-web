@@ -10,18 +10,34 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {SignInComponent} from "./cine-web/components/pages/sign-in/sign-in.component";
-import {ReactiveFormsModule} from "@angular/forms";
-import { SignUpComponent } from './cine-web/components/pages/sign-up/sign-up.component';
+import {SignInComponent} from "./cine-web/components/auth/sign-in/sign-in.component";
+import {ReactiveFormsModule, FormsModule} from "@angular/forms";
+import {SignUpComponent} from './cine-web/components/auth/sign-up/sign-up.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ApiModule, Configuration} from "./cine-web/cine-svc";
 import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
-import { FooterCineComponent } from './cine-web/components/shared/footer-cine/footer-cine.component';
-import { HeaderCineComponent } from './cine-web/components/shared/header-cine/header-cine.component';
+import {FooterCineComponent} from './cine-web/components/shared/footer-cine/footer-cine.component';
+import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
+import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {ApiHttpInterceptor} from "./cine-web/components/shared/api-http-interceptor";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { UserProfileComponent } from './cine-web/components/pages/user-profile/user-profile.component';
+import {MatDialogModule} from "@angular/material/dialog";
+
+import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-web/landing-cine-web.component';
+
+import {MatCardModule} from "@angular/material/card";
+import {SlickCarouselModule} from "ngx-slick-carousel";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { FilmsByGenreComponent } from './cine-web/components/pages/films-by-genre/films-by-genre.component';
+import {NgxPaginationModule} from "ngx-pagination";
+import { LoadingDataComponent } from './cine-web/components/shared/loading-data/loading-data.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -30,36 +46,54 @@ import { HeaderCineComponent } from './cine-web/components/shared/header-cine/he
     FooterCineComponent,
     HeaderCineComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    DetailFilmComponent,
+    UserProfileComponent,
+    LandingCineWebComponent,
+    FilmsByGenreComponent,
+    LoadingDataComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule,
-    MatExpansionModule,
-    ReactiveFormsModule,
-    MatRadioModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    ApiModule.forRoot(() => {
-      return new Configuration({
-        basePath: `${GlobalConstants.baseUrl}`
-      })
-    }),
-    MatExpansionModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        MatButtonModule,
+        MatInputModule,
+        MatIconModule,
+        MatExpansionModule,
+        ReactiveFormsModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatCardModule,
+        SlickCarouselModule,
+        MatTooltipModule,
+        MatPaginatorModule,
+        NgxPaginationModule,
+        ApiModule.forRoot(() => {
+            return new Configuration({
+                basePath: `${GlobalConstants.baseUrl}`
+            })
+        }),
+        MatExpansionModule,
+        HttpClientModule,
+        NgbModule,
+        FormsModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatProgressSpinnerModule
+    ],
   exports: [
     FooterCineComponent,
     HomeCineWebComponent,
-    HeaderCineComponent
+    HeaderCineComponent,
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

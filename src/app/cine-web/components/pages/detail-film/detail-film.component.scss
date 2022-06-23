@@ -1,0 +1,119 @@
+
+.background-film-large {
+  background-repeat: no-repeat;
+}
+
+.background-film-logo {
+  background-image: url("../../../../../../src/assets/images/films/a-quiet-place/small.jpg");
+}
+
+.button-watch.mat-raised-button {
+  height: 48px !important;
+}
+
+.text-button-watch {
+  line-height: 1.1;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.text-title-film {
+  color: white;
+  line-height: 1.1;
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.text-title-film-year {
+  color: royalblue;
+  text-decoration: none;
+  line-height: 1.1;
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.text-button {
+  line-height: 1.1;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 2.5rem;
+  color: #d3d3d3;
+}
+
+.full {
+  color: #FFC107;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden !important;
+  color: #FFC107;
+}
+
+.mat-stroked-button {
+  color: royalblue;
+  height: 40px;
+}
+
+.mat-stroked-button:hover {
+  color: white;
+  height: 40px;
+  background-color: #3b519a;
+}
+
+.genres .mat-stroked-button {
+  border-radius: 100px;
+  height: 32px;
+  border-color: white;
+  color: white;
+}
+
+.genres .mat-stroked-button:hover {
+  border-radius: 100px;
+  height: 32px;
+  border-color: white;
+  background-color: white;
+  color: royalblue;
+}
+
+.text-button-genres {
+  line-height: 1.0;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.text-description {
+  color: #7A7877;
+  line-height: 1.0;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.text-description-info {
+  color: #eae1e1;
+  line-height: 1.0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.avatar-user {
+  border-radius: 50%;
+}
+
+.comment-user {
+  background-color: rgba(10, 10, 10, 0.22);
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.57);
+}
+
+.mat-paginator{
+  background-color: rgba(10, 10, 10, 0.66);
+}
+
+

@@ -1,0 +1,162 @@
+<div fxLayout="column" style="background: #06121E">
+  <div fxLayout="column" [style.background-image]="'url(' + urlImage + ')'"
+       class="background-film-large"
+       fxLayoutGap="200px">
+    <app-header-cine></app-header-cine>
+
+    <div fxLayout="column" style="padding: 24px 64px" fxLayoutGap="30px">
+      <div fxLayout="row" fxLayoutGap="64px">
+        <div fxLayout="column" fxLayoutGap="32px" >
+          <img src="../../../../../assets/images/films/a-quiet-place/small2.jpg" height="414.96" width="280" alt="">
+          <button mat-raised-button class="button-watch" color="warn" fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon>play_arrow</mat-icon>
+            <span class="text-button-watch">
+              Watch now
+            </span>
+          </button>
+        </div>
+        <div fxLayout="column" fxFlex fxLayoutGap="32px">
+          <div fxLayout="column" fxLayoutGap="25px">
+            <div fxLayoutGap="10px">
+            <span class="text-title-film">
+              {{this.formGroup.controls['nameFilm'].value}}
+            </span>
+
+              <span class="text-title-film">
+              (
+                <a href="" class="text-title-film-year">
+                  {{this.formGroup.controls['year'].value}}
+                </a>
+              )
+            </span>
+            </div>
+
+            <div>
+              <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&star;</span>&star;
+            </span>
+              </ng-template>
+
+              <ngb-rating [(rate)]="starRating" [readonly]="true" [starTemplate]="t"  [max]="5"></ngb-rating>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center" (click)="handleFavourite()">
+                <mat-icon>add</mat-icon>
+                <span class="text-button">
+                Add to Favourite
+                </span>
+              </button>
+
+              <div fxLayout="row" class="genres"
+                   fxLayoutGap="10px"
+                   fxLayoutAlign="space-between center"
+                  *ngFor="let genre of this.formGroup.controls['genres'].value"
+              >
+                <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center">
+                  <span class="text-button-genres">
+                    {{genre.name}}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="45px" >
+            <div fxLayout="column" fxLayoutGap="10px" class="text-description">
+              <span >National</span>
+              <span >Director</span>
+              <span >Maturity</span>
+            </div>
+            <div fxLayout="column" fxLayoutGap="12px" class="text-description-info">
+              <span >America</span>
+              <span >{{this.formGroup.controls['director'].value || "Director"}}</span>
+              <span>{{this.formGroup.controls['maturity'].value}}+</span>
+            </div>
+          </div >
+          <div class="text-description">
+            <span style="line-height: 1.2">
+              {{this.formGroup.controls["description"].value}}
+            </span>
+          </div>
+          <div fxLayout="column" class="text-description">
+            <h1 style="color: white">Actor</h1>
+            <div fxLayout="row" fxLayoutGap="52px" style="padding: 10px 20px" >
+              <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="15px"
+                   *ngFor="let actor of this.formGroup.controls['actors'].value">
+                <img src="assets/images/users/5.png" height="120" width="120" style="border-radius: 50%" alt="">
+                <span style="color: white">
+                {{actor.name}}
+              </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="10px" fxFlex>
+
+        <h1 class="text-button-watch">
+          <span style="color: white;">Comments</span>
+        </h1>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <img [src]="avatarUser" height="20" width="20" class="avatar-user" alt="">
+            <span class="text-description">
+              {{this.dataUser.username}}
+            </span>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+            <form style="width: 90%; color: white" [formGroup]="formGroup">
+              <mat-form-field fxFlex>
+                <mat-label>Leave a comment</mat-label>
+                <input type="text" matInput formControlName="commentUser" (keyup.enter)="userComment()" >
+              </mat-form-field>
+            </form>
+            <button mat-raised-button color="warn" (click)="userComment()">
+              Comment
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="this.formGroup.controls['comments'].value">
+          <div
+            class="comment-user" fxLayout="column" fxLayoutGap="20px"
+            *ngFor="let comment of this.formGroup.controls['comments'].value"
+          >
+            <div fxLayout="column" fxLayoutGap="10px">
+              <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                  <img [src]="avatarUserComment + comment.userAvatar" height="20" width="20" class="avatar-user" alt="">
+                  <span class="text-description">{{comment.username}}</span>
+                </div>
+                <span>
+                  {{comment.createdAt | date: 'mediumDate'}}
+                </span>
+              </div>
+              <div style="padding: 5px 10px">
+                {{comment.commentText}}
+              </div>
+            </div>
+          </div>
+          <mat-paginator
+            [length]="length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 15]"
+            [showFirstLastButtons]="true"
+            (page)="onPagination($event)"
+            aria-label="Select page">
+          >
+          </mat-paginator>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <app-footer-cine></app-footer-cine>
+</div>
