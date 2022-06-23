@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FREQUENTLY_QUIZ, Frequently_quiz} from "../../../static/frequently_quiz";
+import {CookieService} from "ngx-cookie-service";
+import {GlobalConstants} from "../../shared/GlobalConstants";
+import {FormControl} from "@angular/forms";
+import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-cine-web',
@@ -9,19 +13,29 @@ import {FREQUENTLY_QUIZ, Frequently_quiz} from "../../../static/frequently_quiz"
 export class HomeCineWebComponent implements OnInit {
 
   frequently_quiz: Frequently_quiz[] = []
-  // data: any
+  email: FormControl
 
   constructor(
-    // private service: UserControllerService
+    private cookieService: CookieService,
+    private router: Router
   ) {
-    // this.service.login({username: "hoangkm13", password: "Hoangkm133131"}).subscribe(result => {
-    //   this.data = parseJSONData(result)
-    //   console.log(this.data.result.token)
-    // })
+
+    this.email = new FormControl("")
+    cookieService.delete(GlobalConstants.authToken, "/")
+
     this.frequently_quiz = FREQUENTLY_QUIZ
   }
 
   ngOnInit(): void {
+  }
+
+  onSignUp() {
+    const extraData: NavigationExtras = {
+      state: {
+        email: this.email.value
+      }
+    }
+    this.router.navigate(['sign-up'], extraData)
   }
 
 }

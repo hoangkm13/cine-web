@@ -48,7 +48,7 @@ export class LandingCineWebComponent implements OnInit {
   }
 
   goToFilmDetail(id: any){
-    this.router.navigate(['/film', id, "/detail"]).then();
+    this.router.navigate(['/film', id, "detail"]).then();
   }
 
   slideConfig = {

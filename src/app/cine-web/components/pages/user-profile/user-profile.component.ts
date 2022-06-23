@@ -4,6 +4,10 @@ import {UserControllerService} from "../../../cine-svc";
 import * as moment from "moment";
 import {result} from "lodash";
 import * as _ from "lodash";
+import {CookieService} from "ngx-cookie-service";
+import {GlobalConstants} from "../../shared/GlobalConstants";
+import {Router} from "@angular/router";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-user-profile',
@@ -40,7 +44,10 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserControllerService
+    private userService: UserControllerService,
+    private cookieService: CookieService,
+    private router: Router,
+    private matDialogRef: MatDialogRef<UserProfileComponent>
   ) {
     this.userProfile = formBuilder.group({
       username: [""],
@@ -84,9 +91,9 @@ export class UserProfileComponent implements OnInit {
       this.inProcessEdit = false
       this.inProcessChangePass = false
       this.userProfile.disable()
-      this.userProfile.reset()
       this.passwordForm.disable()
       this.passwordForm.reset()
+      this.cloneData()
     }
   }
 
@@ -94,17 +101,8 @@ export class UserProfileComponent implements OnInit {
     this.userService.getCurrentUser().subscribe(result => {
       if(!result.errorCode) {
         this.dataBackup = _.cloneDeep(result.result)
-        this.userProfile.patchValue({
-          username: this.dataBackup.username,
-          firstName: this.dataBackup.firstName,
-          lastName: this.dataBackup.lastName,
-          gender: this.dataBackup.gender,
-          dateOfBirth: moment(new Date(this.dataBackup.birthOfDate)).format("yyyy-MM-DD"),
-          mobile: this.dataBackup.mobile,
-          email: this.dataBackup.email
-        })
 
-        console.log()
+        this.cloneData()
 
         this.avatarUrl = `assets/images/users/${this.dataBackup.avatar}`
       }
@@ -116,12 +114,12 @@ export class UserProfileComponent implements OnInit {
       this.userService.updateUser(
         this.dataBackup.id,
         {
-          firstName: this.userProfile.controls['firstName'].value,
-          lastName: this.userProfile.controls['lastName'].value,
+          firstName: this.userProfile.controls['firstName'].value.trim(),
+          lastName: this.userProfile.controls['lastName'].value.trim(),
           gender: this.userProfile.controls['gender'].value,
           birthOfDate: moment(this.userProfile.controls['dateOfBirth'].value).toISOString(),
           mobile: this.userProfile.controls['mobile'].value,
-          email: this.userProfile.controls['email'].value
+          email: this.userProfile.controls['email'].value.trim()
         }
       ).subscribe(result => {
         if(!result.errorCode) {
@@ -131,5 +129,45 @@ export class UserProfileComponent implements OnInit {
       })
 
     }
+
+    else if(this.actionEdit === 'changePassword') {
+      this.userService.resetPassword(
+        this.dataBackup.id,
+        {
+          password: this.passwordForm.controls["newPassword"].value
+        }
+      ).subscribe(result => {
+        if(!result.errorCode) {
+          this.handleUser("cancel")
+          this.getData()
+        }
+      })
+    }
+  }
+
+  cloneData() {
+    this.userProfile.patchValue({
+      username: this.dataBackup.username,
+      firstName: this.dataBackup.firstName,
+      lastName: this.dataBackup.lastName,
+      gender: this.dataBackup.gender,
+      dateOfBirth: moment(new Date(this.dataBackup.birthOfDate)).format("yyyy-MM-DD"),
+      mobile: this.dataBackup.mobile,
+      email: this.dataBackup.email
+    })
+  }
+
+  isNumber(event: KeyboardEvent) {
+    return event.keyCode >= 48 && event.keyCode <= 57
+  }
+
+  enterPassword(event: KeyboardEvent) {
+    return event.keyCode != 32
+  }
+
+  onSignOut() {
+    this.cookieService.delete(GlobalConstants.authToken, "/")
+    this.router.navigate(['/cine-web'])
+    this.matDialogRef.close()
   }
 }
