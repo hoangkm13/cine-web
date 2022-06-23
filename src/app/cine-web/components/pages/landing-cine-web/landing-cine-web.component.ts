@@ -74,6 +74,7 @@ export class LandingCineWebComponent implements OnInit {
       //     }
       //   )
     })
+    this.router.navigate(['/film', id, "detail"]).then();
   }
 
   slideConfig = {

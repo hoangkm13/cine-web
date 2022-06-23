@@ -7,14 +7,19 @@ import {
   HttpInterceptor,
   HttpRequest
 } from "@angular/common/http";
-import {catchError, Observable, retry, throwError} from "rxjs";
+import {catchError, finalize, Observable, retry, throwError} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {GlobalConstants} from "./GlobalConstants";
+import {DialogService} from "./dialog.service";
 
 @Injectable()
 export class ApiHttpInterceptor implements HttpInterceptor {
+
+  private totalRequest = 0
+
   constructor(
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private dialog: DialogService
   ) {
   }
   intercept
@@ -23,6 +28,12 @@ export class ApiHttpInterceptor implements HttpInterceptor {
     next: HttpHandler
   )
     : Observable<HttpEvent<any>> {
+    this.totalRequest++
+    console.log(this.totalRequest)
+    if (this.totalRequest === 1) {
+      this.dialog.showLoadingData()
+    }
+
     const dupReq = request.clone({
       setHeaders: {
         Authorization: `Bearer ${this.cookieService.get(
@@ -31,13 +42,15 @@ export class ApiHttpInterceptor implements HttpInterceptor {
       },
     })
 
-    console.log(
-      `Authorization: Bearer ${this.cookieService.get(
-        GlobalConstants.authToken
-      )}`
-    );
-
     return next.handle(dupReq).pipe(
+      finalize(() => {
+        if (this.totalRequest > 0) this.totalRequest--;
+        console.log(this.totalRequest)
+        if(this.totalRequest === 0) {
+          this.dialog.closeLoadingData()
+        }
+
+      }),
       retry(0),
       catchError((error: HttpErrorResponse) => {
         console.log(error)

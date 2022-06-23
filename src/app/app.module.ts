@@ -36,6 +36,8 @@ import {SlickCarouselModule} from "ngx-slick-carousel";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { FilmsByGenreComponent } from './cine-web/components/pages/films-by-genre/films-by-genre.component';
 import {NgxPaginationModule} from "ngx-pagination";
+import { LoadingDataComponent } from './cine-web/components/shared/loading-data/loading-data.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -48,39 +50,41 @@ import {NgxPaginationModule} from "ngx-pagination";
     DetailFilmComponent,
     UserProfileComponent,
     LandingCineWebComponent,
-    FilmsByGenreComponent
+    FilmsByGenreComponent,
+    LoadingDataComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule,
-    MatExpansionModule,
-    ReactiveFormsModule,
-    MatRadioModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatCardModule,
-    SlickCarouselModule,
-    MatTooltipModule,
-    MatPaginatorModule,
-    NgxPaginationModule,
-    ApiModule.forRoot(() => {
-      return new Configuration({
-        basePath: `${GlobalConstants.baseUrl}`
-      })
-    }),
-    MatExpansionModule,
-    HttpClientModule,
-    NgbModule,
-    FormsModule,
-    MatPaginatorModule,
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        MatButtonModule,
+        MatInputModule,
+        MatIconModule,
+        MatExpansionModule,
+        ReactiveFormsModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatCardModule,
+        SlickCarouselModule,
+        MatTooltipModule,
+        MatPaginatorModule,
+        NgxPaginationModule,
+        ApiModule.forRoot(() => {
+            return new Configuration({
+                basePath: `${GlobalConstants.baseUrl}`
+            })
+        }),
+        MatExpansionModule,
+        HttpClientModule,
+        NgbModule,
+        FormsModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatProgressSpinnerModule
+    ],
   exports: [
     FooterCineComponent,
     HomeCineWebComponent,

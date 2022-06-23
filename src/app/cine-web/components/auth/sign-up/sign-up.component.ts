@@ -16,7 +16,8 @@ export class SignUpComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private userController: UserControllerService) {
+              private userController: UserControllerService
+  ) {
     this.formGroup = this.formBuilder.group({
       userName: ["", Validators.required],
       password: ["", Validators.required],
@@ -28,6 +29,8 @@ export class SignUpComponent implements OnInit {
       mobile: ["", Validators.required],
       email: ["", Validators.required]
     })
+
+    this.getExtraData()
   }
 
   ngOnInit(): void {
@@ -48,12 +51,20 @@ export class SignUpComponent implements OnInit {
         mobile: formValue.mobile
       }).subscribe((response: ApiResponseUserDTO) => {
         if(response.errorCode != null){
-          this.router.navigate(["\sign-in"]).then()
+          this.router.navigate(["/sign-in"]).then()
         }
       })
     }else{
       this.checkPassword = true
       console.log("Loi")
+    }
+  }
+
+  getExtraData() {
+    const state: any = this.router.getCurrentNavigation()?.extras
+    console.log(state)
+    if(state) {
+      this.formGroup.controls['email'].setValue(state.state.email)
     }
   }
 }
