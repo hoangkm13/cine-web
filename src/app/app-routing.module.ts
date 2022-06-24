@@ -42,6 +42,10 @@ routes = [
     path: "films/:genre",
     component: FilmsByGenreComponent
   },
+  {
+    path: "films/favorites",
+    component: FilmsByGenreComponent
+  },
 ]
 
 @NgModule({

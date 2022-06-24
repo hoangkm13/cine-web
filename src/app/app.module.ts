@@ -39,6 +39,8 @@ import {NgxPaginationModule} from "ngx-pagination";
 import { LoadingDataComponent } from './cine-web/components/shared/loading-data/loading-data.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ErrorDialogComponent } from './cine-web/components/shared/error-dialog/error-dialog.component';
+import { VideoPlayerComponent } from './cine-web/components/shared/video-player/video-player.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -54,39 +56,41 @@ import { ErrorDialogComponent } from './cine-web/components/shared/error-dialog/
     FilmsByGenreComponent,
     LoadingDataComponent,
     ErrorDialogComponent,
+    VideoPlayerComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        MatButtonModule,
-        MatInputModule,
-        MatIconModule,
-        MatExpansionModule,
-        ReactiveFormsModule,
-        MatRadioModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCheckboxModule,
-        MatCardModule,
-        SlickCarouselModule,
-        MatTooltipModule,
-        MatPaginatorModule,
-        NgxPaginationModule,
-        ApiModule.forRoot(() => {
-            return new Configuration({
-                basePath: `${GlobalConstants.baseUrl}`
-            })
-        }),
-        MatExpansionModule,
-        HttpClientModule,
-        NgbModule,
-        FormsModule,
-        MatPaginatorModule,
-        MatDialogModule,
-        MatProgressSpinnerModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatCardModule,
+    SlickCarouselModule,
+    MatTooltipModule,
+    MatPaginatorModule,
+    NgxPaginationModule,
+    ApiModule.forRoot(() => {
+      return new Configuration({
+        basePath: `${GlobalConstants.baseUrl}`
+      })
+    }),
+    MatExpansionModule,
+    HttpClientModule,
+    NgbModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatSelectModule
+  ],
   exports: [
     FooterCineComponent,
     HomeCineWebComponent,
