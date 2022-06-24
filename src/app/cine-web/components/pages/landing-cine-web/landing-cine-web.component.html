@@ -17,14 +17,16 @@
   </div>
   <div class="slide-list text-white" fxLayout="column" fxLayoutGap="30px">
     <div fxLayout="column" *ngFor="let slide of slides">
-      <p class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</p>
+      <a class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</a>
       <section>
         <ngx-slick-carousel class="carousel" [config]="slideConfig">
-          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
+          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList" (click)="goToFilmDetail(ele.id)" >
             <div class="favourite-btn">
-              <button (click)="addToFavorite(ele.id)" mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
+              <button *ngIf="isFavorite(ele.id) " (click)="addToFavorite(ele.id)" mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
                 <mat-icon>add_to_photos</mat-icon>
-                <!--                <mat-icon>indeterminate_check_box</mat-icon>-->
+              </button>
+              <button *ngIf="!isFavorite(ele.id)" (click)="removeFromFavorite(ele.id)"  mat-icon-button matTooltip="Remove from favorites" matTooltipPosition="above">
+                <mat-icon>indeterminate_check_box</mat-icon>
               </button>
             </div>
             <img height="140px" mat-card-image src="{{beforePath + ele.slug + afterPath }}" alt="Photo of a Shiba Inu">
@@ -32,7 +34,7 @@
               <p style="font-size: 16px">{{ ele.title }}</p>
               <p style="font-size: 14px" >{{ ele.description }}</p>
             </div>
-            <mat-card-actions (click)="goToFilmDetail(ele.id)" >
+            <mat-card-actions>
               <p class="film-title">{{ ele.title }}</p>
               <ng-template #t let-fill="fill">
                 <span class="star" [class.full]="fill === 100">

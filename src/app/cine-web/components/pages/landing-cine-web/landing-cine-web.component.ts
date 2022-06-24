@@ -5,7 +5,7 @@ import {
   ApiResponseListCategorizedFilmsDTO,
   ApiResponseLoginResponseDTO,
   ApiResponseUserDTO,
-  FavoriteControllerService,
+  FavoriteControllerService, FavoriteDTO,
   FilmControllerService,
   FilmDTO, UserControllerService
 } from "../../../cine-svc";
@@ -29,52 +29,69 @@ export class LandingCineWebComponent implements OnInit {
   slides: SLIDE_DATA[] = [];
 
   hotFilm: any;
+  //
+  favoriteList: Array<FavoriteDTO> = [];
 
   constructor(private filmController: FilmControllerService,
               private router: Router,
               private userController: UserControllerService,
               private favoriteController: FavoriteControllerService
-              ) {
-    // this.userController.getCurrentUser().subscribe((response: ApiResponseUserDTO) => {
-    //   console.log(response.result?.favorites)
-    // })
+  ) {
+   this.getFavoriteData()
   }
 
   ngOnInit(): void {
     this.getFilmData().then();
   }
 
-  async getFilmData(){
-    await this.filmController.getFilmById(3).subscribe((response: ApiResponseFilmDTO) => {
-      this.hotFilm = response.result;
-    })
+  async getFilmData(id?: any) {
+    // await this.filmController.getFilmById(3).subscribe((response: ApiResponseFilmDTO) => {
+    //   this.hotFilm = response.result;
+    // })
 
     await this.filmController.getBrowseData(10).subscribe((response: ApiResponseListCategorizedFilmsDTO) => {
       response.result?.map((ele) => {
         this.slides.push(<SLIDE_DATA>{genre: ele.genre?.name, filmList: ele.films})
       })
     })
+    console.log(this.slides)
   }
 
-  goToFilmByGenre(genreName: string){
+  goToFilmByGenre(genreName: string) {
     this.router.navigate(['/films', genreName]).then();
   }
 
-  goToFilmDetail(id: any){
-    this.router.navigate(['/film', id , "detail"]).then();
+  goToFilmDetail(id: any) {
+    this.router.navigate(['/film', id, "detail"]).then();
   }
 
-  addToFavorite(filmId: any){
+  getFavoriteData(){
+    this.userController.getCurrentUser().subscribe((response: ApiResponseUserDTO) => {
+      response.result?.favorites?.map((ele) => {
+        this.favoriteList.push({id: ele.id, filmId: ele.filmId, userId: ele.userId})
+      })
+    })
+  }
+
+  addToFavorite(filmId: any) {
     let id: any;
     this.userController.getCurrentUser().subscribe((res) => {
       id = res.result?.id
-      // this.favoriteController.createFavorite({filmId: filmId, userId: id})
-      //   .subscribe((response: ApiResponseFavorite) => {
-      //       console.log(response)
-      //     }
-      //   )
+      this.favoriteController.createFavorite({filmId: filmId, userId: id})
+        .subscribe((response: ApiResponseFavorite) => {
+            if(response.errorCode != null) {
+              this.isFavorite(filmId)
+            }
+          }
+        )
     })
-    this.router.navigate(['/film', id, "detail"]).then();
+  }
+
+  removeFromFavorite(filmId: any) {
+    this.favoriteController.deleteFavorite(filmId).subscribe((response) => {
+      console.log(response)
+      this.getFilmData().then()
+    })
   }
 
   slideConfig = {
@@ -85,7 +102,16 @@ export class LandingCineWebComponent implements OnInit {
     arrows: true,
   };
 
-  setStarRating(star: any): number{
+  setStarRating(star: any): number {
     return Number(star);
+  }
+
+  isFavorite(id?: any): boolean {
+    for (const ele of this.favoriteList){
+      if(ele.filmId == id){
+        return false
+      }
+    }
+    return true
   }
 }
