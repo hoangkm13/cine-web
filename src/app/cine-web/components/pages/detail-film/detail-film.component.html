@@ -24,9 +24,9 @@
 
               <span class="text-title-film">
               (
-                <a href="" class="text-title-film-year">
+                <span class="text-title-film-year">
                   {{this.formGroup.controls['year'].value}}
-                </a>
+                </span>
               )
             </span>
             </div>
@@ -42,19 +42,39 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-between center">
-              <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center" (click)="handleFavourite()">
+              <button
+                *ngIf="!checkFavorite; else removeFavorite"
+                mat-stroked-button
+                fxLayout="row" fxLayoutAlign="center center"
+                (click)="handleFavourite('add')">
                 <mat-icon>add</mat-icon>
                 <span class="text-button">
-                Add to Favourite
+                  Add to Favorite
                 </span>
               </button>
+
+              <ng-template #removeFavorite>
+                <button
+                  mat-stroked-button
+                  fxLayout="row" fxLayoutAlign="center center"
+                  (click)="handleFavourite('remove')">
+                  <mat-icon>clear</mat-icon>
+                  <span class="text-button">
+                    Remove from Favorite
+                </span>
+                </button>
+              </ng-template>
+
 
               <div fxLayout="row" class="genres"
                    fxLayoutGap="10px"
                    fxLayoutAlign="space-between center"
                   *ngFor="let genre of this.formGroup.controls['genres'].value"
               >
-                <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center">
+                <button mat-stroked-button fxLayout="row"
+                        fxLayoutAlign="center center"
+                        (click)="redirectToPage(genre.name)"
+                >
                   <span class="text-button-genres">
                     {{genre.name}}
                   </span>

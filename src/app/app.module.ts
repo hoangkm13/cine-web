@@ -38,6 +38,7 @@ import { FilmsByGenreComponent } from './cine-web/components/pages/films-by-genr
 import {NgxPaginationModule} from "ngx-pagination";
 import { LoadingDataComponent } from './cine-web/components/shared/loading-data/loading-data.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { ErrorDialogComponent } from './cine-web/components/shared/error-dialog/error-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     LandingCineWebComponent,
     FilmsByGenreComponent,
     LoadingDataComponent,
+    ErrorDialogComponent,
   ],
     imports: [
         BrowserModule,

@@ -27,7 +27,7 @@ export class HeaderCineComponent implements OnInit {
   openUserProfile() {
     this.dialog.open(UserProfileComponent, {
       width: '80vw',
-      height: '75vh'
+      height: '70vh'
     })
   }
 
