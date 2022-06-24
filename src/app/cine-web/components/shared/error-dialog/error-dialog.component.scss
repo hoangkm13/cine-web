@@ -1,0 +1,24 @@
+
+
+.error-title {
+  background-color: #F44336;
+  padding: 16px 0;
+}
+
+.error-title-text {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.error-description {
+  padding: 0 16px;
+  display: flex;
+}
+
+.error-description-text {
+  font-size: 18px;
+  font-weight: 500;
+  word-break: break-word;
+  text-align: center;
+}
