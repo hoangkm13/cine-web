@@ -8,6 +8,7 @@ import {CookieService} from "ngx-cookie-service";
 import {GlobalConstants} from "../../shared/GlobalConstants";
 import {Router} from "@angular/router";
 import {MatDialogRef} from "@angular/material/dialog";
+import {DialogService} from "../../shared/dialog.service";
 
 @Component({
   selector: 'app-user-profile',
@@ -47,7 +48,8 @@ export class UserProfileComponent implements OnInit {
     private userService: UserControllerService,
     private cookieService: CookieService,
     private router: Router,
-    private matDialogRef: MatDialogRef<UserProfileComponent>
+    private matDialogRef: MatDialogRef<UserProfileComponent>,
+    private dialogService: DialogService
   ) {
     this.userProfile = formBuilder.group({
       username: [""],
@@ -64,9 +66,7 @@ export class UserProfileComponent implements OnInit {
     this.passwordForm = formBuilder.group({
       newPassword: ["", Validators.required],
       confirmNewPassword: ["", Validators.required],
-
     })
-
 
     this.passwordForm.disable()
 
@@ -101,15 +101,24 @@ export class UserProfileComponent implements OnInit {
     this.userService.getCurrentUser().subscribe(result => {
       if(!result.errorCode) {
         this.dataBackup = _.cloneDeep(result.result)
-
         this.cloneData()
-
         this.avatarUrl = `assets/images/users/${this.dataBackup.avatar}`
+      } else {
+        this.showErrorDialog(result)
       }
     })
   }
 
   editUser() {
+    if(this.userProfile.invalid || this.passwordForm.invalid) {
+      this.dialogService.showErrorDialog({
+        title: "Error",
+        description: "Please fill out all fields",
+        buttonText: "Exit",
+        onAccept: () => {}
+      })
+      return
+    }
     if(this.actionEdit === 'editProfile') {
       this.userService.updateUser(
         this.dataBackup.id,
@@ -125,6 +134,8 @@ export class UserProfileComponent implements OnInit {
         if(!result.errorCode) {
           this.handleUser("cancel")
           this.getData()
+        } else {
+          this.showErrorDialog(result)
         }
       })
 
@@ -140,6 +151,8 @@ export class UserProfileComponent implements OnInit {
         if(!result.errorCode) {
           this.handleUser("cancel")
           this.getData()
+        } else {
+          this.showErrorDialog(result)
         }
       })
     }
@@ -169,5 +182,14 @@ export class UserProfileComponent implements OnInit {
     this.cookieService.delete(GlobalConstants.authToken, "/")
     this.router.navigate(['/cine-web'])
     this.matDialogRef.close()
+  }
+
+  showErrorDialog(result: any) {
+    this.dialogService.showErrorDialog({
+      title: "Error",
+      description: `${result.message}`,
+      buttonText: "Exit",
+      onAccept: () => {}
+    })
   }
 }
