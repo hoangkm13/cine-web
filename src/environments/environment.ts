@@ -5,9 +5,8 @@
 export const environment = {
   production: false,
   // apiBaseUrl: "http://localhost:8001"
-  apiBaseUrl: "https://demo-cine-svc.herokuapp.com"
+  apiBaseUrl: "http://cine-svc.us-west-2.elasticbeanstalk.com"
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
