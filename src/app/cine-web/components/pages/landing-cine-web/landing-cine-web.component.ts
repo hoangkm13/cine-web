@@ -12,6 +12,7 @@ import {
 import {NavigationExtras, Router} from "@angular/router";
 import {DialogService} from "../../shared/dialog.service";
 import {CookieService} from "ngx-cookie-service";
+import {GlobalConstants} from "../../shared/GlobalConstants";
 
 export interface SLIDE_DATA {
   genre: string;
@@ -70,9 +71,9 @@ export class LandingCineWebComponent implements OnInit {
           })
         } else {
           this.dialogService.showErrorDialog({
-            title: "",
+            title: "Error",
             description: `${response.message}`,
-            buttonText: "Đóng",
+            buttonText: "Exit",
             onAccept: () => {
 
             }
@@ -83,12 +84,8 @@ export class LandingCineWebComponent implements OnInit {
   }
 
   goToFilmByGenre(genreName: string) {
-    const extraData: NavigationExtras = {
-      state: {
-        check: 'byGenre',
-      }
-    }
-    this.router.navigate(['/films', genreName], extraData).then();
+    this.cookie.set(GlobalConstants.searchType, 'byGenre', undefined, "/")
+    this.router.navigate(['/films', genreName]).then();
   }
 
   goToFilmDetail(id: any) {
@@ -97,20 +94,18 @@ export class LandingCineWebComponent implements OnInit {
 
   async getFavoriteData() {
     await this.userController.getCurrentUser().subscribe((response: ApiResponseUserDTO) => {
-      response.result?.favorites?.map((ele) => {
-        if (response.errorCode == null) {
-          this.favoriteList.push({id: ele.id, filmId: ele.filmId, userId: ele.userId})
-        } else {
-          this.dialogService.showErrorDialog({
-            title: "",
-            description: `${response.message}`,
-            buttonText: "Đóng",
-            onAccept: () => {
+      if (response.errorCode == null) {
+        this.favoriteList = response.result?.favorites ? response.result?.favorites : []
+      } else {
+        this.dialogService.showErrorDialog({
+          title: "Error",
+          description: `${response.message}`,
+          buttonText: "Exit",
+          onAccept: () => {
+          }
+        })
+      }
 
-            }
-          })
-        }
-      })
     })
   }
 
@@ -124,11 +119,10 @@ export class LandingCineWebComponent implements OnInit {
 
             } else {
               this.dialogService.showErrorDialog({
-                title: "",
+                title: "Error",
                 description: `${response.message}`,
-                buttonText: "Đóng",
+                buttonText: "Exit",
                 onAccept: () => {
-
                 }
               })
             }
@@ -146,12 +140,10 @@ export class LandingCineWebComponent implements OnInit {
 
       } else {
         this.dialogService.showErrorDialog({
-          title: "",
+          title: "Error",
           description: `${response.message}`,
-          buttonText: "Đóng",
-          onAccept: () => {
-
-          }
+          buttonText: "Exit",
+          onAccept: () => {}
         })
       }
     })
@@ -161,11 +153,11 @@ export class LandingCineWebComponent implements OnInit {
     return Number(star);
   }
 
-  favoriteControl(id?: any, index?: any): boolean{
+  favoriteControl(id?: any, index?: any): boolean {
     for (const ele of this.favoriteList) {
       if (ele.filmId == id) {
         this.favorites[id] = true;
-      }else{
+      } else {
         this.favorites[id] = false;
       }
     }

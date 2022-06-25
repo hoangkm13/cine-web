@@ -1,10 +1,10 @@
 <div class="background-cine-header" fxLayoutGap="30px" fxLayout="column">
   <app-header-cine></app-header-cine>
   <div fxLayout="column" fxLayoutAlign="center center">
-    <div class="sign-in-form" fxLayout="column" fxLayoutAlign="center center">
+    <div class="form" fxLayout="column" fxLayoutAlign="center center">
       <div style="width: 350px" fxLayout="column" fxLayoutGap="20">
         <div class="sign-in-title text-white">SIGN IN</div>
-        <form [formGroup]="formGroup" fxLayout="column">
+        <form [formGroup]="formGroup" fxLayout="column" (keyup.enter)="login()">
           <mat-form-field appearance="outline">
             <mat-label>User name</mat-label>
             <input formControlName="userName" class="text-white" matInput>
@@ -22,7 +22,7 @@
           </mat-form-field>
         </form>
         <div class="dialog-action-row">
-          <button style="width: 100%" mat-raised-button color="primary" (keyup.enter)="login()" (click)="login()">Sign in</button>
+          <button style="width: 100%" mat-raised-button color="warn" (click)="login()">Sign in</button>
         </div>
         <div class="gray-text">
           <p>New to Cine? <a class="text-white" style="text-decoration: none" href="/sign-up">Sign up now</a></p>

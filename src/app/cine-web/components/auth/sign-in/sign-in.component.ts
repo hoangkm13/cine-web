@@ -43,7 +43,7 @@ export class SignInComponent implements OnInit {
           this.dialogService.showErrorDialog({
             title: "",
             description: `${response.message}`,
-            buttonText: "Đóng",
+            buttonText: "Exit",
             onAccept: () => {
 
             }

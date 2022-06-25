@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {GlobalConstants} from "../GlobalConstants";
 import {MatDialog} from "@angular/material/dialog";
@@ -26,7 +26,8 @@ export class HeaderCineComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private genreService: GenreControllerService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private cookie: CookieService
   ) {
     this.genreList = new FormControl([])
     this.token = cookieService.get(GlobalConstants.authToken)
@@ -37,21 +38,21 @@ export class HeaderCineComponent implements OnInit {
   }
 
   openUserProfile() {
-    this.dialog.open(UserProfileComponent, {
-    })
+    this.dialog.open(UserProfileComponent, {})
   }
 
   getGenres() {
-    if(this.token) {
+    if (this.token) {
       this.genreService.getAllGenres().subscribe(result => {
-        if(!result.errorCode) {
+        if (!result.errorCode) {
           this.genreList.setValue(result.result)
         } else {
           this.dialogService.showErrorDialog({
             title: "Error",
             description: `${result.message}`,
             buttonText: "Exit",
-            onAccept: () => {}
+            onAccept: () => {
+            }
           })
         }
       })
@@ -59,7 +60,7 @@ export class HeaderCineComponent implements OnInit {
   }
 
   navigationPage() {
-    if(this.token) this.router.navigate(['/welcome'])
+    if (this.token) this.router.navigate(['/welcome'])
     else this.router.navigate(['/cine-web'])
   }
 
@@ -68,29 +69,17 @@ export class HeaderCineComponent implements OnInit {
   }
 
   onSearchKey() {
-    const extraData: NavigationExtras = {
-      state: {
-        check: 'bySearch',
-      }
-    }
-    this.router.navigate(['/films/', this.searchKey], extraData)
+    this.cookie.set(GlobalConstants.searchType, 'bySearch', undefined, "/")
+    this.router.navigate(['/films/', this.searchKey])
   }
 
   navigationPageGenre(genre: string) {
-    if(genre) {
-      const extraData: NavigationExtras = {
-        state: {
-          check: 'byGenre',
-        }
-      }
-      this.router.navigate(['/films/', genre], extraData)
+    if (genre) {
+      this.cookie.set(GlobalConstants.searchType, 'byGenre', undefined, "/")
+      this.router.navigate(['/films/', genre])
     } else {
-      const extraData: NavigationExtras = {
-        state: {
-          check: 'byFavorite'
-        }
-      }
-      this.router.navigate(['/films/favorites', ], extraData)
+      this.cookie.set(GlobalConstants.searchType, 'byFavorite', undefined, "/")
+      this.router.navigate(['/films/favorites',])
     }
   }
 }
