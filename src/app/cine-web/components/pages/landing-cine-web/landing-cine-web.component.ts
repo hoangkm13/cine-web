@@ -83,7 +83,12 @@ export class LandingCineWebComponent implements OnInit {
   }
 
   goToFilmByGenre(genreName: string) {
-    this.router.navigate(['/films', genreName]).then();
+    const extraData: NavigationExtras = {
+      state: {
+        check: 'byGenre',
+      }
+    }
+    this.router.navigate(['/films', genreName], extraData).then();
   }
 
   goToFilmDetail(id: any) {

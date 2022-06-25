@@ -51,9 +51,9 @@
             <label fxFlex="30">Gender:</label>
             <mat-radio-group formControlName="gender" fxFlex="70" fxLayout="row wrap" fxLayoutAlign="space-between"
                              aria-label="Select an option">
-              <mat-radio-button value="MALE">Nam</mat-radio-button>
-              <mat-radio-button value="FEMALE">Nữ</mat-radio-button>
-              <mat-radio-button value="OTHER">Khác</mat-radio-button>
+              <mat-radio-button value="MALE">MALE</mat-radio-button>
+              <mat-radio-button value="FEMALE">FEMALE</mat-radio-button>
+              <mat-radio-button value="OTHER">OTHER</mat-radio-button>
             </mat-radio-group>
             <mat-error *ngIf="formGroup.controls['gender'].errors">
               Giới tính không được để trống
@@ -80,7 +80,7 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Phone number:</mat-label>
-            <input formControlName="mobile" class="text-white" matInput>
+            <input (keydown)="numberOnly($event)" formControlName="mobile" class="text-white" matInput>
             <mat-error *ngIf="formGroup.controls['mobile'].errors">
               Số điện thoại không được để trống
             </mat-error>

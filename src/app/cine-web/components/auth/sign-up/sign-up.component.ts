@@ -28,11 +28,20 @@ export class SignUpComponent implements OnInit {
       lastName: ["", Validators.required],
       gender: [" ", Validators.required],
       birthOfDate: ["", Validators.required],
-      mobile: ["", Validators.required],
+      mobile: ["", [Validators.required, Validators.pattern("[1-9]{1}[0-9]{9}")]],
       email: ["", Validators.required]
     })
 
-    this.getExtraData()
+    // this.getExtraData()
+  }
+
+  numberOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
   }
 
   ngOnInit(): void {
@@ -71,11 +80,11 @@ export class SignUpComponent implements OnInit {
     }
   }
 
-  getExtraData() {
-    const state: any = this.router.getCurrentNavigation()?.extras
-    console.log(state)
-    if(state) {
-      this.formGroup.controls['email'].setValue(state.state.email)
-    }
-  }
+  // getExtraData() {
+  //   const state: any = this.router.getCurrentNavigation()?.extras
+  //   console.log(state)
+  //   if(state) {
+  //     this.formGroup.controls['email'].setValue(state.state.email)
+  //   }
+  // }
 }

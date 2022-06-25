@@ -70,7 +70,7 @@ export class HeaderCineComponent implements OnInit {
   onSearchKey() {
     const extraData: NavigationExtras = {
       state: {
-        searchKey: this.searchKey
+        check: 'bySearch',
       }
     }
     this.router.navigate(['/films/', this.searchKey], extraData)
@@ -78,12 +78,16 @@ export class HeaderCineComponent implements OnInit {
 
   navigationPageGenre(genre: string) {
     if(genre) {
-      this.router.navigate(['/films/', genre])
-      console.log(genre)
+      const extraData: NavigationExtras = {
+        state: {
+          check: 'byGenre',
+        }
+      }
+      this.router.navigate(['/films/', genre], extraData)
     } else {
       const extraData: NavigationExtras = {
         state: {
-          searchKey: ''
+          check: 'byFavorite'
         }
       }
       this.router.navigate(['/films/favorites', ], extraData)

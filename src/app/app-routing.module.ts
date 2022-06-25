@@ -39,7 +39,7 @@ routes = [
     component: LandingCineWebComponent
   },
   {
-    path: "films/:genre",
+    path: "films/:searchValue",
     component: FilmsByGenreComponent
   },
   {
