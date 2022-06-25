@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  CommentDTO,
   DislikeDTO,
   FavoriteControllerService,
   FavoriteDTO,
@@ -7,11 +8,12 @@ import {
   UserControllerService, ViewControllerService
 } from "../../../cine-svc";
 import {CookieService} from "ngx-cookie-service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import * as _ from "lodash";
 import {PageEvent} from "@angular/material/paginator";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {DialogService} from "../../shared/dialog.service";
+import {CommentUser} from "../../../interface/data";
 
 @Component({
   selector: 'app-detail-film',
@@ -38,6 +40,8 @@ export class DetailFilmComponent implements OnInit {
   favoriteList: FavoriteDTO[] = []
   idFavoriteFilm: number = 0
 
+  listComment : Array<CommentUser> = []
+
   reactLikeUser: boolean = false
   reactDislikeUser: boolean = false
 
@@ -45,6 +49,19 @@ export class DetailFilmComponent implements OnInit {
   dislikeList: DislikeDTO[] = []
   idLike: number = 1
   idDislike: number = 1
+
+  orderByValue = [
+    {
+      value: 'DSC',
+      viewValue: "Newest"
+    },
+    {
+      value: 'ASC',
+      viewValue: "Oldest"
+    }
+  ]
+
+  orderBySelect = new FormControl('DSC')
 
   avatarUserComment: string = `assets/images/users/`
 
@@ -75,11 +92,11 @@ export class DetailFilmComponent implements OnInit {
       viewCount: [0]
     })
 
+    this.getCommentData()
     this.getFilmID()
     this.getCurrentUser()
     this.getData()
     this.getViewCount()
-    this.getCommentData()
   }
 
   ngOnInit(): void {
@@ -168,15 +185,31 @@ export class DetailFilmComponent implements OnInit {
   }
 
   getCommentData() {
+    this.listComment = []
     this.filmService.getCommentPagination(
       this.idFilm,
       this.pageIndex + 1,
       this.pageSize,
       'createdAt',
-      'DSC').subscribe(result => {
+      this.orderBySelect.value).subscribe(result => {
         if(!result.errorCode) {
           this.formGroup.controls["comments"].setValue(result.result?.commentDTOList)
           this.length = result.result?.totalElements
+
+          this.formGroup.controls["comments"].value.forEach((comment: CommentDTO) => {
+            if(comment.userId === this.dataUser.id) {
+              this.listComment.push({
+                idComment: comment.id,
+                data: comment
+              })
+              } else {
+              this.listComment.push({
+                data: comment
+              })
+            }
+          })
+
+          console.log(this.listComment)
         }
         else {
           this.showErrorDialog(result)
@@ -341,5 +374,16 @@ export class DetailFilmComponent implements OnInit {
         }
       })
     }
+  }
+
+  deleteComment(idComment: any) {
+    this.filmService.deleteComment(idComment).subscribe(result => {
+      if(!result.errorCode) {
+        this.getCommentData()
+        this.dialogService.showSnackBar({message: "Delete comment successfully"})
+      } else {
+        this.showErrorDialog(result)
+      }
+    })
   }
 }

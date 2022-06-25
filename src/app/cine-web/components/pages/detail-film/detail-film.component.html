@@ -218,25 +218,55 @@
         </div>
 
         <div *ngIf="this.formGroup.controls['comments'].value">
-          <div
-            class="comment-user" fxLayout="column" fxLayoutGap="20px"
-            *ngFor="let comment of this.formGroup.controls['comments'].value"
-          >
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
-                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                  <img [src]="avatarUserComment + comment.userAvatar" height="20" width="20" class="avatar-user" alt="">
-                  <span class="text-description">{{comment.username}}</span>
+          <div fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <mat-form-field class="genre-choice" color="warn">
+                <mat-label>Order by</mat-label>
+                <mat-select [formControl]="orderBySelect">
+                  <mat-option
+                    *ngFor="let orderBy of orderByValue"
+                    [value]="orderBy.value"
+                    (click)="getCommentData()"
+                  >
+                    {{orderBy.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div
+              class="comment-user" fxLayout="column" fxLayoutGap="20px"
+              *ngFor="let comment of this.listComment"
+            >
+              <div fxLayout="column" fxLayoutGap="10px">
+                <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between center">
+                  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                    <img [src]="avatarUserComment + comment.data.userAvatar" height="20" width="20"
+                         class="avatar-user" alt=""
+                    >
+                    <span class="text-description">{{comment.data.username}}</span>
+                  </div>
+                  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="24px">
+                    <span>
+                    {{comment.data.createdAt | date: 'mediumDate'}}
+                  </span>
+                    <mat-icon
+                      matTooltip="Delete comment"
+                      class="delete-comment-icon"
+                      *ngIf="comment.idComment"
+                      (click)="deleteComment(comment.idComment)"
+                    >
+                      delete_outline
+                    </mat-icon>
+                  </div>
+
                 </div>
-                <span>
-                  {{comment.createdAt | date: 'mediumDate'}}
-                </span>
-              </div>
-              <div style="padding: 5px 10px">
-                {{comment.commentText}}
+                <div style="padding: 5px 10px">
+                  {{comment.data.commentText}}
+                </div>
               </div>
             </div>
           </div>
+
           <mat-paginator
             [length]="length"
             [pageSize]="pageSize"

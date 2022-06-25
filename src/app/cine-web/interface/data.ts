@@ -1,4 +1,4 @@
-import {FilmDTO} from "../cine-svc";
+import {CommentDTO, FilmDTO} from "../cine-svc";
 
 export interface ErrorDialogData {
   title?: string
@@ -24,4 +24,9 @@ export interface FilmByGenre {
 export interface LandingData {
   genre: string,
   data: Array<FilmByGenre>
+}
+
+export interface CommentUser {
+  idComment?: number
+  data: CommentDTO
 }
