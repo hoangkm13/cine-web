@@ -1,7 +1,6 @@
 <div fxLayout="column" style="background: #06121E">
   <div fxLayout="column" [style.background-image]="'url(' + urlImage + ')'"
        class="background-film-large"
-       style="background-size: contain"
        fxLayoutGap="200px">
     <app-header-cine></app-header-cine>
 
@@ -145,10 +144,10 @@
 
               <div fxLayout="row" class="genres"
                    fxLayoutGap="10px"
-                   fxLayoutAlign="space-between center"
-                  *ngFor="let genre of this.formGroup.controls['genres'].value"
+                   fxLayoutAlign="end center"
               >
                 <button mat-stroked-button fxLayout="row"
+                        *ngFor="let genre of this.formGroup.controls['genres'].value"
                         fxLayoutAlign="center center"
                         (click)="redirectToPage(genre.name)"
                 >
