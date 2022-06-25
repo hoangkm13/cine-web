@@ -40,9 +40,9 @@ export class LandingCineWebComponent implements OnInit {
 
   slideConfig = {
     slidesToShow: 1,
-    infinite: true,
+    infinite: false,
     variableWidth: true,
-    outerEdgeLimit: false,
+    outerEdgeLimit: true,
     arrows: true,
     draggable: false,
   };
