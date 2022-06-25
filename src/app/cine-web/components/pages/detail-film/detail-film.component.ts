@@ -250,18 +250,19 @@ export class DetailFilmComponent implements OnInit {
   }
 
   playVideo() {
+    this.viewService.createView({
+      filmId: this.idFilm,
+      userId: this.dataUser.id
+    }).subscribe(result => {
+      if(!result.errorCode) {
+        this.getViewCount()
+      } else {
+        this.showErrorDialog(result)
+      }
+    })
     this.dialogService.showVideoPlayer().afterClosed().subscribe(result => {
       if(result) {
-        this.viewService.createView({
-          filmId: this.idFilm,
-          userId: this.dataUser.id
-        }).subscribe(result => {
-          if(!result.errorCode) {
-            this.getViewCount()
-          } else {
-            this.showErrorDialog(result)
-          }
-        })
+       console.log(result)
       }
     })
   }

@@ -6,7 +6,7 @@
 
       <section fxLayout="row wrap">
         <mat-card (click)="goToFilmDetail(film.id)" style="width: 224px; margin: 10px;"
-                  *ngFor="let film of list | paginate: { itemsPerPage: 15, currentPage: currentPage }">
+                  *ngFor="let film of list | paginate: { itemsPerPage: 5, currentPage: currentPage }">
           <img mat-card-image src="{{ beforePath + film?.slug + afterPath}}"
                alt="Photo of a Shiba Inu">
           <mat-card-title>{{film?.title}}</mat-card-title>
@@ -18,7 +18,6 @@
 
           <ngb-rating [rate]="setStarRating(film?.ratingStar)" [readonly]="true" [starTemplate]="t"
                       [max]="5"></ngb-rating>
-
           <!--          <mat-card-content>-->
           <!--            <p>-->
           <!--              {{film.description}}-->
