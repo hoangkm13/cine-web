@@ -42,6 +42,7 @@ import { ErrorDialogComponent } from './cine-web/components/shared/error-dialog/
 import { VideoPlayerComponent } from './cine-web/components/shared/video-player/video-player.component';
 import {MatSelectModule} from "@angular/material/select";
 import { ClickStopPropagationDirective } from './cine-web/components/directives/click-stop-propagation.directive';
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { ClickStopPropagationDirective } from './cine-web/components/directives/
     MatPaginatorModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   exports: [
     FooterCineComponent,

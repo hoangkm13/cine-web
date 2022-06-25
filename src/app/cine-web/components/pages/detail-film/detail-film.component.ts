@@ -3,7 +3,7 @@ import {
   DislikeDTO,
   FavoriteControllerService,
   FavoriteDTO,
-  FilmControllerService, GenreControllerService, LikeDTO,
+  FilmControllerService, LikeDTO,
   UserControllerService, ViewControllerService
 } from "../../../cine-svc";
 import {CookieService} from "ngx-cookie-service";
@@ -12,7 +12,6 @@ import * as _ from "lodash";
 import {PageEvent} from "@angular/material/paginator";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {DialogService} from "../../shared/dialog.service";
-import {result} from "lodash";
 
 @Component({
   selector: 'app-detail-film',
@@ -199,6 +198,7 @@ export class DetailFilmComponent implements OnInit {
       if(!result.errorCode) {
         this.getCommentData()
         this.formGroup.controls["commentUser"].setValue("")
+        this.dialogService.showSnackBar({message: "Add comment successfully"})
       } else {
         this.showErrorDialog(result)
       }

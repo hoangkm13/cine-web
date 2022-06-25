@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]]
     })
 
-    // this.getExtraData()
+    this.getExtraData()
   }
 
   numberOnly(event: any): boolean {
@@ -85,11 +85,8 @@ export class SignUpComponent implements OnInit {
     }
   }
 
-  // getExtraData() {
-  //   const state: any = this.router.getCurrentNavigation()?.extras
-  //   console.log(state)
-  //   if(state) {
-  //     this.formGroup.controls['email'].setValue(state.state.email)
-  //   }
-  // }
+  getExtraData() {
+      const state: any = this.router.getCurrentNavigation()?.extras
+        this.formGroup.controls['email'].setValue(state?.state?.email)
+      }
 }

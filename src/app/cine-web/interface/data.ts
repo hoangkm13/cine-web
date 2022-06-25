@@ -7,6 +7,10 @@ export interface ErrorDialogData {
   onAccept: Function
 }
 
+export interface SnackBarData {
+  message: string
+}
+
 export interface idFavorite {
   idFavorite: number,
   idFilm: number
