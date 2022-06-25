@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  DislikeDTO,
   FavoriteControllerService,
   FavoriteDTO,
-  FilmControllerService,
-  UserControllerService
+  FilmControllerService, GenreControllerService, LikeDTO,
+  UserControllerService, ViewControllerService
 } from "../../../cine-svc";
 import {CookieService} from "ngx-cookie-service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import * as _ from "lodash";
 import {PageEvent} from "@angular/material/paginator";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {DialogService} from "../../shared/dialog.service";
+import {result} from "lodash";
 
 @Component({
   selector: 'app-detail-film',
@@ -37,11 +39,16 @@ export class DetailFilmComponent implements OnInit {
   favoriteList: FavoriteDTO[] = []
   idFavoriteFilm: number = 0
 
+  reactLikeUser: boolean = false
+  reactDislikeUser: boolean = false
+
+  likeList: LikeDTO[] = []
+  dislikeList: DislikeDTO[] = []
+  idLike: number = 1
+  idDislike: number = 1
+
   avatarUserComment: string = `assets/images/users/`
 
-  actor: Array<string> = [
-    "Ngoc Nghia", "Hoang Khuat", "Quoc Viet"
-  ]
   urlImage: string = "";
   constructor(
     private filmService: FilmControllerService,
@@ -51,7 +58,8 @@ export class DetailFilmComponent implements OnInit {
     private favouriteService: FavoriteControllerService,
     private activeRouter: ActivatedRoute,
     private router: Router,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private viewService: ViewControllerService,
   ) {
     this.formGroup = formBuilder.group({
       nameFilm: [""],
@@ -64,17 +72,18 @@ export class DetailFilmComponent implements OnInit {
       genres: [[]],
       director: [null],
       ratingStar: [0],
-      commentUser: [""]
+      commentUser: [""],
+      viewCount: [0]
     })
 
     this.getFilmID()
     this.getCurrentUser()
     this.getData()
+    this.getViewCount()
     this.getCommentData()
   }
 
   ngOnInit(): void {
-
   }
 
   getData() {
@@ -90,11 +99,13 @@ export class DetailFilmComponent implements OnInit {
           genres: this.data.genres,
           actors: this.data.actors,
           director: this.data.director.name,
-          ratingStar: this.data.ratingStar
+          ratingStar: this.data.ratingStar,
         })
         this.starRating = this.formGroup.controls['ratingStar'].value
-
+        this.likeList = this.data.likes
+        this.dislikeList = this.data.dislikes
         this.urlImage = `../../../../../../assets/images/films/${this.formGroup.controls['slug'].value}/large.jpg`;
+        this.checkLikeUser()
       }
       else {
         this.showErrorDialog(result)
@@ -220,5 +231,109 @@ export class DetailFilmComponent implements OnInit {
       buttonText: "Exit",
       onAccept: () => {}
     })
+  }
+
+  playVideo() {
+    this.dialogService.showVideoPlayer().afterClosed().subscribe(result => {
+      if(result) {
+        this.viewService.createView({
+          filmId: this.idFilm,
+          userId: this.dataUser.id
+        }).subscribe(result => {
+          if(!result.errorCode) {
+            this.getViewCount()
+          } else {
+            this.showErrorDialog(result)
+          }
+        })
+      }
+    })
+  }
+
+  getViewCount() {
+    this.viewService.getViewCountByFilmId(this.idFilm).subscribe(result => {
+      if(!result.errorCode) {
+        this.formGroup.controls['viewCount'].setValue(result.result?.count)
+      } else {
+        this.showErrorDialog(result)
+      }
+    })
+  }
+
+  checkLikeUser() {
+    let foundReact
+    foundReact = this.likeList.find(like => {
+      return like.userId === this.dataUser.id
+    })
+
+    if(foundReact) {
+      this.reactLikeUser = true
+      this.idLike = <number>foundReact.id
+      return
+    } else {
+      foundReact = this.dislikeList.find(dislike => {
+        return dislike.userId === this.dataUser.id
+      })
+
+      if(foundReact) {
+        this.reactDislikeUser = true
+        this.idDislike = <number>foundReact.id
+      }
+    }
+
+  }
+
+  handleReact(action: string) {
+    if(action === 'like') {
+      if(this.reactDislikeUser) this.handleUndoReact('dislike')
+      this.filmService.createLike({
+        userId: this.dataUser.id,
+        filmId: this.idFilm
+      }).subscribe(result => {
+        if(!result.errorCode) {
+          this.idLike = <number>result.result?.id
+          this.reactLikeUser = true
+          this.likeList.length++
+        } else {
+          this.showErrorDialog(result)
+        }
+      })
+    } else if(action === 'dislike') {
+      if(this.reactLikeUser) this.handleUndoReact('like')
+      this.filmService.createDislike({
+        userId: this.dataUser.id,
+        filmId: this.idFilm
+      }).subscribe(result => {
+        if(!result.errorCode) {
+          this.idDislike = <number>result.result?.id
+          this.reactDislikeUser = true
+          this.dislikeList.length++
+        } else {
+          this.showErrorDialog(result)
+        }
+      })
+    }
+  }
+
+  handleUndoReact(action: string) {
+    if(action === 'like') {
+      this.filmService.deleteLike(this.idLike).subscribe(result => {
+        if(result.errorCode) {
+          this.showErrorDialog(result)
+        } else {
+          this.reactLikeUser = false
+          this.likeList.length--
+        }
+      })
+    } else if(action === 'dislike') {
+      this.filmService.deleteDislike(this.idDislike).subscribe(result => {
+        if(result.errorCode) {
+          this.showErrorDialog(result)
+        } else {
+          this.reactDislikeUser = false
+          this.dislikeList.length--
+        }
+      })
+    }
   }
 }

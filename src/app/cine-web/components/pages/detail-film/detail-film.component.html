@@ -8,7 +8,11 @@
       <div fxLayout="row" fxLayoutGap="64px">
         <div fxLayout="column" fxLayoutGap="32px" >
           <img src="../../../../../assets/images/films/a-quiet-place/small2.jpg" height="414.96" width="280" alt="">
-          <button mat-raised-button class="button-watch" color="warn" fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button class="button-watch"
+                  color="warn" fxLayout="row"
+                  fxLayoutAlign="center center"
+                  (click)="playVideo()"
+          >
             <mat-icon>play_arrow</mat-icon>
             <span class="text-button-watch">
               Watch now
@@ -16,11 +20,11 @@
           </button>
         </div>
         <div fxLayout="column" fxFlex fxLayoutGap="32px">
-          <div fxLayout="column" fxLayoutGap="25px">
+          <div fxLayout="column" fxLayoutGap="28px">
             <div fxLayoutGap="10px">
-            <span class="text-title-film">
-              {{this.formGroup.controls['nameFilm'].value}}
-            </span>
+              <span class="text-title-film">
+                {{this.formGroup.controls['nameFilm'].value}}
+              </span>
 
               <span class="text-title-film">
               (
@@ -31,40 +35,112 @@
             </span>
             </div>
 
-            <div>
-              <ng-template #t let-fill="fill">
-            <span class="star" [class.full]="fill === 100">
-              <span class="half" [style.width.%]="fill">&star;</span>&star;
-            </span>
-              </ng-template>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px">
+              <div>
+                <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&star;</span>&star;
+                </span>
+                </ng-template>
 
-              <ngb-rating [(rate)]="starRating" [readonly]="true" [starTemplate]="t"  [max]="5"></ngb-rating>
+                <ngb-rating [(rate)]="starRating" [readonly]="true" [starTemplate]="t"  [max]="5"></ngb-rating>
+              </div>
+
+              <div class="text-description-info" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <mat-icon>remove_red_eye</mat-icon>
+                <span>
+                  {{this.formGroup.controls['viewCount'].value}}
+                </span>
+              </div>
+
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-between center">
-              <button
-                *ngIf="!checkFavorite; else removeFavorite"
-                mat-stroked-button
-                fxLayout="row" fxLayoutAlign="center center"
-                (click)="handleFavourite('add')">
-                <mat-icon>add</mat-icon>
-                <span class="text-button">
-                  Add to Favorite
-                </span>
-              </button>
 
-              <ng-template #removeFavorite>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
                 <button
+                  *ngIf="!checkFavorite; else removeFavorite"
                   mat-stroked-button
                   fxLayout="row" fxLayoutAlign="center center"
-                  (click)="handleFavourite('remove')">
-                  <mat-icon>clear</mat-icon>
+                  (click)="handleFavourite('add')">
+                  <mat-icon>add</mat-icon>
                   <span class="text-button">
-                    Remove from Favorite
+                  Add to Favorite
                 </span>
                 </button>
-              </ng-template>
 
+                <ng-template #removeFavorite>
+                  <button
+                    mat-stroked-button
+                    fxLayout="row" fxLayoutAlign="center center"
+                    (click)="handleFavourite('remove')">
+                    <mat-icon>clear</mat-icon>
+                    <span class="text-button">
+                    Remove from Favorite
+                </span>
+                  </button>
+                </ng-template>
+
+                <div fxLayout="row"
+                     class="text-description-info"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="20px">
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="8px"
+                  >
+                    <mat-icon
+                      *ngIf="!reactLikeUser; else haveReactLike"
+                      class="user-react"
+                      (click)="handleReact('like')"
+                    >
+                      thumb_up
+                    </mat-icon>
+                    <span>
+                      {{this.likeList.length}}
+                    </span>
+                  </div>
+
+                  <ng-template #haveReactLike>
+                    <mat-icon
+                      class="user-react"
+                      color="warn"
+                      (click)="handleUndoReact('like')"
+                    >
+                      thumb_up
+                    </mat-icon>
+                  </ng-template>
+
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="8px"
+                  >
+                    <mat-icon
+                      class="user-react"
+                      *ngIf="!reactDislikeUser; else haveReactDislike"
+                      (click)="handleReact('dislike')"
+                    >
+                      thumb_down
+                    </mat-icon>
+                    <span>
+                      {{this.dislikeList.length}}
+                    </span>
+                  </div>
+
+                  <ng-template #haveReactDislike>
+                    <mat-icon
+                      class="user-react"
+                      color="warn"
+                      (click)="handleUndoReact('dislike')"
+                    >
+                      thumb_down
+                    </mat-icon>
+                  </ng-template>
+
+                </div>
+              </div>
 
               <div fxLayout="row" class="genres"
                    fxLayoutGap="10px"

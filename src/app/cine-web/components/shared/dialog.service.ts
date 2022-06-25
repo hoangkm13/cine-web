@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {LoadingDataComponent} from "./loading-data/loading-data.component";
 import {ErrorDialogData} from "../../interface/data";
 import {ErrorDialogComponent} from "./error-dialog/error-dialog.component";
+import {VideoPlayerComponent} from "./video-player/video-player.component";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +19,7 @@ export class DialogService {
 
   showErrorDialog(errorDialogData: ErrorDialogData) {
     this.matDialog.open(ErrorDialogComponent, {
-      width: "35vw",
+      width: "30vw",
       data: {
         title: `${errorDialogData.title == null ? "Error" : errorDialogData.title}`,
         description: `${
@@ -39,5 +40,12 @@ export class DialogService {
   closeLoadingData() {
     // @ts-ignore
     this.loadingAnimation.close()
+  }
+
+  showVideoPlayer() {
+    return this.matDialog.open(VideoPlayerComponent, {
+      width: "80vw",
+      height: "75vh"
+    })
   }
 }
