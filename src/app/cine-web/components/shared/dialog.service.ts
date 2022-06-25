@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {LoadingDataComponent} from "./loading-data/loading-data.component";
-import {ErrorDialogData} from "../../interface/data";
+import {ErrorDialogData, SnackBarData} from "../../interface/data";
 import {ErrorDialogComponent} from "./error-dialog/error-dialog.component";
 import {VideoPlayerComponent} from "./video-player/video-player.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +14,8 @@ export class DialogService {
   loadingAnimation: MatDialogRef<LoadingDataComponent> | undefined;
 
   constructor(
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -46,6 +48,15 @@ export class DialogService {
     return this.matDialog.open(VideoPlayerComponent, {
       width: "80vw",
       height: "75vh"
+    })
+  }
+
+  showSnackBar(dataSnack: SnackBarData) {
+    this.snackBar.open(dataSnack.message, "", {
+      duration: 3 * 1000,
+      horizontalPosition: "start",
+      verticalPosition: "bottom",
+      panelClass: ["snackbar-custom"],
     })
   }
 }

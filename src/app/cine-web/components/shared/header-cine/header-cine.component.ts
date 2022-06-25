@@ -69,6 +69,15 @@ export class HeaderCineComponent implements OnInit {
   }
 
   onSearchKey() {
+    if(this.searchKey.trim() === "") {
+      this.dialogService.showErrorDialog({
+        title: "Error",
+        description: "Please enter film name or actor name",
+        buttonText: "Exit",
+        onAccept: () => {}
+      })
+      return
+    }
     this.cookie.set(GlobalConstants.searchType, 'bySearch', undefined, "/")
     this.router.navigate(['/films/', this.searchKey])
   }

@@ -38,8 +38,8 @@ export class UserProfileComponent implements OnInit {
       viewValue: "Female"
     },
     {
-      value: "ANOTHER",
-      viewValue: "Another"
+      value: "OTHER",
+      viewValue: "Other"
     }
   ]
 
@@ -119,6 +119,16 @@ export class UserProfileComponent implements OnInit {
       })
       return
     }
+    if(this.passwordForm.controls['newPassword'].value !== this.passwordForm.controls['confirmNewPassword'].value) {
+      this.dialogService.showErrorDialog({
+        title: "Error",
+        description: "Confirm password not matching",
+        buttonText: "Exit",
+        onAccept: () => {}
+      })
+      this.passwordForm.reset()
+      return
+    }
     if(this.actionEdit === 'editProfile') {
       this.userService.updateUser(
         this.dataBackup.id,
@@ -134,6 +144,7 @@ export class UserProfileComponent implements OnInit {
         if(!result.errorCode) {
           this.handleUser("cancel")
           this.getData()
+          this.showSnackBar("Edit user profile successfully")
         } else {
           this.showErrorDialog(result)
         }
@@ -151,11 +162,13 @@ export class UserProfileComponent implements OnInit {
         if(!result.errorCode) {
           this.handleUser("cancel")
           this.getData()
+          this.showSnackBar("Edit user profile successfully")
         } else {
           this.showErrorDialog(result)
         }
       })
     }
+
   }
 
   cloneData() {
@@ -180,6 +193,7 @@ export class UserProfileComponent implements OnInit {
 
   onSignOut() {
     this.cookieService.delete(GlobalConstants.authToken, "/")
+    this.cookieService.delete(GlobalConstants.searchType, "/")
     this.router.navigate(['/cine-web'])
     this.matDialogRef.close()
   }
@@ -191,5 +205,9 @@ export class UserProfileComponent implements OnInit {
       buttonText: "Exit",
       onAccept: () => {}
     })
+  }
+
+  showSnackBar(message: string) {
+    this.dialogService.showSnackBar({message: message})
   }
 }
