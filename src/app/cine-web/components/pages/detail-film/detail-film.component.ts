@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  CommentDTO,
   DislikeDTO,
   FavoriteControllerService,
   FavoriteDTO,
@@ -7,7 +8,7 @@ import {
   UserControllerService, ViewControllerService
 } from "../../../cine-svc";
 import {CookieService} from "ngx-cookie-service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import * as _ from "lodash";
 import {PageEvent} from "@angular/material/paginator";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
@@ -47,6 +48,19 @@ export class DetailFilmComponent implements OnInit {
   idLike: number = 1
   idDislike: number = 1
 
+  orderByValue = [
+    {
+      value: 'DSC',
+      viewValue: "Newest"
+    },
+    {
+      value: 'ASC',
+      viewValue: "Oldest"
+    }
+  ]
+
+  orderBySelect = new FormControl('DSC')
+
   avatarUserComment: string = `assets/images/users/`
 
   urlImage: string = "";
@@ -78,9 +92,9 @@ export class DetailFilmComponent implements OnInit {
 
     this.getFilmID()
     this.getCurrentUser()
+    this.getCommentData()
     this.getData()
     this.getViewCount()
-    this.getCommentData()
   }
 
   ngOnInit(): void {
@@ -174,7 +188,7 @@ export class DetailFilmComponent implements OnInit {
       this.pageIndex + 1,
       this.pageSize,
       'createdAt',
-      'DSC').subscribe(result => {
+      this.orderBySelect.value).subscribe(result => {
         if(!result.errorCode) {
           this.formGroup.controls["comments"].setValue(result.result?.commentDTOList)
           this.length = result.result?.totalElements
@@ -337,5 +351,20 @@ export class DetailFilmComponent implements OnInit {
         }
       })
     }
+  }
+
+  deleteComment(idComment: any) {
+    this.filmService.deleteComment(idComment).subscribe(result => {
+      if(!result.errorCode) {
+        this.getCommentData()
+        this.dialogService.showSnackBar({message: "Delete comment successfully"})
+      } else {
+        this.showErrorDialog(result)
+      }
+    })
+  }
+
+  checkCommentUser(userId: any): boolean {
+    return userId === this.dataUser.id
   }
 }

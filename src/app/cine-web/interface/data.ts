@@ -1,4 +1,4 @@
-import {FilmDTO} from "../cine-svc";
+import {CommentDTO, FilmDTO} from "../cine-svc";
 
 export interface ErrorDialogData {
   title?: string

@@ -54,7 +54,7 @@ export class DialogService {
   showSnackBar(dataSnack: SnackBarData) {
     this.snackBar.open(dataSnack.message, "", {
       duration: 3 * 1000,
-      horizontalPosition: "start",
+      horizontalPosition: "end",
       verticalPosition: "bottom",
       panelClass: ["snackbar-custom"],
     })
