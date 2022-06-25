@@ -16,35 +16,49 @@
     </div>
   </div>
   <div class="slide-list text-white" fxLayout="column" fxLayoutGap="30px">
-    <div fxLayout="column" *ngFor="let slide of slides">
-      <a class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</a>
+    <div fxLayout="column" *ngFor="let landingData of this.landingData">
+      <a class="genreName" (click)="goToFilmByGenre(landingData.genre)">
+        {{landingData.genre}}
+      </a>
       <section>
         <ngx-slick-carousel class="carousel" [config]="slideConfig">
-          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList" (click)="goToFilmDetail(ele.id)" >
+          <mat-card ngxSlickItem class="slide"
+                    *ngFor="let ele of landingData.data"
+                    (click)="goToFilmDetail(ele.film.id)"
+          >
             <div class="favourite-btn">
-              <button appClickStopPropagation *ngIf="!favorites[ele.id]; else removeFavorite " (click)="addToFavorite(ele.id)" mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
-                <mat-icon>add_to_photos</mat-icon>
+              <button appClickStopPropagation
+                      *ngIf="!ele.idFavorite; else removeFavorite "
+                      (click)="addToFavorite(landingData.genre, ele.film.id)"
+                      mat-icon-button matTooltip="Add to favorites"
+                      matTooltipPosition="above"
+              >
+                <mat-icon>
+                  add_to_photos
+                </mat-icon>
               </button>
               <ng-template #removeFavorite>
-                <button appClickStopPropagation (click)="removeFromFavorite(ele.id)"  mat-icon-button matTooltip="Remove from favorites" matTooltipPosition="above">
+                <button appClickStopPropagation (click)="removeFromFavorite(landingData.genre, ele.idFavorite, ele.film.id)"
+                        mat-icon-button matTooltip="Remove from favorites" matTooltipPosition="above"
+                >
                   <mat-icon>indeterminate_check_box</mat-icon>
                 </button>
               </ng-template>
             </div>
-            <img height="140px" mat-card-image src="{{beforePath + ele.slug + afterPath }}" alt="Photo of a Shiba Inu">
+            <img height="140px" mat-card-image src="{{beforePath + ele.film.slug + afterPath }}" alt="Photo of a Shiba Inu">
             <div class="short-description">
-              <p style="font-size: 16px">{{ ele.title }}</p>
-              <p style="font-size: 14px" >{{ ele.description }}</p>
+              <p style="font-size: 16px">{{ ele.film.title }}</p>
+              <p style="font-size: 14px" >{{ ele.film.description }}</p>
             </div>
             <mat-card-actions>
-              <p class="film-title">{{ ele.title }}</p>
+              <p class="film-title">{{ ele.film.title }}</p>
               <ng-template #t let-fill="fill">
                 <span class="star" [class.full]="fill === 100">
                   <span class="half" [style.width.%]="fill">&star;</span>&star;
                 </span>
               </ng-template>
 
-              <ngb-rating [rate]="setStarRating(ele.ratingStar)" [readonly]="true" [starTemplate]="t" [max]="5"></ngb-rating>
+              <ngb-rating [rate]="setStarRating(ele.film.ratingStar)" [readonly]="true" [starTemplate]="t" [max]="5"></ngb-rating>
             </mat-card-actions>
           </mat-card>
         </ngx-slick-carousel>

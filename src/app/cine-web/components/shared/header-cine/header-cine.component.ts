@@ -42,9 +42,9 @@ export class HeaderCineComponent implements OnInit {
   }
 
   getGenres() {
-    if (this.token) {
+    if(this.token) {
       this.genreService.getAllGenres().subscribe(result => {
-        if (!result.errorCode) {
+        if(!result.errorCode) {
           this.genreList.setValue(result.result)
         } else {
           this.dialogService.showErrorDialog({
