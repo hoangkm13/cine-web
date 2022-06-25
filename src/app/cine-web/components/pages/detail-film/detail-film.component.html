@@ -235,25 +235,25 @@
             </div>
             <div
               class="comment-user" fxLayout="column" fxLayoutGap="20px"
-              *ngFor="let comment of this.listComment"
+              *ngFor="let comment of this.formGroup.controls['comments'].value"
             >
               <div fxLayout="column" fxLayoutGap="10px">
                 <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between center">
                   <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                    <img [src]="avatarUserComment + comment.data.userAvatar" height="20" width="20"
+                    <img [src]="avatarUserComment + comment.userAvatar" height="20" width="20"
                          class="avatar-user" alt=""
                     >
-                    <span class="text-description">{{comment.data.username}}</span>
+                    <span class="text-description">{{comment.username}}</span>
                   </div>
                   <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="24px">
                     <span>
-                    {{comment.data.createdAt | date: 'mediumDate'}}
+                    {{comment.createdAt | date: 'mediumDate'}}
                   </span>
                     <mat-icon
+                      *ngIf="checkCommentUser(comment.userId)"
                       matTooltip="Delete comment"
                       class="delete-comment-icon"
-                      *ngIf="comment.idComment"
-                      (click)="deleteComment(comment.idComment)"
+                      (click)="deleteComment(comment.id)"
                     >
                       delete_outline
                     </mat-icon>
@@ -261,7 +261,7 @@
 
                 </div>
                 <div style="padding: 5px 10px">
-                  {{comment.data.commentText}}
+                  {{comment.commentText}}
                 </div>
               </div>
             </div>

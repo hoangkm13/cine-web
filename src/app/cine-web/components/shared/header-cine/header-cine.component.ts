@@ -20,6 +20,7 @@ export class HeaderCineComponent implements OnInit {
   clickGenre: boolean = false
   genreList: FormControl
   genreClick = new FormControl('')
+  checkOnClickSign: boolean = false
 
   constructor(
     private cookieService: CookieService,

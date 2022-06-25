@@ -13,7 +13,6 @@ import * as _ from "lodash";
 import {PageEvent} from "@angular/material/paginator";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {DialogService} from "../../shared/dialog.service";
-import {CommentUser} from "../../../interface/data";
 
 @Component({
   selector: 'app-detail-film',
@@ -39,8 +38,6 @@ export class DetailFilmComponent implements OnInit {
   checkFavorite: boolean = false
   favoriteList: FavoriteDTO[] = []
   idFavoriteFilm: number = 0
-
-  listComment : Array<CommentUser> = []
 
   reactLikeUser: boolean = false
   reactDislikeUser: boolean = false
@@ -92,9 +89,9 @@ export class DetailFilmComponent implements OnInit {
       viewCount: [0]
     })
 
-    this.getCommentData()
     this.getFilmID()
     this.getCurrentUser()
+    this.getCommentData()
     this.getData()
     this.getViewCount()
   }
@@ -185,7 +182,6 @@ export class DetailFilmComponent implements OnInit {
   }
 
   getCommentData() {
-    this.listComment = []
     this.filmService.getCommentPagination(
       this.idFilm,
       this.pageIndex + 1,
@@ -195,21 +191,6 @@ export class DetailFilmComponent implements OnInit {
         if(!result.errorCode) {
           this.formGroup.controls["comments"].setValue(result.result?.commentDTOList)
           this.length = result.result?.totalElements
-
-          this.formGroup.controls["comments"].value.forEach((comment: CommentDTO) => {
-            if(comment.userId === this.dataUser.id) {
-              this.listComment.push({
-                idComment: comment.id,
-                data: comment
-              })
-              } else {
-              this.listComment.push({
-                data: comment
-              })
-            }
-          })
-
-          console.log(this.listComment)
         }
         else {
           this.showErrorDialog(result)
@@ -385,5 +366,9 @@ export class DetailFilmComponent implements OnInit {
         this.showErrorDialog(result)
       }
     })
+  }
+
+  checkCommentUser(userId: any): boolean {
+    return userId === this.dataUser.id
   }
 }

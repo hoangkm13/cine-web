@@ -25,8 +25,3 @@ export interface LandingData {
   genre: string,
   data: Array<FilmByGenre>
 }
-
-export interface CommentUser {
-  idComment?: number
-  data: CommentDTO
-}
