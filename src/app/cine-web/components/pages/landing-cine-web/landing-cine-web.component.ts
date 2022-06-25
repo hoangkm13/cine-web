@@ -9,7 +9,9 @@ import {
   FilmControllerService,
   FilmDTO, UserControllerService
 } from "../../../cine-svc";
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
+import {DialogService} from "../../shared/dialog.service";
+import {CookieService} from "ngx-cookie-service";
 
 export interface SLIDE_DATA {
   genre: string;
@@ -29,32 +31,55 @@ export class LandingCineWebComponent implements OnInit {
   slides: SLIDE_DATA[] = [];
 
   hotFilm: any;
-  //
+
   favoriteList: Array<FavoriteDTO> = [];
+
+  favorites: boolean[] = [];
+
+  slideConfig = {
+    slidesToShow: 1,
+    infinite: true,
+    variableWidth: true,
+    outerEdgeLimit: false,
+    arrows: true,
+    draggable: false,
+  };
 
   constructor(private filmController: FilmControllerService,
               private router: Router,
               private userController: UserControllerService,
-              private favoriteController: FavoriteControllerService
+              private favoriteController: FavoriteControllerService,
+              private dialogService: DialogService,
+              private cookie: CookieService
   ) {
-   this.getFavoriteData()
+
   }
 
   ngOnInit(): void {
     this.getFilmData().then();
+    this.getFavoriteData().then()
   }
 
-  async getFilmData(id?: any) {
-    // await this.filmController.getFilmById(3).subscribe((response: ApiResponseFilmDTO) => {
-    //   this.hotFilm = response.result;
-    // })
-
+  async getFilmData() {
     await this.filmController.getBrowseData(10).subscribe((response: ApiResponseListCategorizedFilmsDTO) => {
       response.result?.map((ele) => {
-        this.slides.push(<SLIDE_DATA>{genre: ele.genre?.name, filmList: ele.films})
+        if (response.errorCode == null) {
+          this.slides.push(<SLIDE_DATA>{genre: ele.genre?.name, filmList: ele.films})
+          ele.films?.map((film, index) => {
+            this.favoriteControl(film.id)
+          })
+        } else {
+          this.dialogService.showErrorDialog({
+            title: "",
+            description: `${response.message}`,
+            buttonText: "Đóng",
+            onAccept: () => {
+
+            }
+          })
+        }
       })
     })
-    console.log(this.slides)
   }
 
   goToFilmByGenre(genreName: string) {
@@ -65,10 +90,21 @@ export class LandingCineWebComponent implements OnInit {
     this.router.navigate(['/film', id, "detail"]).then();
   }
 
-  getFavoriteData(){
-    this.userController.getCurrentUser().subscribe((response: ApiResponseUserDTO) => {
+  async getFavoriteData() {
+    await this.userController.getCurrentUser().subscribe((response: ApiResponseUserDTO) => {
       response.result?.favorites?.map((ele) => {
-        this.favoriteList.push({id: ele.id, filmId: ele.filmId, userId: ele.userId})
+        if (response.errorCode == null) {
+          this.favoriteList.push({id: ele.id, filmId: ele.filmId, userId: ele.userId})
+        } else {
+          this.dialogService.showErrorDialog({
+            title: "",
+            description: `${response.message}`,
+            buttonText: "Đóng",
+            onAccept: () => {
+
+            }
+          })
+        }
       })
     })
   }
@@ -79,8 +115,17 @@ export class LandingCineWebComponent implements OnInit {
       id = res.result?.id
       this.favoriteController.createFavorite({filmId: filmId, userId: id})
         .subscribe((response: ApiResponseFavorite) => {
-            if(response.errorCode != null) {
-              this.isFavorite(filmId)
+            if (response.errorCode == null) {
+
+            } else {
+              this.dialogService.showErrorDialog({
+                title: "",
+                description: `${response.message}`,
+                buttonText: "Đóng",
+                onAccept: () => {
+
+                }
+              })
             }
           }
         )
@@ -88,30 +133,37 @@ export class LandingCineWebComponent implements OnInit {
   }
 
   removeFromFavorite(filmId: any) {
-    this.favoriteController.deleteFavorite(filmId).subscribe((response) => {
-      console.log(response)
-      this.getFilmData().then()
+    let foundFilm = this.favoriteList.filter((ele) => {
+      return ele.filmId == filmId
+    })
+    this.favoriteController.deleteFavorite(<number>foundFilm[0].id).subscribe((response) => {
+      if (response.errorCode == null) {
+
+      } else {
+        this.dialogService.showErrorDialog({
+          title: "",
+          description: `${response.message}`,
+          buttonText: "Đóng",
+          onAccept: () => {
+
+          }
+        })
+      }
     })
   }
-
-  slideConfig = {
-    slidesToShow: 1,
-    infinite: true,
-    variableWidth: true,
-    outerEdgeLimit: true,
-    arrows: true,
-  };
 
   setStarRating(star: any): number {
     return Number(star);
   }
 
-  isFavorite(id?: any): boolean {
-    for (const ele of this.favoriteList){
-      if(ele.filmId == id){
-        return false
+  favoriteControl(id?: any, index?: any): boolean{
+    for (const ele of this.favoriteList) {
+      if (ele.filmId == id) {
+        this.favorites[id] = true;
+      }else{
+        this.favorites[id] = false;
       }
     }
-    return true
+    return this.favorites[id]
   }
 }

@@ -23,10 +23,10 @@ import {GlobalConstants} from "./cine-web/components/shared/GlobalConstants";
 import {FooterCineComponent} from './cine-web/components/shared/footer-cine/footer-cine.component';
 import {HeaderCineComponent} from './cine-web/components/shared/header-cine/header-cine.component';
 import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ApiHttpInterceptor} from "./cine-web/components/shared/api-http-interceptor";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import { UserProfileComponent } from './cine-web/components/pages/user-profile/user-profile.component';
+import {UserProfileComponent} from './cine-web/components/pages/user-profile/user-profile.component';
 import {MatDialogModule} from "@angular/material/dialog";
 
 import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-web/landing-cine-web.component';
@@ -34,11 +34,12 @@ import {LandingCineWebComponent} from './cine-web/components/pages/landing-cine-
 import {MatCardModule} from "@angular/material/card";
 import {SlickCarouselModule} from "ngx-slick-carousel";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import { FilmsByGenreComponent } from './cine-web/components/pages/films-by-genre/films-by-genre.component';
+import {FilmsByGenreComponent} from './cine-web/components/pages/films-by-genre/films-by-genre.component';
 import {NgxPaginationModule} from "ngx-pagination";
-import { LoadingDataComponent } from './cine-web/components/shared/loading-data/loading-data.component';
+import {LoadingDataComponent} from './cine-web/components/shared/loading-data/loading-data.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { ErrorDialogComponent } from './cine-web/components/shared/error-dialog/error-dialog.component';
+import {ErrorDialogComponent} from './cine-web/components/shared/error-dialog/error-dialog.component';
+import { ClickStopPropagationDirective } from './cine-web/components/directives/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -54,39 +55,40 @@ import { ErrorDialogComponent } from './cine-web/components/shared/error-dialog/
     FilmsByGenreComponent,
     LoadingDataComponent,
     ErrorDialogComponent,
+    ClickStopPropagationDirective,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        MatButtonModule,
-        MatInputModule,
-        MatIconModule,
-        MatExpansionModule,
-        ReactiveFormsModule,
-        MatRadioModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCheckboxModule,
-        MatCardModule,
-        SlickCarouselModule,
-        MatTooltipModule,
-        MatPaginatorModule,
-        NgxPaginationModule,
-        ApiModule.forRoot(() => {
-            return new Configuration({
-                basePath: `${GlobalConstants.baseUrl}`
-            })
-        }),
-        MatExpansionModule,
-        HttpClientModule,
-        NgbModule,
-        FormsModule,
-        MatPaginatorModule,
-        MatDialogModule,
-        MatProgressSpinnerModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatCardModule,
+    SlickCarouselModule,
+    MatTooltipModule,
+    MatPaginatorModule,
+    NgxPaginationModule,
+    ApiModule.forRoot(() => {
+      return new Configuration({
+        basePath: `${GlobalConstants.baseUrl}`
+      })
+    }),
+    MatExpansionModule,
+    HttpClientModule,
+    NgbModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatProgressSpinnerModule
+  ],
   exports: [
     FooterCineComponent,
     HomeCineWebComponent,

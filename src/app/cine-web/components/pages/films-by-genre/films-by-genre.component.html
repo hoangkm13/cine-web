@@ -5,7 +5,7 @@
       <p class="genreName">{{genre}}</p>
 
       <section fxLayout="row wrap">
-        <mat-card style="width: 224px; margin: 10px;"
+        <mat-card (click)="goToFilmDetail(film.id)" style="width: 224px; margin: 10px;"
                   *ngFor="let film of list | paginate: { itemsPerPage: 20, currentPage: currentPage }">
           <img mat-card-image src="{{ beforePath + film.slug + afterPath}}"
                alt="Photo of a Shiba Inu">

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ApiResponseUserDTO, UserControllerService} from "../../../cine-svc";
 import * as moment from "moment";
+import {DialogService} from "../../shared/dialog.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -16,7 +17,8 @@ export class SignUpComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private userController: UserControllerService
+              private userController: UserControllerService,
+              private dialogService: DialogService
   ) {
     this.formGroup = this.formBuilder.group({
       userName: ["", Validators.required],
@@ -50,8 +52,17 @@ export class SignUpComponent implements OnInit {
         email: formValue.email,
         mobile: formValue.mobile
       }).subscribe((response: ApiResponseUserDTO) => {
-        if(response.errorCode != null){
+        if(response.errorCode == null){
           this.router.navigate(["/sign-in"]).then()
+        }else {
+          this.dialogService.showErrorDialog({
+            title: "",
+            description: `${response.message}`,
+            buttonText: "Đóng",
+            onAccept: () => {
+
+            }
+          })
         }
       })
     }else{
