@@ -46,6 +46,8 @@ export class FilmsByGenreComponent implements OnInit {
       .subscribe((response: ApiResponsePageFilm) => {
         if (response.errorCode == null) {
           this.list = response.result?.content ? response.result?.content : [];
+        }else {
+          this.showError(response.message)
         }
       })
   }
@@ -59,23 +61,29 @@ export class FilmsByGenreComponent implements OnInit {
           if (searchType == 'byFavorite') {
             this.getByFavorite()
           }
-        } else {
-          this.dialogService.showErrorDialog({
-            title: "Error",
-            description: `${response.message}`,
-            buttonText: "Exit",
-            onAccept: () => {
-            }
-          })
         }
       })
   }
 
+  showError(message: any){
+    this.dialogService.showErrorDialog({
+      title: "Error",
+      description: `${message}`,
+      buttonText: "Exit",
+      onAccept: () => {
+      }
+    })
+  }
+
   getByFavorite() {
     this.userController.getCurrentUser().subscribe((res) => {
-      let favoriteList: Array<FavoriteDTO>;
-      favoriteList = res.result?.favorites ? res.result?.favorites : [];
-      this.list = this.list.filter((ele) => favoriteList.find(({filmId}) => ele.id === filmId));
+      if (res.errorCode == null){
+        let favoriteList: Array<FavoriteDTO>;
+        favoriteList = res.result?.favorites ? res.result?.favorites : [];
+        this.list = this.list.filter((ele) => favoriteList.find(({filmId}) => ele.id === filmId));
+      }else{
+        this.showError(res.message)
+      }
     })
   }
 

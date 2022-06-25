@@ -40,9 +40,9 @@ export class LandingCineWebComponent implements OnInit {
 
   slideConfig = {
     slidesToShow: 1,
-    infinite: true,
+    infinite: false,
     variableWidth: true,
-    outerEdgeLimit: false,
+    outerEdgeLimit: true,
     arrows: true,
     draggable: false,
   };
@@ -130,6 +130,10 @@ export class LandingCineWebComponent implements OnInit {
 
   goToFilmDetail(id: any) {
     this.router.navigate(['/film', id, "detail"]).then();
+  }
+
+  watchTrailer(){
+    this.dialogService.showVideoPlayer()
   }
 
   addToFavorite(genre: string, filmId: number) {

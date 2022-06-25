@@ -2,7 +2,7 @@
   <app-header-cine></app-header-cine>
   <div fxLayout="column" fxLayoutAlign="center center">
     <div class="form text-white" fxLayout="column" fxLayoutAlign="center center">
-      <div style="width: 350px" fxLayout="column" fxLayoutGap="20">
+      <div style="width: 350px" fxLayout="column" fxLayoutGap="30">
         <div class="sign-in-title ">SIGN UP</div>
         <form [formGroup]="formGroup" fxLayout="column" fxLayoutGap="15" (keyup.enter)="signUp()">
           <mat-form-field appearance="outline">
@@ -62,9 +62,7 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Birth day:</mat-label>
-            <input formControlName="birthOfDate" matInput [matDatepicker]="picker">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <input type="date" matInput formControlName="birthOfDate">
 <!--            <mat-error *ngIf="formGroup.controls['birthOfDate'].errors">-->
 <!--              Ngày tháng năm sinh không được để trống-->
 <!--            </mat-error>-->
@@ -87,7 +85,7 @@
           </mat-form-field>
 
           <section>
-            <mat-checkbox color="primary">I accept the Terms of Use & Privacy Policy</mat-checkbox>
+            <mat-checkbox formControlName="termAndPrivacy" color="primary">I accept the Terms of Use & Privacy Policy</mat-checkbox>
           </section>
         </form>
         <div class="dialog-action-row">

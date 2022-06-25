@@ -7,7 +7,6 @@
   font-size: 24px;
   color: #e5e5e5;
   font-weight: bold;
-  cursor: pointer;
 }
 
 mat-card{
@@ -21,5 +20,10 @@ mat-card:hover{
 
 mat-card:hover mat-card-title{
   color: #3b519a;
+}
+
+::ng-deep .ngx-pagination a{
+  text-decoration: none;
+  background-color: #7A7877;
 }
 

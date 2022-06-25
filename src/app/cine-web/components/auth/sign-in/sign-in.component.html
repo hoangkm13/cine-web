@@ -2,29 +2,29 @@
   <app-header-cine></app-header-cine>
   <div fxLayout="column" fxLayoutAlign="center center">
     <div class="form" fxLayout="column" fxLayoutAlign="center center">
-      <div style="width: 350px" fxLayout="column" fxLayoutGap="20">
+      <div style="width: 350px" fxLayout="column" fxLayoutGap="30">
         <div class="sign-in-title text-white">SIGN IN</div>
-        <form [formGroup]="formGroup" fxLayout="column" (keyup.enter)="login()">
+        <form [formGroup]="formGroup" fxLayout="column" fxLayoutGap="15" (keyup.enter)="login()">
           <mat-form-field appearance="outline">
             <mat-label>User name</mat-label>
             <input formControlName="userName" class="text-white" matInput>
-            <mat-error *ngIf="formGroup.controls['userName'].errors">
-              Tên đăng nhập không được để trống
-            </mat-error>
+<!--            <mat-error *ngIf="formGroup.controls['userName'].errors">-->
+<!--              Tên đăng nhập không được để trống-->
+<!--            </mat-error>-->
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input formControlName="password" type="password" class="text-white" matInput>
-            <mat-error *ngIf="formGroup.controls['password'].errors">
-              Mật khẩu không được để trống
-            </mat-error>
+<!--            <mat-error *ngIf="formGroup.controls['password'].errors">-->
+<!--              Mật khẩu không được để trống-->
+<!--            </mat-error>-->
           </mat-form-field>
         </form>
         <div class="dialog-action-row">
-          <button style="width: 100%" mat-raised-button color="warn" (click)="login()">Sign in</button>
+          <button style="width: 100%;" mat-raised-button color="warn" (click)="login()">Sign in</button>
         </div>
-        <div class="gray-text">
+        <div class="gray-text" style="padding-bottom: 20px;">
           <p>New to Cine? <a class="text-white" style="cursor: pointer;text-decoration: none" (click)="navigationToSignUp()" >Sign up now</a></p>
           <p>This page is protected by Google mCaptcha to ensure you're not a bot</p>
         </div>

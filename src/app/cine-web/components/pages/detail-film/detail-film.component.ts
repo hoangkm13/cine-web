@@ -13,6 +13,7 @@ import * as _ from "lodash";
 import {PageEvent} from "@angular/material/paginator";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {DialogService} from "../../shared/dialog.service";
+import {GlobalConstants} from "../../shared/GlobalConstants";
 
 @Component({
   selector: 'app-detail-film',
@@ -235,13 +236,8 @@ export class DetailFilmComponent implements OnInit {
   }
 
   redirectToPage(genre: string) {
-
-    const extraData: NavigationExtras = {
-      state: {
-        check: 'byGenre',
-      }
-    }
-    this.router.navigate(['/films/', genre], extraData)
+    this.cookie.set(GlobalConstants.searchType, 'byGenre', undefined, "/")
+    this.router.navigate(['/films/', genre])
   }
 
   showErrorDialog(result: any) {
