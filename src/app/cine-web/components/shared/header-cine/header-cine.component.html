@@ -11,6 +11,12 @@
       </div>
 
       <div *ngIf="this.token"  fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
+        <div
+          class="favorite"
+          (click)="navigationPageGenre('')"
+        >
+          <span>Favorite</span>
+        </div>
 
         <mat-form-field class="genre-choice" color="warn">
           <mat-label>Genres</mat-label>
@@ -28,12 +34,7 @@
           </mat-select>
         </mat-form-field>
 
-        <div
-          class="favorite"
-          (click)="navigationPageGenre('')"
-        >
-          <span>Favorite</span>
-        </div>
+
       </div>
 
     </div>
