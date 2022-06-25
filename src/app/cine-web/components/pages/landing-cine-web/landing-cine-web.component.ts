@@ -1,22 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {
   ApiResponseFavorite,
-  ApiResponseFilmDTO,
   ApiResponseListCategorizedFilmsDTO,
-  ApiResponseLoginResponseDTO,
-  ApiResponseUserDTO,
+  ApiResponseUserDTO, CategorizedFilmsDTO,
   FavoriteControllerService, FavoriteDTO,
-  FilmControllerService,
-  FilmDTO, UserControllerService
+  FilmControllerService, FilmDTO,
+  UserControllerService, UserDTO
 } from "../../../cine-svc";
 import {NavigationExtras, Router} from "@angular/router";
 import {DialogService} from "../../shared/dialog.service";
-import {CookieService} from "ngx-cookie-service";
+import {FilmByGenre, idFavorite, LandingData} from "../../../interface/data";
+import {result} from "lodash";
+import * as _ from "lodash";
 
-export interface SLIDE_DATA {
-  genre: string;
-  filmList: Array<FilmDTO>
-}
 
 @Component({
   selector: 'app-landing-cine-web',
@@ -28,13 +24,16 @@ export class LandingCineWebComponent implements OnInit {
   beforePath = "././assets/images/films/";
   afterPath = "/small.jpg";
 
-  slides: SLIDE_DATA[] = [];
-
   hotFilm: any;
 
+  landingData: Array<LandingData> = []
+  listIdFavorite: Array<idFavorite> = []
+
   favoriteList: Array<FavoriteDTO> = [];
+  dataUser: any | UserDTO
 
   favorites: boolean[] = [];
+  slides: any[] = []
 
   slideConfig = {
     slidesToShow: 1,
@@ -45,41 +44,56 @@ export class LandingCineWebComponent implements OnInit {
     draggable: false,
   };
 
-  constructor(private filmController: FilmControllerService,
-              private router: Router,
-              private userController: UserControllerService,
-              private favoriteController: FavoriteControllerService,
-              private dialogService: DialogService,
-              private cookie: CookieService
+  constructor(
+    private filmController: FilmControllerService,
+    private router: Router,
+    private userController: UserControllerService,
+    private favoriteController: FavoriteControllerService,
+    private dialogService: DialogService
   ) {
-
+    this.getDataUser()
   }
 
   ngOnInit(): void {
     this.getFilmData().then();
-    this.getFavoriteData().then()
   }
 
   async getFilmData() {
     await this.filmController.getBrowseData(10).subscribe((response: ApiResponseListCategorizedFilmsDTO) => {
-      response.result?.map((ele) => {
-        if (response.errorCode == null) {
-          this.slides.push(<SLIDE_DATA>{genre: ele.genre?.name, filmList: ele.films})
-          ele.films?.map((film, index) => {
-            this.favoriteControl(film.id)
+        if (!response.errorCode) {
+          response.result?.forEach(response => {
+            this.landingData.push(
+              {
+                genre: <string>response.genre?.name,
+                data: this.getFilmByGenre(response)
+              }
+            )
           })
+          console.log(this.landingData)
         } else {
-          this.dialogService.showErrorDialog({
-            title: "",
-            description: `${response.message}`,
-            buttonText: "Đóng",
-            onAccept: () => {
-
-            }
-          })
+          this.showErrorDialog(result)
         }
-      })
     })
+  }
+
+  getFilmByGenre(response: CategorizedFilmsDTO): Array<FilmByGenre> {
+    let filmByGenre: FilmByGenre[] = []
+    let foundFilmFavor
+    response.films?.forEach(res => {
+      foundFilmFavor = this.checkFavorite(res.id)
+      if(foundFilmFavor) {
+        filmByGenre.push({
+          film: res,
+          idFavorite: foundFilmFavor.idFavorite
+        })
+      } else {
+        filmByGenre.push({
+          film: res,
+        })
+      }
+
+    })
+    return filmByGenre
   }
 
   goToFilmByGenre(genreName: string) {
@@ -91,68 +105,73 @@ export class LandingCineWebComponent implements OnInit {
     this.router.navigate(['/films', genreName], extraData).then();
   }
 
+  getDataUser() {
+    this.userController.getCurrentUser().subscribe(result => {
+      if(!result.errorCode) {
+        this.dataUser = _.cloneDeep(result.result)
+        result.result?.favorites?.forEach(favor => {
+          this.listIdFavorite.push({
+            idFavorite: <number>favor.id,
+            idFilm: favor.filmId
+          })
+        })
+      } else {
+        this.showErrorDialog(result)
+      }
+    })
+  }
+
+  checkFavorite(idFilm: number) {
+    let foundFilm
+    foundFilm = this.listIdFavorite.find(favor => {
+      return favor.idFilm === idFilm
+    })
+
+    return foundFilm
+  }
+
   goToFilmDetail(id: any) {
     this.router.navigate(['/film', id, "detail"]).then();
   }
 
-  async getFavoriteData() {
-    await this.userController.getCurrentUser().subscribe((response: ApiResponseUserDTO) => {
-      response.result?.favorites?.map((ele) => {
-        if (response.errorCode == null) {
-          this.favoriteList.push({id: ele.id, filmId: ele.filmId, userId: ele.userId})
-        } else {
-          this.dialogService.showErrorDialog({
-            title: "",
-            description: `${response.message}`,
-            buttonText: "Đóng",
-            onAccept: () => {
-
-            }
-          })
-        }
-      })
-    })
-  }
-
-  addToFavorite(filmId: any) {
-    let id: any;
-    this.userController.getCurrentUser().subscribe((res) => {
-      id = res.result?.id
-      this.favoriteController.createFavorite({filmId: filmId, userId: id})
-        .subscribe((response: ApiResponseFavorite) => {
-            if (response.errorCode == null) {
-
-            } else {
-              this.dialogService.showErrorDialog({
-                title: "",
-                description: `${response.message}`,
-                buttonText: "Đóng",
-                onAccept: () => {
-
-                }
-              })
-            }
-          }
-        )
-    })
-  }
-
-  removeFromFavorite(filmId: any) {
-    let foundFilm = this.favoriteList.filter((ele) => {
-      return ele.filmId == filmId
-    })
-    this.favoriteController.deleteFavorite(<number>foundFilm[0].id).subscribe((response) => {
-      if (response.errorCode == null) {
-
-      } else {
-        this.dialogService.showErrorDialog({
-          title: "",
-          description: `${response.message}`,
-          buttonText: "Đóng",
-          onAccept: () => {
-
-          }
+  addToFavorite(genre: string, filmId: number) {
+    let foundList: LandingData
+    this.favoriteController.createFavorite({
+      filmId: filmId,
+      userId: this.dataUser.id
+    }).subscribe(result => {
+      if(!result.errorCode) {
+        foundList = <LandingData>this.landingData.find(landing => {
+          return landing.genre === genre
         })
+        _.set(
+          <FilmByGenre>foundList.data.find(film => {
+          return film.film.id === filmId
+        }),
+          'idFavorite',
+          result.result?.id)
+      } else {
+        this.showErrorDialog(result)
+      }
+    })
+  }
+
+  removeFromFavorite(genre: string, idFavorite: any, filmId: number) {
+    let foundList: LandingData
+    this.favoriteController.deleteFavorite(idFavorite).subscribe((response) => {
+      if(!response.errorCode) {
+        foundList = <LandingData>this.landingData.find(landing => {
+          return landing.genre === genre
+        })
+        _.set(
+          <FilmByGenre>foundList.data.find(film => {
+            return film.film.id === filmId
+          }),
+          'idFavorite',
+          undefined
+          )
+      } else {
+        this.showErrorDialog(response)
       }
     })
   }
@@ -161,14 +180,13 @@ export class LandingCineWebComponent implements OnInit {
     return Number(star);
   }
 
-  favoriteControl(id?: any, index?: any): boolean{
-    for (const ele of this.favoriteList) {
-      if (ele.filmId == id) {
-        this.favorites[id] = true;
-      }else{
-        this.favorites[id] = false;
-      }
-    }
-    return this.favorites[id]
+
+  showErrorDialog(result: any) {
+    this.dialogService.showErrorDialog({
+      title: "Error",
+      description: `${result.message}`,
+      buttonText: "Exit",
+      onAccept: () => {}
+    })
   }
 }

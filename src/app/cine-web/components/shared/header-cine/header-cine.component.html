@@ -54,7 +54,7 @@
         Sign In
       </button>
 
-      <div *ngIf="token">
+      <div *ngIf="token" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon (click)="openUserProfile()" class="icon-profile" color="warn">
           account_circle
         </mat-icon >

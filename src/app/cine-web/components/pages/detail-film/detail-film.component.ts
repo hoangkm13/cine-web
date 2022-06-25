@@ -221,7 +221,13 @@ export class DetailFilmComponent implements OnInit {
   }
 
   redirectToPage(genre: string) {
-    this.router.navigate(["/films/", genre])
+
+    const extraData: NavigationExtras = {
+      state: {
+        check: 'byGenre',
+      }
+    }
+    this.router.navigate(['/films/', genre], extraData)
   }
 
   showErrorDialog(result: any) {

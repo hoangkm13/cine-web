@@ -78,19 +78,10 @@ export class HeaderCineComponent implements OnInit {
 
   navigationPageGenre(genre: string) {
     if(genre) {
-      const extraData: NavigationExtras = {
-        state: {
-          check: 'byGenre',
-        }
-      }
-      this.router.navigate(['/films/', genre], extraData)
+
+      this.router.navigate(['/films/', genre])
     } else {
-      const extraData: NavigationExtras = {
-        state: {
-          check: 'byFavorite'
-        }
-      }
-      this.router.navigate(['/films/favorites', ], extraData)
+      this.router.navigate(['/films/favorites', ])
     }
   }
 }
