@@ -1,6 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {ApiResponsePageFilm, Film, FilmControllerService, UserControllerService} from "../../../cine-svc";
+import {
+  ApiResponsePageFilm,
+  FavoriteDTO,
+  Film,
+  FilmControllerService,
+  UserControllerService
+} from "../../../cine-svc";
 import {DialogService} from "../../shared/dialog.service";
 import {CookieService} from "ngx-cookie-service";
 
@@ -14,9 +20,7 @@ export class FilmsByGenreComponent implements OnInit {
   beforePath = "././assets/images/films/";
   afterPath = "/small.jpg";
 
-  genre: string = "";
-
-  list: any;
+  list: Array<Film> = [];
 
   currentPage: number = 1;
   searchKey: string[] = [];
@@ -24,11 +28,12 @@ export class FilmsByGenreComponent implements OnInit {
   public constructor(private route: ActivatedRoute, private router: Router,
                      private filmController: FilmControllerService,
                      private dialogService: DialogService,
-                     private userController: UserControllerService) {
+                     private userController: UserControllerService,
+                     private cookie: CookieService) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.searchKey = val.url.split('/');
-        this.getExtraData()
+        this.getData()
       }
     });
   }
@@ -36,68 +41,59 @@ export class FilmsByGenreComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getData(genre?: any) {
-      this.filmController.getFilmsByGenre(genre, 1, 20, "id")
-        .subscribe((response: ApiResponsePageFilm) => {
-          if (response.errorCode == null) {
-            this.list = response.result?.content;
-          } else {
-            this.dialogService.showErrorDialog({
-              title: "",
-              description: `${response.message}`,
-              buttonText: "Đóng",
-              onAccept: () => {}
-            })
-          }
-        })
-    }
-
-
-  getDataBySearch(searchText?: any){
-    this.filmController.getSearchData(searchText, 1, 20, 'id')
+  getByGenre(genre?: any) {
+    this.filmController.getFilmsByGenre(genre, 1, 20, "id")
       .subscribe((response: ApiResponsePageFilm) => {
         if (response.errorCode == null) {
-          console.log(response.result?.content)
-          this.list = response.result?.content;
+          this.list = response.result?.content ? response.result?.content : [];
+        }
+      })
+  }
+
+
+  getDataBySearch(searchText?: any, size?: any, searchType?: any) {
+    this.filmController.getSearchData(searchText, 1, size, 'id')
+      .subscribe((response: ApiResponsePageFilm) => {
+        if (response.errorCode == null) {
+          this.list = response.result?.content ? response.result?.content : [];
+          if (searchType == 'byFavorite') {
+            this.getByFavorite()
+          }
         } else {
           this.dialogService.showErrorDialog({
-            title: "",
+            title: "Error",
             description: `${response.message}`,
-            buttonText: "Đóng",
+            buttonText: "Exit",
             onAccept: () => {
-
             }
           })
         }
       })
   }
 
-  getByFavorite(){
+  getByFavorite() {
     this.userController.getCurrentUser().subscribe((res) => {
-      console.log(res.result?.favorites)
-      // this.list = res.result?.favorites
+      let favoriteList: Array<FavoriteDTO>;
+      favoriteList = res.result?.favorites ? res.result?.favorites : [];
+      this.list = this.list.filter((ele) => favoriteList.find(({filmId}) => ele.id === filmId));
     })
   }
 
-  check: string = ""
+  searchType: string = ""
 
-  getExtraData() {
-    const state: any = this.router.getCurrentNavigation()?.extras
-    console.log(state)
-    if(state) {
-      this.check = state.state.check;
-      if(this.check == 'bySearch'){
-        this.searchKey[1] = this.route.snapshot.params['searchValue'];
-        this.getDataBySearch(this.searchKey[1])
-      }
-      if(this.check == 'byGenre'){
-        this.searchKey[1] = this.route.snapshot.params['searchValue'];
-        this.getData(this.searchKey[1])
-      }
-      if(this.check == 'byFavorite'){
-        this.getDataBySearch('')
-        this.getByFavorite()
-      }
+  getData() {
+    this.searchType = this.cookie.get('searchType')
+    if (this.searchType == 'bySearch') {
+      this.searchKey[1] = this.route.snapshot.params['searchValue'];
+      this.getDataBySearch(this.searchKey[1], 20)
+    }
+    if (this.searchType == 'byGenre') {
+      this.searchKey[1] = this.route.snapshot.params['searchValue'];
+      this.getByGenre(this.searchKey[1])
+    }
+    if (this.searchType == 'byFavorite') {
+      this.searchKey[1] = this.route.snapshot.params['searchValue'];
+      this.getDataBySearch('', 300, this.searchType)
     }
   }
 

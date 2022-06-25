@@ -1,17 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  ApiResponseFavorite,
   ApiResponseListCategorizedFilmsDTO,
-  ApiResponseUserDTO, CategorizedFilmsDTO,
-  FavoriteControllerService, FavoriteDTO,
-  FilmControllerService, FilmDTO,
-  UserControllerService, UserDTO
+  CategorizedFilmsDTO,
+  FavoriteControllerService,
+  FavoriteDTO,
+  FilmControllerService,
+  UserControllerService,
+  UserDTO
 } from "../../../cine-svc";
-import {NavigationExtras, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {DialogService} from "../../shared/dialog.service";
 import {FilmByGenre, idFavorite, LandingData} from "../../../interface/data";
-import {result} from "lodash";
 import * as _ from "lodash";
+import {result} from "lodash";
+import {CookieService} from "ngx-cookie-service";
+import {GlobalConstants} from "../../shared/GlobalConstants";
 
 
 @Component({
@@ -49,7 +52,8 @@ export class LandingCineWebComponent implements OnInit {
     private router: Router,
     private userController: UserControllerService,
     private favoriteController: FavoriteControllerService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private cookie: CookieService
   ) {
     this.getDataUser()
   }
@@ -60,19 +64,19 @@ export class LandingCineWebComponent implements OnInit {
 
   async getFilmData() {
     await this.filmController.getBrowseData(10).subscribe((response: ApiResponseListCategorizedFilmsDTO) => {
-        if (!response.errorCode) {
-          response.result?.forEach(response => {
-            this.landingData.push(
-              {
-                genre: <string>response.genre?.name,
-                data: this.getFilmByGenre(response)
-              }
-            )
-          })
-          console.log(this.landingData)
-        } else {
-          this.showErrorDialog(result)
-        }
+      if (!response.errorCode) {
+        response.result?.forEach(response => {
+          this.landingData.push(
+            {
+              genre: <string>response.genre?.name,
+              data: this.getFilmByGenre(response)
+            }
+          )
+        })
+        console.log(this.landingData)
+      } else {
+        this.showErrorDialog(result)
+      }
     })
   }
 
@@ -81,7 +85,7 @@ export class LandingCineWebComponent implements OnInit {
     let foundFilmFavor
     response.films?.forEach(res => {
       foundFilmFavor = this.checkFavorite(res.id)
-      if(foundFilmFavor) {
+      if (foundFilmFavor) {
         filmByGenre.push({
           film: res,
           idFavorite: foundFilmFavor.idFavorite
@@ -91,23 +95,18 @@ export class LandingCineWebComponent implements OnInit {
           film: res,
         })
       }
-
     })
     return filmByGenre
   }
 
   goToFilmByGenre(genreName: string) {
-    const extraData: NavigationExtras = {
-      state: {
-        check: 'byGenre',
-      }
-    }
-    this.router.navigate(['/films', genreName], extraData).then();
+    this.cookie.set(GlobalConstants.searchType, 'byGenre', undefined, "/")
+    this.router.navigate(['/films', genreName]).then();
   }
 
   getDataUser() {
     this.userController.getCurrentUser().subscribe(result => {
-      if(!result.errorCode) {
+      if (!result.errorCode) {
         this.dataUser = _.cloneDeep(result.result)
         result.result?.favorites?.forEach(favor => {
           this.listIdFavorite.push({
@@ -126,7 +125,6 @@ export class LandingCineWebComponent implements OnInit {
     foundFilm = this.listIdFavorite.find(favor => {
       return favor.idFilm === idFilm
     })
-
     return foundFilm
   }
 
@@ -140,14 +138,14 @@ export class LandingCineWebComponent implements OnInit {
       filmId: filmId,
       userId: this.dataUser.id
     }).subscribe(result => {
-      if(!result.errorCode) {
+      if (!result.errorCode) {
         foundList = <LandingData>this.landingData.find(landing => {
           return landing.genre === genre
         })
         _.set(
           <FilmByGenre>foundList.data.find(film => {
-          return film.film.id === filmId
-        }),
+            return film.film.id === filmId
+          }),
           'idFavorite',
           result.result?.id)
       } else {
@@ -159,7 +157,7 @@ export class LandingCineWebComponent implements OnInit {
   removeFromFavorite(genre: string, idFavorite: any, filmId: number) {
     let foundList: LandingData
     this.favoriteController.deleteFavorite(idFavorite).subscribe((response) => {
-      if(!response.errorCode) {
+      if (!response.errorCode) {
         foundList = <LandingData>this.landingData.find(landing => {
           return landing.genre === genre
         })
@@ -169,7 +167,7 @@ export class LandingCineWebComponent implements OnInit {
           }),
           'idFavorite',
           undefined
-          )
+        )
       } else {
         this.showErrorDialog(response)
       }
@@ -180,13 +178,13 @@ export class LandingCineWebComponent implements OnInit {
     return Number(star);
   }
 
-
   showErrorDialog(result: any) {
     this.dialogService.showErrorDialog({
       title: "Error",
       description: `${result.message}`,
       buttonText: "Exit",
-      onAccept: () => {}
+      onAccept: () => {
+      }
     })
   }
 }

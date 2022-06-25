@@ -2,7 +2,7 @@
   <app-header-cine></app-header-cine>
   <div fxLayout="column" fxLayoutAlign="center center">
     <div fxLayout="column" style="width: 1220px" fxLayoutGap="30px">
-      <p class="genreName">{{searchKey[1]}}</p>
+      <p class="genreName">{{searchKey[1].toUpperCase()}}</p>
 
       <section fxLayout="row wrap">
         <mat-card (click)="goToFilmDetail(film.id)" style="width: 224px; margin: 10px;"

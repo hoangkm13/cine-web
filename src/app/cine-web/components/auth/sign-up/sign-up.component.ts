@@ -28,8 +28,8 @@ export class SignUpComponent implements OnInit {
       lastName: ["", Validators.required],
       gender: [" ", Validators.required],
       birthOfDate: ["", Validators.required],
-      mobile: ["", [Validators.required, Validators.pattern("[1-9]{1}[0-9]{9}")]],
-      email: ["", Validators.required]
+      mobile: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]]
     })
 
     // this.getExtraData()
@@ -50,7 +50,7 @@ export class SignUpComponent implements OnInit {
   signUp() {
     let formValue = this.formGroup.getRawValue();
     this.formGroup.markAllAsTouched();
-    if(formValue.password === formValue.cf_password && this.formGroup.valid){
+    if (formValue.password === formValue.cf_password && this.formGroup.valid) {
       this.userController.register({
         username: formValue.userName,
         password: formValue.password,
@@ -61,22 +61,27 @@ export class SignUpComponent implements OnInit {
         email: formValue.email,
         mobile: formValue.mobile
       }).subscribe((response: ApiResponseUserDTO) => {
-        if(response.errorCode == null){
+        if (response.errorCode == null) {
           this.router.navigate(["/sign-in"]).then()
-        }else {
+        } else {
           this.dialogService.showErrorDialog({
-            title: "",
+            title: "Error",
             description: `${response.message}`,
-            buttonText: "Đóng",
+            buttonText: "Exit",
             onAccept: () => {
-
             }
           })
         }
       })
-    }else{
+    } else {
       this.checkPassword = true
-      console.log("Loi")
+      this.dialogService.showErrorDialog({
+        title: "Error",
+        description: `Vui lòng kiểm tra lại thông tin`,
+        buttonText: "Exit",
+        onAccept: () => {
+        }
+      })
     }
   }
 

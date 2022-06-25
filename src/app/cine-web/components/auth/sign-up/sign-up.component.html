@@ -1,24 +1,24 @@
 <div class="background-cine-header" fxLayoutGap="30px" fxLayout="column">
   <app-header-cine></app-header-cine>
   <div fxLayout="column" fxLayoutAlign="center center">
-    <div class="sign-in-form text-white" fxLayout="column" fxLayoutAlign="center center">
+    <div class="form text-white" fxLayout="column" fxLayoutAlign="center center">
       <div style="width: 350px" fxLayout="column" fxLayoutGap="20">
         <div class="sign-in-title ">SIGN UP</div>
-        <form [formGroup]="formGroup" fxLayout="column" fxLayoutGap="15">
+        <form [formGroup]="formGroup" fxLayout="column" fxLayoutGap="15" (keyup.enter)="signUp()">
           <mat-form-field appearance="outline">
             <mat-label>User name</mat-label>
             <input formControlName="userName" class="text-white" matInput>
-            <mat-error *ngIf="formGroup.controls['userName'].errors">
-              Tên đăng nhập không được để trống
-            </mat-error>
+<!--            <mat-error *ngIf="formGroup.controls['userName'].errors">-->
+<!--              Tên đăng nhập không được để trống-->
+<!--            </mat-error>-->
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input formControlName="password" type="password" class="text-white" matInput>
-            <mat-error *ngIf="formGroup.controls['password'].errors || checkPassword">
-              Mật khẩu không được để trống
-            </mat-error>
+<!--            <mat-error *ngIf="formGroup.controls['password'].errors || checkPassword">-->
+<!--              Mật khẩu không được để trống-->
+<!--            </mat-error>-->
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -33,17 +33,17 @@
             <mat-form-field fxFlex="50" appearance="outline">
               <mat-label>First name</mat-label>
               <input formControlName="firstName" class="text-white" matInput>
-              <mat-error *ngIf="formGroup.controls['firstName'].errors">
-                Vui lòng nhập first name
-              </mat-error>
+<!--              <mat-error *ngIf="formGroup.controls['firstName'].errors">-->
+<!--                Vui lòng nhập first name-->
+<!--              </mat-error>-->
             </mat-form-field>
 
             <mat-form-field fxFlex="47" appearance="outline">
               <mat-label>Last name</mat-label>
               <input formControlName="lastName" class="text-white" matInput>
-              <mat-error *ngIf="formGroup.controls['lastName'].errors">
-                Vui lòng nhập last name
-              </mat-error>
+<!--              <mat-error *ngIf="formGroup.controls['lastName'].errors">-->
+<!--                Vui lòng nhập last name-->
+<!--              </mat-error>-->
             </mat-form-field>
           </div>
 
@@ -51,13 +51,13 @@
             <label fxFlex="30">Gender:</label>
             <mat-radio-group formControlName="gender" fxFlex="70" fxLayout="row wrap" fxLayoutAlign="space-between"
                              aria-label="Select an option">
-              <mat-radio-button value="MALE">MALE</mat-radio-button>
-              <mat-radio-button value="FEMALE">FEMALE</mat-radio-button>
-              <mat-radio-button value="OTHER">OTHER</mat-radio-button>
+              <mat-radio-button value="MALE">Male</mat-radio-button>
+              <mat-radio-button value="FEMALE">Female</mat-radio-button>
+              <mat-radio-button value="OTHER">Other</mat-radio-button>
             </mat-radio-group>
-            <mat-error *ngIf="formGroup.controls['gender'].errors">
-              Giới tính không được để trống
-            </mat-error>
+<!--            <mat-error *ngIf="formGroup.controls['gender'].errors">-->
+<!--              Giới tính không được để trống-->
+<!--            </mat-error>-->
           </div>
 
           <mat-form-field appearance="outline">
@@ -65,25 +65,25 @@
             <input formControlName="birthOfDate" matInput [matDatepicker]="picker">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            <mat-error *ngIf="formGroup.controls['birthOfDate'].errors">
-              Ngày tháng năm sinh không được để trống
-            </mat-error>
+<!--            <mat-error *ngIf="formGroup.controls['birthOfDate'].errors">-->
+<!--              Ngày tháng năm sinh không được để trống-->
+<!--            </mat-error>-->
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Email:</mat-label>
             <input formControlName="email" class="text-white" matInput>
             <mat-error *ngIf="formGroup.controls['email'].errors">
-              Email không được để trống
+              Email không đúng định dạng
             </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Phone number:</mat-label>
             <input (keydown)="numberOnly($event)" formControlName="mobile" class="text-white" matInput>
-            <mat-error *ngIf="formGroup.controls['mobile'].errors">
-              Số điện thoại không được để trống
-            </mat-error>
+<!--            <mat-error *ngIf="formGroup.controls['mobile'].errors">-->
+<!--              Số điện thoại không được để trống-->
+<!--            </mat-error>-->
           </mat-form-field>
 
           <section>
@@ -91,7 +91,7 @@
           </section>
         </form>
         <div class="dialog-action-row">
-          <button style="width: 100%" mat-raised-button color="primary" (click)="signUp()">Sign up</button>
+          <button style="width: 100%" mat-raised-button color="warn" (click)="signUp()">Sign up</button>
         </div>
       </div>
     </div>
