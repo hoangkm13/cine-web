@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ApiResponseUserDTO, UserControllerService} from "../../../cine-svc";
 import * as moment from "moment";
+import {DialogService} from "../../shared/dialog.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -16,7 +17,8 @@ export class SignUpComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private userController: UserControllerService
+              private userController: UserControllerService,
+              private dialogService: DialogService
   ) {
     this.formGroup = this.formBuilder.group({
       userName: ["", Validators.required],
@@ -26,11 +28,20 @@ export class SignUpComponent implements OnInit {
       lastName: ["", Validators.required],
       gender: [" ", Validators.required],
       birthOfDate: ["", Validators.required],
-      mobile: ["", Validators.required],
+      mobile: ["", [Validators.required, Validators.pattern("[1-9]{1}[0-9]{9}")]],
       email: ["", Validators.required]
     })
 
-    this.getExtraData()
+    // this.getExtraData()
+  }
+
+  numberOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
   }
 
   ngOnInit(): void {
@@ -50,8 +61,17 @@ export class SignUpComponent implements OnInit {
         email: formValue.email,
         mobile: formValue.mobile
       }).subscribe((response: ApiResponseUserDTO) => {
-        if(response.errorCode != null){
+        if(response.errorCode == null){
           this.router.navigate(["/sign-in"]).then()
+        }else {
+          this.dialogService.showErrorDialog({
+            title: "",
+            description: `${response.message}`,
+            buttonText: "Đóng",
+            onAccept: () => {
+
+            }
+          })
         }
       })
     }else{
@@ -60,11 +80,11 @@ export class SignUpComponent implements OnInit {
     }
   }
 
-  getExtraData() {
-    const state: any = this.router.getCurrentNavigation()?.extras
-    console.log(state)
-    if(state) {
-      this.formGroup.controls['email'].setValue(state.state.email)
-    }
-  }
+  // getExtraData() {
+  //   const state: any = this.router.getCurrentNavigation()?.extras
+  //   console.log(state)
+  //   if(state) {
+  //     this.formGroup.controls['email'].setValue(state.state.email)
+  //   }
+  // }
 }

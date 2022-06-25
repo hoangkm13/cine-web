@@ -10,29 +10,33 @@
           Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he projects in a futile
           attempt to feel like he's part of the world around him.</p>
         <div>
-          <button (click)="goToFilmDetail(hotFilm.id)" class="play-button" mat-raised-button>Play</button>
+          <button (click)="goToFilmDetail(41)" class="play-button" mat-raised-button>Play</button>
         </div>
       </div>
     </div>
   </div>
   <div class="slide-list text-white" fxLayout="column" fxLayoutGap="30px">
     <div fxLayout="column" *ngFor="let slide of slides">
-      <p class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</p>
+      <a class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</a>
       <section>
         <ngx-slick-carousel class="carousel" [config]="slideConfig">
-          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
+          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList" (click)="goToFilmDetail(ele.id)" >
             <div class="favourite-btn">
-              <button (click)="addToFavorite(ele.id)" mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
+              <button appClickStopPropagation *ngIf="!favorites[ele.id]; else removeFavorite " (click)="addToFavorite(ele.id)" mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
                 <mat-icon>add_to_photos</mat-icon>
-                <!--                <mat-icon>indeterminate_check_box</mat-icon>-->
               </button>
+              <ng-template #removeFavorite>
+                <button appClickStopPropagation (click)="removeFromFavorite(ele.id)"  mat-icon-button matTooltip="Remove from favorites" matTooltipPosition="above">
+                  <mat-icon>indeterminate_check_box</mat-icon>
+                </button>
+              </ng-template>
             </div>
             <img height="140px" mat-card-image src="{{beforePath + ele.slug + afterPath }}" alt="Photo of a Shiba Inu">
             <div class="short-description">
               <p style="font-size: 16px">{{ ele.title }}</p>
               <p style="font-size: 14px" >{{ ele.description }}</p>
             </div>
-            <mat-card-actions (click)="goToFilmDetail(ele.id)" >
+            <mat-card-actions>
               <p class="film-title">{{ ele.title }}</p>
               <ng-template #t let-fill="fill">
                 <span class="star" [class.full]="fill === 100">

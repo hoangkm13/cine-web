@@ -41,6 +41,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ErrorDialogComponent } from './cine-web/components/shared/error-dialog/error-dialog.component';
 import { VideoPlayerComponent } from './cine-web/components/shared/video-player/video-player.component';
 import {MatSelectModule} from "@angular/material/select";
+import { ClickStopPropagationDirective } from './cine-web/components/directives/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {MatSelectModule} from "@angular/material/select";
     LoadingDataComponent,
     ErrorDialogComponent,
     VideoPlayerComponent,
+    ClickStopPropagationDirective,
   ],
   imports: [
     BrowserModule,

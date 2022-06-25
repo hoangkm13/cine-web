@@ -43,7 +43,6 @@
 
 /* Slide */
 .slide-list {
-  width: 1288px;
   margin: -50px 38px 38px;
 }
 
@@ -56,6 +55,8 @@ mat-card-actions {
   color: #e5e5e5;
   font-weight: bold;
   cursor: pointer;
+  text-decoration: none;
+  width: max-content;
 }
 
 /* Show button when hover */
@@ -105,7 +106,7 @@ mat-card:hover .short-description{
   opacity: 0.8;
 }
 
-mat-card-actions:hover .film-title{
+mat-card:hover .film-title{
   color: #3b519a;
 }
 
