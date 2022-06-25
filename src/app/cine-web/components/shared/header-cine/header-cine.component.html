@@ -1,25 +1,64 @@
 <div>
   <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" style="margin: 10px 36px 0">
-    <div >
-      <img
-        style="cursor: pointer"
-        src="../../../../../assets/images/logo.a27cfc72.svg"
-        height="75%" width="75%" alt="Cine"
-        (click)="navigationPage()"
-      >
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <img
+          style="cursor: pointer"
+          src="../../../../../assets/images/logo.a27cfc72.svg"
+          height="75%" width="75%" alt="Cine"
+          (click)="navigationPage()"
+        >
+      </div>
+
+      <div *ngIf="this.token"  fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
+
+        <mat-form-field class="genre-choice" color="warn">
+          <mat-label>Genres</mat-label>
+          <mat-select [formControl]="genreClick">
+            <mat-select-trigger>
+              {{genreClick.value}}
+            </mat-select-trigger>
+            <mat-option
+              *ngFor="let genre of genreList.value"
+              [value]="genre.name"
+              (click)="navigationPageGenre(genre.name)"
+            >
+              {{genre.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div
+          class="favorite"
+          (click)="navigationPageGenre('')"
+        >
+          <span>Favorite</span>
+        </div>
+      </div>
+
     </div>
 
-    <button *ngIf="!token"
-            mat-raised-button color="warn"
-            (click)="onSignIn()"
-    >
-      Sign In
-    </button>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
 
-    <div *ngIf="token">
-      <mat-icon (click)="openUserProfile()" class="icon-profile" color="warn">
-        account_circle
-      </mat-icon >
+      <input *ngIf="token" type="text"
+             class="search-header"
+             placeholder="Search film name or actor"
+             [(ngModel)]="searchKey"
+             (keyup.enter)="onSearchKey()"
+      >
+
+      <button *ngIf="!token"
+              mat-raised-button color="warn"
+              (click)="onSignIn()"
+      >
+        Sign In
+      </button>
+
+      <div *ngIf="token">
+        <mat-icon (click)="openUserProfile()" class="icon-profile" color="warn">
+          account_circle
+        </mat-icon >
+      </div>
     </div>
 
   </div>
