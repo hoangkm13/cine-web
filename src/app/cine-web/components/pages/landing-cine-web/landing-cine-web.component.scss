@@ -37,13 +37,13 @@
 .favourite-btn{
   z-index: 2;
   position: absolute;
-  top: 18px;
+  top: 0;
   right: 0;
 }
 
 /* Slide */
 .slide-list {
-  margin: -50px 38px 38px;
+  margin: 16px 38px 38px;
 }
 
 mat-card-actions {
@@ -56,7 +56,6 @@ mat-card-actions {
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
-  width: max-content;
 }
 
 /* Show button when hover */

@@ -41,12 +41,10 @@ export class SignInComponent implements OnInit {
           this.route.navigateByUrl("/welcome").then();
         } else {
           this.dialogService.showErrorDialog({
-            title: "",
+            title: "Error",
             description: `${response.message}`,
             buttonText: "Exit",
-            onAccept: () => {
-
-            }
+            onAccept: () => {}
           })
         }
       })

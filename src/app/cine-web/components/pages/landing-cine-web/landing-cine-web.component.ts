@@ -132,6 +132,10 @@ export class LandingCineWebComponent implements OnInit {
     this.router.navigate(['/film', id, "detail"]).then();
   }
 
+  watchTrailer(){
+    this.dialogService.showVideoPlayer()
+  }
+
   addToFavorite(genre: string, filmId: number) {
     let foundList: LandingData
     this.favoriteController.createFavorite({

@@ -29,10 +29,14 @@ export class SignUpComponent implements OnInit {
       gender: [" ", Validators.required],
       birthOfDate: ["", Validators.required],
       mobile: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]]
+      email: ["", [Validators.required, Validators.email]],
+      termAndPrivacy: [false]
     })
 
     this.getExtraData()
+  }
+
+  ngOnInit(): void {
   }
 
   numberOnly(event: any): boolean {
@@ -41,52 +45,51 @@ export class SignUpComponent implements OnInit {
       return false;
     }
     return true;
-
   }
 
-  ngOnInit(): void {
-  }
 
   signUp() {
     let formValue = this.formGroup.getRawValue();
     this.formGroup.markAllAsTouched();
     if (formValue.password === formValue.cf_password && this.formGroup.valid) {
-      this.userController.register({
-        username: formValue.userName,
-        password: formValue.password,
-        firstName: formValue.firstName,
-        lastName: formValue.lastName,
-        gender: formValue.gender,
-        birthOfDate: moment(formValue.birthOfDate).toISOString(),
-        email: formValue.email,
-        mobile: formValue.mobile
-      }).subscribe((response: ApiResponseUserDTO) => {
-        if (response.errorCode == null) {
-          this.router.navigate(["/sign-in"]).then()
-        } else {
-          this.dialogService.showErrorDialog({
-            title: "Error",
-            description: `${response.message}`,
-            buttonText: "Exit",
-            onAccept: () => {
-            }
-          })
-        }
-      })
+      if (formValue.termAndPrivacy) {
+        this.userController.register({
+          username: formValue.userName,
+          password: formValue.password,
+          firstName: formValue.firstName,
+          lastName: formValue.lastName,
+          gender: formValue.gender,
+          birthOfDate: moment(formValue.birthOfDate).toISOString(),
+          email: formValue.email,
+          mobile: formValue.mobile
+        }).subscribe((response: ApiResponseUserDTO) => {
+          if (response.errorCode == null) {
+            this.router.navigate(["/sign-in"]).then()
+          } else {
+            this.showError(response.message);
+          }
+        })
+      } else {
+        this.showError("Please accept Terms of Use & Privacy Policy");
+      }
     } else {
       this.checkPassword = true
-      this.dialogService.showErrorDialog({
-        title: "Error",
-        description: `Vui lòng kiểm tra lại thông tin`,
-        buttonText: "Exit",
-        onAccept: () => {
-        }
-      })
+      this.showError("Please check your information");
     }
   }
 
   getExtraData() {
-      const state: any = this.router.getCurrentNavigation()?.extras
-        this.formGroup.controls['email'].setValue(state?.state?.email)
+    const state: any = this.router.getCurrentNavigation()?.extras
+    this.formGroup.controls['email'].setValue(state?.state?.email)
+  }
+
+  showError(message: any) {
+    this.dialogService.showErrorDialog({
+      title: "Error",
+      description: `${message}`,
+      buttonText: "Exit",
+      onAccept: () => {
       }
+    })
+  }
 }
