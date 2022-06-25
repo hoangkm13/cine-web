@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {GlobalConstants} from "../GlobalConstants";
 import {MatDialog} from "@angular/material/dialog";
 import {UserProfileComponent} from "../../pages/user-profile/user-profile.component";
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
+import {FormControl} from "@angular/forms";
+import {GenreControllerService} from "../../../cine-svc";
+import {DialogService} from "../dialog.service";
 
 @Component({
   selector: 'app-header-cine',
@@ -13,30 +16,80 @@ import {Router} from "@angular/router";
 export class HeaderCineComponent implements OnInit {
 
   token: string = ""
+  searchKey: string = ""
+  clickGenre: boolean = false
+  genreList: FormControl
+  genreClick = new FormControl('')
+  checkOnClickSign: boolean = false
+
   constructor(
     private cookieService: CookieService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private genreService: GenreControllerService,
+    private dialogService: DialogService,
+    private cookie: CookieService
   ) {
+    this.genreList = new FormControl([])
     this.token = cookieService.get(GlobalConstants.authToken)
+    this.getGenres()
   }
 
   ngOnInit(): void {
   }
 
   openUserProfile() {
-    this.dialog.open(UserProfileComponent, {
-      width: '80vw',
-      height: '75vh'
-    })
+    this.dialog.open(UserProfileComponent, {})
+  }
+
+  getGenres() {
+    if(this.token) {
+      this.genreService.getAllGenres().subscribe(result => {
+        if(!result.errorCode) {
+          this.genreList.setValue(result.result)
+        } else {
+          this.dialogService.showErrorDialog({
+            title: "Error",
+            description: `${result.message}`,
+            buttonText: "Exit",
+            onAccept: () => {
+            }
+          })
+        }
+      })
+    }
   }
 
   navigationPage() {
-    if(this.token) this.router.navigate(['/welcome'])
+    if (this.token) this.router.navigate(['/welcome'])
     else this.router.navigate(['/cine-web'])
   }
 
   onSignIn() {
     this.router.navigate(['/sign-in'])
+  }
+
+  onSearchKey() {
+    if(this.searchKey.trim() === "") {
+      this.dialogService.showErrorDialog({
+        title: "Error",
+        description: "Please enter film name or actor name",
+        buttonText: "Exit",
+        onAccept: () => {}
+      })
+      return
+    }
+    this.cookie.set(GlobalConstants.searchType, 'bySearch', undefined, "/")
+    this.router.navigate(['/films/', this.searchKey])
+  }
+
+  navigationPageGenre(genre: string) {
+    if (genre) {
+      this.cookie.set(GlobalConstants.searchType, 'byGenre', undefined, "/")
+      this.router.navigate(['/films/', genre])
+    } else {
+      this.cookie.set(GlobalConstants.searchType, 'byFavorite', undefined, "/")
+      this.router.navigate(['/films/favorites',])
+    }
   }
 }

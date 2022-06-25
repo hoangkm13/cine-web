@@ -10,7 +10,7 @@
 .landing-content {
   font-size: 22px;
   line-height: normal;
-  font-weight: lighter;
+  font-weight: 400;
   text-shadow: 2px 2px 4px rgb(0 0 0 / 45%);
   text-align: justify;
 }
@@ -37,14 +37,13 @@
 .favourite-btn{
   z-index: 2;
   position: absolute;
-  top: 18px;
+  top: 0;
   right: 0;
 }
 
 /* Slide */
 .slide-list {
-  width: 1288px;
-  margin: -50px 38px 38px;
+  margin: 16px 38px 38px;
 }
 
 mat-card-actions {
@@ -56,6 +55,7 @@ mat-card-actions {
   color: #e5e5e5;
   font-weight: bold;
   cursor: pointer;
+  text-decoration: none;
 }
 
 /* Show button when hover */
@@ -105,7 +105,7 @@ mat-card:hover .short-description{
   opacity: 0.8;
 }
 
-mat-card-actions:hover .film-title{
+mat-card:hover .film-title{
   color: #3b519a;
 }
 

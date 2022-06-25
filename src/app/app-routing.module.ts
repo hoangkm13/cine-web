@@ -6,6 +6,7 @@ import {HomeCineWebComponent} from "./cine-web/components/pages/home-cine-web/ho
 import {DetailFilmComponent} from "./cine-web/components/pages/detail-film/detail-film.component";
 import {LandingCineWebComponent} from "./cine-web/components/pages/landing-cine-web/landing-cine-web.component";
 import {FilmsByGenreComponent} from "./cine-web/components/pages/films-by-genre/films-by-genre.component";
+import {ErrorDialogComponent} from "./cine-web/components/shared/error-dialog/error-dialog.component";
 
 let routes: Routes = [];
 routes = [
@@ -38,9 +39,13 @@ routes = [
     component: LandingCineWebComponent
   },
   {
-    path: "films/:genre",
+    path: "films/:searchValue",
     component: FilmsByGenreComponent
-  }
+  },
+  {
+    path: "films/favorites",
+    component: FilmsByGenreComponent
+  },
 ]
 
 @NgModule({

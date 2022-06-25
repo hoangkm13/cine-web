@@ -1,4 +1,5 @@
-<div fxLayout="column" style="background: #000000;">
+<div fxLayout="column" style="background-color: #2d3436;
+    background-image: linear-gradient(328deg, #2d3436 0%, #000000 74%);">
   <div class="background-cine-landing" fxLayout="column" style="height: 700px">
     <app-header-cine fxFlex></app-header-cine>
     <div fxLayout="row" fxFlex="65">
@@ -10,43 +11,65 @@
           Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he projects in a futile
           attempt to feel like he's part of the world around him.</p>
         <div>
-          <button (click)="goToFilmDetail(hotFilm.id)" class="play-button" mat-raised-button>Play</button>
+          <button (click)="watchTrailer()" class="play-button" mat-raised-button>Play</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="slide-list text-white" fxLayout="column" fxLayoutGap="30px">
-    <div fxLayout="column" *ngFor="let slide of slides">
-      <p class="genreName" (click)="goToFilmByGenre(slide.genre)">{{slide.genre}}</p>
-      <section>
-        <ngx-slick-carousel class="carousel" [config]="slideConfig">
-          <mat-card ngxSlickItem class="slide" *ngFor="let ele of slide.filmList">
-            <div class="favourite-btn">
-              <button (click)="addToFavorite(ele.id)" mat-icon-button matTooltip="Add to favorites" matTooltipPosition="above">
-                <mat-icon>add_to_photos</mat-icon>
-                <!--                <mat-icon>indeterminate_check_box</mat-icon>-->
-              </button>
-            </div>
-            <img height="140px" mat-card-image src="{{beforePath + ele.slug + afterPath }}" alt="Photo of a Shiba Inu">
-            <div class="short-description">
-              <p style="font-size: 16px">{{ ele.title }}</p>
-              <p style="font-size: 14px" >{{ ele.description }}</p>
-            </div>
-            <mat-card-actions (click)="goToFilmDetail(ele.id)" >
-              <p class="film-title">{{ ele.title }}</p>
-              <ng-template #t let-fill="fill">
+  <div>
+    <div class="slide-list text-white" fxLayout="column" fxLayoutGap="40px">
+      <div fxLayout="column" *ngFor="let landingData of this.landingData" fxLayoutGap="30px">
+        <a class="genreName" (click)="goToFilmByGenre(landingData.genre)">
+          {{landingData.genre}}
+        </a>
+        <section>
+          <ngx-slick-carousel class="carousel" [config]="slideConfig">
+            <mat-card ngxSlickItem class="slide"
+                      *ngFor="let ele of landingData.data"
+                      (click)="goToFilmDetail(ele.film.id)"
+            >
+              <div class="favourite-btn">
+                <button appClickStopPropagation
+                        *ngIf="!ele.idFavorite; else removeFavorite "
+                        (click)="addToFavorite(landingData.genre, ele.film.id)"
+                        mat-icon-button matTooltip="Add to favorites"
+                        matTooltipPosition="above"
+                >
+                  <mat-icon>
+                    add_to_photos
+                  </mat-icon>
+                </button>
+                <ng-template #removeFavorite>
+                  <button appClickStopPropagation
+                          (click)="removeFromFavorite(landingData.genre, ele.idFavorite, ele.film.id)"
+                          mat-icon-button matTooltip="Remove from favorites" matTooltipPosition="above"
+                  >
+                    <mat-icon>indeterminate_check_box</mat-icon>
+                  </button>
+                </ng-template>
+              </div>
+              <img height="140px" mat-card-image src="{{beforePath + ele.film.slug + afterPath }}"
+                   alt="Photo of a Shiba Inu">
+              <div class="short-description">
+                <p style="font-size: 16px">{{ ele.film.title }}</p>
+                <p style="font-size: 14px">{{ ele.film.description }}</p>
+              </div>
+              <mat-card-actions>
+                <p class="film-title">{{ ele.film.title }}</p>
+                <ng-template #t let-fill="fill">
                 <span class="star" [class.full]="fill === 100">
                   <span class="half" [style.width.%]="fill">&star;</span>&star;
                 </span>
-              </ng-template>
+                </ng-template>
 
-              <ngb-rating [rate]="setStarRating(ele.ratingStar)" [readonly]="true" [starTemplate]="t" [max]="5"></ngb-rating>
-            </mat-card-actions>
-          </mat-card>
-        </ngx-slick-carousel>
-      </section>
+                <ngb-rating [rate]="setStarRating(ele.film.ratingStar)" [readonly]="true" [starTemplate]="t"
+                            [max]="5"></ngb-rating>
+              </mat-card-actions>
+            </mat-card>
+          </ngx-slick-carousel>
+        </section>
+      </div>
     </div>
-
   </div>
   <app-footer-cine></app-footer-cine>
 </div>

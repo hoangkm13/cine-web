@@ -1,0 +1,17 @@
+.video-component {
+  position: relative;
+}
+
+.video-player {
+  height: inherit;
+  position: relative;
+}
+
+.exit-button {
+  margin-top: 8px;
+  margin-right: 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}

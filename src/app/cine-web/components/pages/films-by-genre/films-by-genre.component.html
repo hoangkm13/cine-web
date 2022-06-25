@@ -2,21 +2,21 @@
   <app-header-cine></app-header-cine>
   <div fxLayout="column" fxLayoutAlign="center center">
     <div fxLayout="column" style="width: 1220px" fxLayoutGap="30px">
-      <p class="genreName">{{genre}}</p>
+      <p class="genreName">{{searchKey[1].toUpperCase()}}</p>
 
       <section fxLayout="row wrap">
-        <mat-card style="width: 224px; margin: 10px;"
-                  *ngFor="let film of list | paginate: { itemsPerPage: 20, currentPage: currentPage }">
-          <img mat-card-image src="{{ beforePath + film.slug + afterPath}}"
+        <mat-card (click)="goToFilmDetail(film.id)" style="width: 224px; margin: 10px;"
+                  *ngFor="let film of list | paginate: { itemsPerPage: 15, currentPage: currentPage }">
+          <img mat-card-image src="{{ beforePath + film?.slug + afterPath}}"
                alt="Photo of a Shiba Inu">
-          <mat-card-title>{{film.title}}</mat-card-title>
+          <mat-card-title>{{film?.title}}</mat-card-title>
           <ng-template #t let-fill="fill">
                 <span class="star" [class.full]="fill === 100">
                   <span class="half" [style.width.%]="fill">&star;</span>&star;
                 </span>
           </ng-template>
 
-          <ngb-rating [rate]="setStarRating(film.ratingStar)" [readonly]="true" [starTemplate]="t"
+          <ngb-rating [rate]="setStarRating(film?.ratingStar)" [readonly]="true" [starTemplate]="t"
                       [max]="5"></ngb-rating>
 
           <!--          <mat-card-content>-->
@@ -28,6 +28,7 @@
           <!--            <button mat-raised-button color="primary">Watch</button>-->
           <!--          </mat-card-actions>-->
         </mat-card>
+        <p *ngIf="list.length == 0" style="color: #ffffff">No data found</p>
       </section>
       <pagination-controls fxLayout="row" fxLayoutAlign="center center" (pageChange)="currentPage = $event"
                            class="float-right"></pagination-controls>

@@ -8,7 +8,11 @@
       <div fxLayout="row" fxLayoutGap="64px">
         <div fxLayout="column" fxLayoutGap="32px" >
           <img src="../../../../../assets/images/films/a-quiet-place/small2.jpg" height="414.96" width="280" alt="">
-          <button mat-raised-button class="button-watch" color="warn" fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button class="button-watch"
+                  color="warn" fxLayout="row"
+                  fxLayoutAlign="center center"
+                  (click)="playVideo()"
+          >
             <mat-icon>play_arrow</mat-icon>
             <span class="text-button-watch">
               Watch now
@@ -16,45 +20,137 @@
           </button>
         </div>
         <div fxLayout="column" fxFlex fxLayoutGap="32px">
-          <div fxLayout="column" fxLayoutGap="25px">
+          <div fxLayout="column" fxLayoutGap="28px">
             <div fxLayoutGap="10px">
-            <span class="text-title-film">
-              {{this.formGroup.controls['nameFilm'].value}}
-            </span>
+              <span class="text-title-film">
+                {{this.formGroup.controls['nameFilm'].value}}
+              </span>
 
               <span class="text-title-film">
               (
-                <a href="" class="text-title-film-year">
+                <span class="text-title-film-year">
                   {{this.formGroup.controls['year'].value}}
-                </a>
+                </span>
               )
             </span>
             </div>
 
-            <div>
-              <ng-template #t let-fill="fill">
-            <span class="star" [class.full]="fill === 100">
-              <span class="half" [style.width.%]="fill">&star;</span>&star;
-            </span>
-              </ng-template>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px">
+              <div>
+                <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&star;</span>&star;
+                </span>
+                </ng-template>
 
-              <ngb-rating [(rate)]="starRating" [readonly]="true" [starTemplate]="t"  [max]="5"></ngb-rating>
+                <ngb-rating [(rate)]="starRating" [readonly]="true" [starTemplate]="t"  [max]="5"></ngb-rating>
+              </div>
+
+              <div class="text-description-info" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <mat-icon>remove_red_eye</mat-icon>
+                <span>
+                  {{this.formGroup.controls['viewCount'].value}}
+                </span>
+              </div>
+
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-between center">
-              <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center" (click)="handleFavourite()">
-                <mat-icon>add</mat-icon>
-                <span class="text-button">
-                Add to Favourite
+
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
+                <button
+                  *ngIf="!checkFavorite; else removeFavorite"
+                  mat-stroked-button
+                  fxLayout="row" fxLayoutAlign="center center"
+                  (click)="handleFavourite('add')">
+                  <mat-icon>add</mat-icon>
+                  <span class="text-button">
+                  Add to Favorite
                 </span>
-              </button>
+                </button>
+
+                <ng-template #removeFavorite>
+                  <button
+                    mat-stroked-button
+                    fxLayout="row" fxLayoutAlign="center center"
+                    (click)="handleFavourite('remove')">
+                    <mat-icon>clear</mat-icon>
+                    <span class="text-button">
+                    Remove from Favorite
+                </span>
+                  </button>
+                </ng-template>
+
+                <div fxLayout="row"
+                     class="text-description-info"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="20px">
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="8px"
+                  >
+                    <mat-icon
+                      *ngIf="!reactLikeUser; else haveReactLike"
+                      class="user-react"
+                      (click)="handleReact('like')"
+                    >
+                      thumb_up
+                    </mat-icon>
+                    <span>
+                      {{this.likeList.length}}
+                    </span>
+                  </div>
+
+                  <ng-template #haveReactLike>
+                    <mat-icon
+                      class="user-react"
+                      color="warn"
+                      (click)="handleUndoReact('like')"
+                    >
+                      thumb_up
+                    </mat-icon>
+                  </ng-template>
+
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="8px"
+                  >
+                    <mat-icon
+                      class="user-react"
+                      *ngIf="!reactDislikeUser; else haveReactDislike"
+                      (click)="handleReact('dislike')"
+                    >
+                      thumb_down
+                    </mat-icon>
+                    <span>
+                      {{this.dislikeList.length}}
+                    </span>
+                  </div>
+
+                  <ng-template #haveReactDislike>
+                    <mat-icon
+                      class="user-react"
+                      color="warn"
+                      (click)="handleUndoReact('dislike')"
+                    >
+                      thumb_down
+                    </mat-icon>
+                  </ng-template>
+
+                </div>
+              </div>
 
               <div fxLayout="row" class="genres"
                    fxLayoutGap="10px"
                    fxLayoutAlign="space-between center"
                   *ngFor="let genre of this.formGroup.controls['genres'].value"
               >
-                <button mat-stroked-button fxLayout="row" fxLayoutAlign="center center">
+                <button mat-stroked-button fxLayout="row"
+                        fxLayoutAlign="center center"
+                        (click)="redirectToPage(genre.name)"
+                >
                   <span class="text-button-genres">
                     {{genre.name}}
                   </span>
@@ -105,7 +201,7 @@
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
             <img [src]="avatarUser" height="20" width="20" class="avatar-user" alt="">
             <span class="text-description">
-              {{this.dataUser.username}}
+              {{this.dataUser?.username}}
             </span>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
@@ -122,25 +218,55 @@
         </div>
 
         <div *ngIf="this.formGroup.controls['comments'].value">
-          <div
-            class="comment-user" fxLayout="column" fxLayoutGap="20px"
-            *ngFor="let comment of this.formGroup.controls['comments'].value"
-          >
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
-                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                  <img [src]="avatarUserComment + comment.userAvatar" height="20" width="20" class="avatar-user" alt="">
-                  <span class="text-description">{{comment.username}}</span>
+          <div fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <mat-form-field class="genre-choice" color="warn">
+                <mat-label>Order by</mat-label>
+                <mat-select [formControl]="orderBySelect">
+                  <mat-option
+                    *ngFor="let orderBy of orderByValue"
+                    [value]="orderBy.value"
+                    (click)="getCommentData()"
+                  >
+                    {{orderBy.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div
+              class="comment-user" fxLayout="column" fxLayoutGap="20px"
+              *ngFor="let comment of this.formGroup.controls['comments'].value"
+            >
+              <div fxLayout="column" fxLayoutGap="10px">
+                <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between center">
+                  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                    <img [src]="avatarUserComment + comment.userAvatar" height="20" width="20"
+                         class="avatar-user" alt=""
+                    >
+                    <span class="text-description">{{comment.username}}</span>
+                  </div>
+                  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="24px">
+                    <span>
+                    {{comment.createdAt | date: 'mediumDate'}}
+                  </span>
+                    <mat-icon
+                      *ngIf="checkCommentUser(comment.userId)"
+                      matTooltip="Delete comment"
+                      class="delete-comment-icon"
+                      (click)="deleteComment(comment.id)"
+                    >
+                      delete_outline
+                    </mat-icon>
+                  </div>
+
                 </div>
-                <span>
-                  {{comment.createdAt | date: 'mediumDate'}}
-                </span>
-              </div>
-              <div style="padding: 5px 10px">
-                {{comment.commentText}}
+                <div style="padding: 5px 10px">
+                  {{comment.commentText}}
+                </div>
               </div>
             </div>
           </div>
+
           <mat-paginator
             [length]="length"
             [pageSize]="pageSize"

@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="30px">
+<div fxLayout="column" style="padding: 24px" fxLayoutAlign="center center" fxLayoutGap="30px">
   <div mat-dialog-content class="dialog-profile" fxLayout="row" fxLayoutAlign="space-between center">
     <div fxLayout="column" style="padding-right: 24px" fxLayoutAlign="space-around center" fxFlex="25" fxLayoutGap="24px">
       <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
@@ -116,13 +116,17 @@
       <div class="vertical-line"></div>
     </div>
 
-    <div fxLayout="column" class="user-info" style="padding-left: 24px" fxLayoutAlign="space-between center" fxFlex>
+    <div fxLayout="column" class="user-info"
+         style="padding-left: 24px"
+         fxLayoutAlign="space-between center"
+         fxLayoutGap="12px"
+         fxFlex>
       <div fxLayout="column" fxLayoutAlign="center start" class="profile-width-max" [formGroup]="userProfile">
         <span>
           Email
         </span>
         <mat-form-field appearance="outline" >
-          <input type="text" matInput formControlName="email">
+          <input type="text" matInput formControlName="email" [email]="true">
         </mat-form-field>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between start"

@@ -10,8 +10,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-image: url("assets/images/misc/home-bg.jpg");
 }
 
-.white-text {
-  color: white !important;
+.form {
+  width: 480px;
+  background: black;
+  opacity: 0.8;
+  border-radius: 4px;
+  position: relative;
 }
 
 .background-cine-landing {
@@ -61,6 +65,7 @@ section{
     cursor: pointer;
     width: 250px;
     margin: 2px;
+    padding: 0 16px 16px;
     background-color: #000000;
     font-family: "Open Sans", sans-serif;
     p {
@@ -79,8 +84,14 @@ section{
 }
 
 mat-dialog-container {
-  background-color: #06121E !important;
+  background-color: rgb(6, 18, 30) !important;
   overflow: hidden !important;
+  padding: 0 !important;
+}
+
+.snackbar-custom {
+  background-color: rgba(12, 157, 15, 0.52) !important;
+  color: #eae1e1;
 }
 
 

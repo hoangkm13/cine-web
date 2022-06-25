@@ -6,3 +6,36 @@
   cursor: pointer;
 }
 
+.search-header {
+  padding-left: 10px;
+  outline: none;
+  border-radius: 25px;
+  height: 35px;
+  width: 15vw;
+  border: none;
+  position: relative;
+}
+
+.genre-choice {
+  cursor: pointer;
+  color:white;
+  font-size: 16px;
+  font-weight: 600;
+  width: 50%;
+}
+
+mat-option {
+  background-color: rgba(211, 211, 211, 0.22) !important;
+}
+
+.favorite {
+  cursor: pointer;
+  color:white;
+  font-size: 16px;
+  font-weight: 600
+}
+
+
+
+
+
