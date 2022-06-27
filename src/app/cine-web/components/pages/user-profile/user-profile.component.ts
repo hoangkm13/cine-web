@@ -117,6 +117,12 @@ export class UserProfileComponent implements OnInit {
         buttonText: "Exit",
         onAccept: () => {}
       })
+      if(this.actionEdit === 'editProfile') {
+        this.userProfile.markAllAsTouched()
+      }
+      if(this.actionEdit === 'changePassword'){
+        this.passwordForm.markAllAsTouched()
+      }
       return
     }
     if(this.passwordForm.controls['newPassword'].value !== this.passwordForm.controls['confirmNewPassword'].value) {
