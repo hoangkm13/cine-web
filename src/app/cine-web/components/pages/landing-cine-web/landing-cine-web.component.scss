@@ -29,6 +29,24 @@
   cursor: pointer;
 }
 
+.info-button {
+  box-shadow: 0 0.6vw 1vw -0.4vw rgb(0 0 0 / 35%);
+  background-color: #8e8e8e;
+  color: #d5d5d5;
+  border-width: 0;
+  padding: 4px 40px;
+  border-radius: 5px;
+  max-width: 130px;
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.info-button:hover{
+  background-color: #adadad;
+}
+
 .play-button:hover{
   background-color: #ff1e1e;
   color: white;

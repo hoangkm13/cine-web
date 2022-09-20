@@ -112,7 +112,7 @@ export class DetailFilmComponent implements OnInit {
           slug: this.data.slug,
           genres: this.data.genres,
           actors: this.data.actors,
-          director: this.data.director.name,
+          director: this.data.director ? this.data.director.name : '',
           ratingStar: this.data.ratingStar,
         })
         this.starRating = this.formGroup.controls['ratingStar'].value
