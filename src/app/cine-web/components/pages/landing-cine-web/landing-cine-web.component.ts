@@ -45,6 +45,8 @@ export class LandingCineWebComponent implements OnInit {
     outerEdgeLimit: true,
     arrows: true,
     draggable: false,
+    lazyLoad: 'ondemand',
+    cssEase: 'linear',
     responsive: [
       {
         breakpoint: 1024,
@@ -55,6 +57,20 @@ export class LandingCineWebComponent implements OnInit {
           dots: true
         }
       },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
     ]
   };
 
@@ -143,7 +159,7 @@ export class LandingCineWebComponent implements OnInit {
     this.router.navigate(['/film', id, "detail"]).then();
   }
 
-  watchTrailer(){
+  watchTrailer() {
     this.dialogService.showVideoPlayer()
   }
 
