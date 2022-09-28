@@ -11,5 +11,5 @@ COPY . .
 RUN npm run build
 
 EXPOSE 4200
-CMD ["npx", "ng", "serve"]
+CMD ["npm", "run", "start"]
 
