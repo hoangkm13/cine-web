@@ -4,6 +4,8 @@ WORKDIR /usr/src/app/
 
 COPY package*.json ./
 
+RUN npm i @angular/cli@12.2.0
+
 RUN npm install --unsafe-perm
 
 COPY . .
@@ -11,5 +13,5 @@ COPY . .
 RUN npm run build
 
 EXPOSE 4200
-CMD ["npm", "run", "start"]
+CMD ["ng", "serve", "--host", "0.0.0.0"]
 
