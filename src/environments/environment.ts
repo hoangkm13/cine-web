@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "http://localhost:5000"
+  apiBaseUrl: "http://172.17.0.2:30080"
   // apiBaseUrl: "http://cine-svc.us-west-2.elasticbeanstalk.com"
 };
 /*
