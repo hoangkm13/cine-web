@@ -1,19 +1,17 @@
-FROM node:14.15.0 as BUILD
+FROM node:12.22.9 as BUILD
 
 RUN mkdir /app
 WORKDIR /app
 
-RUN npm install -g npm@6.14.17
-RUN npm i @angular/cli@12.2.0
-RUN npm link @angular/cli@12.2.0
+RUN npm install -g npm@8.5.1
+RUN npm i @angular/cli@13.3.11
+RUN npm link @angular/cli@13.3.11
 RUN npm cache clean -f
 COPY . .
 RUN npm config set legacy-peer-deps true
 RUN npm install --save --legacy-peer-deps
 
-RUN npm i lru-cache
-
-RUN #ng version
+RUN ng version
 
 RUN npm run build
 
